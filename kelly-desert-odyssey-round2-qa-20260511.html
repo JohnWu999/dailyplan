@@ -1,0 +1,721 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Desert Odyssey — Round 2 Coach Notes for Kelly</title>
+    <link href="https://fonts.googleapis.com/css2?family=Noto+Serif+SC:wght@400;600;700&family=Cormorant+Garamond:ital,wght@0,400;0,600;1,400&family=Source+Sans+Pro:wght@400;600&display=swap" rel="stylesheet">
+    <style>
+        :root {
+            --burnt-orange: #E85D04;
+            --gold: #C9A961;
+            --cream: #FAF7F2;
+            --ink: #2C2420;
+            --ink-light: #5C534A;
+            --ink-lighter: #8A7E72;
+            --border-gold: rgba(201, 169, 97, 0.35);
+            --idea-color: #8B5CF6;
+            --word-color: #0891B2;
+            --structure-color: #E85D04;
+            --success-bg: #f0fdf4;
+            --success-border: #86efac;
+            --warn-bg: #fffbeb;
+            --warn-border: #fcd34d;
+        }
+
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+        html { scroll-behavior: smooth; }
+
+        body {
+            font-family: 'Source Sans Pro', 'Noto Serif SC', sans-serif;
+            background: var(--cream);
+            color: var(--ink);
+            line-height: 1.85;
+            font-size: 16px;
+        }
+
+        .header {
+            text-align: center;
+            padding: 70px 20px 45px;
+            background: linear-gradient(180deg, #FFF 0%, var(--cream) 100%);
+            border-bottom: 1px solid var(--border-gold);
+        }
+
+        .header-badge {
+            display: inline-block;
+            font-size: 11px;
+            letter-spacing: 3px;
+            text-transform: uppercase;
+            color: var(--gold);
+            border: 1px solid var(--border-gold);
+            padding: 7px 22px;
+            margin-bottom: 24px;
+        }
+
+        .header h1 {
+            font-family: 'Cormorant Garamond', serif;
+            font-size: 44px;
+            font-weight: 600;
+            color: var(--ink);
+            letter-spacing: 1px;
+            margin-bottom: 10px;
+        }
+
+        .header-subtitle {
+            font-size: 15px;
+            color: var(--ink-light);
+            font-family: 'Cormorant Garamond', serif;
+            font-style: italic;
+        }
+
+        .header-divider {
+            width: 50px;
+            height: 2px;
+            background: var(--gold);
+            margin: 28px auto 0;
+        }
+
+        .section {
+            max-width: 780px;
+            margin: 0 auto;
+            padding: 50px 28px;
+        }
+
+        .section-label {
+            font-size: 11px;
+            letter-spacing: 2.5px;
+            text-transform: uppercase;
+            color: var(--gold);
+            margin-bottom: 8px;
+            font-weight: 600;
+        }
+
+        .section-title {
+            font-family: 'Cormorant Garamond', serif;
+            font-size: 32px;
+            font-weight: 600;
+            color: var(--burnt-orange);
+            margin-bottom: 36px;
+            padding-bottom: 14px;
+            border-bottom: 1px solid var(--border-gold);
+            display: flex;
+            align-items: center;
+            gap: 12px;
+        }
+
+        .section-title::before {
+            content: '';
+            display: inline-block;
+            width: 7px;
+            height: 7px;
+            background: var(--gold);
+            transform: rotate(45deg);
+        }
+
+        .essay-box {
+            background: #fff;
+            padding: 40px 44px;
+            border-radius: 4px;
+            box-shadow: 0 2px 20px rgba(44,36,32,0.05);
+            margin-bottom: 28px;
+        }
+
+        .essay-box .essay-title {
+            font-family: 'Cormorant Garamond', serif;
+            font-size: 26px;
+            font-weight: 600;
+            text-align: center;
+            margin-bottom: 4px;
+            color: var(--ink);
+        }
+
+        .essay-box .essay-author {
+            text-align: center;
+            font-size: 14px;
+            color: var(--ink-lighter);
+            margin-bottom: 30px;
+            font-style: italic;
+        }
+
+        .essay-box p {
+            font-family: 'Source Sans Pro', sans-serif;
+            font-size: 16px;
+            line-height: 1.85;
+            color: var(--ink);
+            margin-bottom: 16px;
+            text-align: justify;
+        }
+
+        .essay-box p + p {
+            text-indent: 2em;
+        }
+
+        .para-anchor {
+            position: relative;
+            padding-left: 16px;
+            border-left: 2px solid transparent;
+            transition: all 0.3s ease;
+        }
+
+        .para-anchor:target {
+            border-left-color: var(--gold);
+            background: rgba(201, 169, 97, 0.06);
+            padding: 12px 12px 12px 20px;
+            margin: -12px -12px 6px -12px;
+            border-radius: 0 4px 4px 0;
+        }
+
+        .para-num {
+            position: absolute;
+            left: -40px;
+            top: 2px;
+            width: 28px;
+            height: 28px;
+            background: var(--cream);
+            border: 1px solid var(--border-gold);
+            border-radius: 50%;
+            font-size: 12px;
+            font-weight: 600;
+            color: var(--gold);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            cursor: pointer;
+            text-decoration: none;
+            transition: all 0.2s;
+        }
+
+        .para-num:hover {
+            background: var(--gold);
+            color: #fff;
+        }
+
+        .coach-box {
+            background: linear-gradient(135deg, #fff 0%, #fdfbf7 100%);
+            border-left: 3px solid var(--gold);
+            padding: 18px 24px;
+            margin: 24px 0 10px;
+            font-size: 14.5px;
+            color: var(--ink-light);
+            line-height: 1.75;
+        }
+
+        .coach-box strong {
+            color: var(--burnt-orange);
+            font-weight: 600;
+        }
+
+        .progress-box {
+            background: var(--success-bg);
+            border-left: 3px solid var(--success-border);
+            padding: 18px 24px;
+            margin: 24px 0;
+            font-size: 14.5px;
+            color: #166534;
+            line-height: 1.75;
+        }
+
+        .progress-box strong {
+            color: #166534;
+        }
+
+        .warn-box {
+            background: var(--warn-bg);
+            border-left: 3px solid var(--warn-border);
+            padding: 18px 24px;
+            margin: 24px 0;
+            font-size: 14.5px;
+            color: #92400e;
+            line-height: 1.75;
+        }
+
+        .tip-card {
+            background: #fff;
+            border-radius: 4px;
+            padding: 30px;
+            margin-bottom: 22px;
+            box-shadow: 0 2px 16px rgba(44,36,32,0.04);
+            border-top: 3px solid var(--gold);
+        }
+
+        .tip-card:target {
+            box-shadow: 0 4px 24px rgba(232, 93, 4, 0.1);
+            border-top-color: var(--burnt-orange);
+        }
+
+        .tip-header {
+            display: flex;
+            align-items: flex-start;
+            justify-content: space-between;
+            margin-bottom: 14px;
+            flex-wrap: wrap;
+            gap: 10px;
+        }
+
+        .tip-left {
+            display: flex;
+            align-items: center;
+            gap: 14px;
+        }
+
+        .tip-number {
+            font-family: 'Cormorant Garamond', serif;
+            font-size: 36px;
+            font-weight: 600;
+            color: var(--border-gold);
+            line-height: 1;
+        }
+
+        .tip-meta {
+            display: flex;
+            flex-direction: column;
+            gap: 4px;
+        }
+
+        .tip-title {
+            font-size: 17px;
+            font-weight: 700;
+            color: var(--ink);
+            line-height: 1.35;
+        }
+
+        .tip-type {
+            display: inline-block;
+            font-size: 10.5px;
+            letter-spacing: 1.5px;
+            text-transform: uppercase;
+            font-weight: 700;
+            padding: 4px 10px;
+            border-radius: 3px;
+        }
+
+        .tip-type.idea {
+            background: rgba(139, 92, 246, 0.1);
+            color: var(--idea-color);
+        }
+
+        .tip-type.word {
+            background: rgba(8, 145, 178, 0.1);
+            color: var(--word-color);
+        }
+
+        .tip-type.structure {
+            background: rgba(232, 93, 4, 0.08);
+            color: var(--structure-color);
+        }
+
+        .tip-body {
+            font-size: 15px;
+            line-height: 1.8;
+            color: var(--ink-light);
+        }
+
+        .tip-body p {
+            margin-bottom: 10px;
+        }
+
+        .tip-body p:last-child {
+            margin-bottom: 0;
+        }
+
+        .tip-body strong {
+            color: var(--ink);
+            font-weight: 600;
+        }
+
+        .keyword-box {
+            background: var(--cream);
+            padding: 14px 18px;
+            border-radius: 4px;
+            margin: 14px 0;
+            border-left: 2px solid var(--border-gold);
+        }
+
+        .keyword-label {
+            font-size: 11px;
+            letter-spacing: 1.5px;
+            text-transform: uppercase;
+            color: var(--gold);
+            font-weight: 700;
+            margin-bottom: 8px;
+        }
+
+        .keyword-list {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 8px;
+        }
+
+        .keyword-tag {
+            display: inline-block;
+            background: #fff;
+            border: 1px solid var(--border-gold);
+            padding: 5px 12px;
+            border-radius: 20px;
+            font-size: 14px;
+            color: var(--ink);
+            font-weight: 600;
+        }
+
+        .fill-blank {
+            background: rgba(201, 169, 97, 0.15);
+            padding: 2px 10px;
+            border-radius: 3px;
+            font-weight: 600;
+            color: var(--burnt-orange);
+        }
+
+        .mini-exercise {
+            background: #fff;
+            border: 1px dashed var(--border-gold);
+            padding: 20px 24px;
+            margin: 16px 0;
+            border-radius: 4px;
+        }
+
+        .mini-exercise-label {
+            font-size: 11px;
+            letter-spacing: 1.5px;
+            text-transform: uppercase;
+            color: var(--gold);
+            font-weight: 700;
+            margin-bottom: 10px;
+        }
+
+        .mini-exercise p {
+            font-size: 14.5px;
+            color: var(--ink-light);
+            line-height: 1.75;
+            margin: 0;
+        }
+
+        .tip-actions {
+            margin-top: 18px;
+            display: flex;
+            gap: 10px;
+            flex-wrap: wrap;
+        }
+
+        .jump-link {
+            display: inline-flex;
+            align-items: center;
+            gap: 6px;
+            font-size: 13px;
+            color: var(--burnt-orange);
+            text-decoration: none;
+            padding: 6px 14px;
+            border: 1px solid rgba(232, 93, 4, 0.25);
+            border-radius: 4px;
+            transition: all 0.2s;
+            font-weight: 600;
+        }
+
+        .jump-link:hover {
+            background: var(--burnt-orange);
+            color: #fff;
+        }
+
+        .gold-divider {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 16px;
+            margin: 40px 0;
+        }
+
+        .gold-divider .line {
+            width: 80px;
+            height: 1px;
+            background: var(--border-gold);
+        }
+
+        .gold-divider .diamond {
+            width: 6px;
+            height: 6px;
+            background: var(--gold);
+            transform: rotate(45deg);
+        }
+
+        .footer {
+            text-align: center;
+            padding: 50px 30px 70px;
+            border-top: 1px solid var(--border-gold);
+            color: var(--ink-lighter);
+            font-size: 13px;
+        }
+
+        @media (max-width: 640px) {
+            .header h1 { font-size: 32px; }
+            .section { padding: 36px 18px; }
+            .essay-box { padding: 28px 24px; }
+            .tip-card { padding: 24px; }
+            .para-num { display: none; }
+        }
+    </style>
+</head>
+<body>
+
+<div class="header">
+    <div class="header-badge">Writing Coach · Round 2 · Grade 6</div>
+    <h1>Desert Odyssey</h1>
+    <div class="header-subtitle">Kelly Zhang &middot; Draft 2 &middot; May 2026</div>
+    <div class="header-divider"></div>
+</div>
+
+<!-- ========== PART 1: DRAFT 2 ========== -->
+<div class="section">
+    <div class="section-label">Part One</div>
+    <div class="section-title">Your Draft 2 — Keep This Open While You Revise</div>
+
+    <div class="essay-box">
+        <div class="essay-title">Desert Odyssey</div>
+        <div class="essay-author">By: Kelly Zhang</div>
+
+        <p id="p1" class="para-anchor">
+            <a href="#tip1" class="para-num" title="See Coach Note">1</a>
+            Walking in the desert, miles and miles away from civilisation. No Wi-Fi, no roads, only rock, dust, and sand. This is the Gobi desert. It is famous for its stars and sky, holding millions of bright stars. Believe it or not, we are those stars shining in the big vast sky. We may look small —but together, we can light up the entire sky.
+        </p>
+
+        <p id="p2" class="para-anchor">
+            <a href="#tip5" class="para-num" title="See Coach Note">2</a>
+            In this trip of walking 68km, we are not walking by ourselves. Kids from all over China came to join for walking 68km, not only that, a six-year old kid came to walk too! We were a team. A good team needs a great captain and co-captain. The captain is kind, understands what a strong team looks like, and most importantly, has leadership. Without a captain, our team would not have finished the 68km. Our athletic co-captain showed true dedication by carrying three bags, despite the exhausting heat. Another role that is important in the team is the flag raiser. He holds the flag up high to show teammates where the team is if someone falls behind. He is always at the front and helps to carry bags. He even warned the co-captain not to carry too many bags—but the co-captain did not listen, and as a result he grew exhausted and fell behind the team. Because we are in the desert, we need a GPS. I was the GPS, and my role is to guide the team. It may sound easy, but it is actually hard. Knowing which way to go climbing over which sand dunes… Sometimes, I make mistakes. I am not really satisfied by that because when I lead the group to the wrong direction, then we will have to find the right way and walk longer.
+        </p>
+
+        <p id="p3" class="para-anchor">
+            <a href="#tip1" class="para-num" title="See Coach Note">3</a>
+            When we were at big and tall hills, the group had to slow down to carefully cross these hills in case of anyone getting hurt. It was fun, being the GPS also making new friends! Our team was really successful. Our biggest advantage is we encouraged the six-year old kid to finish the 68km. One time, there was a tall sand dune and the whole group had to cross over it, the wind was blowing ferociously making the team hard to go over that tall dune. The six-year old kid wanted to give up, he was crying that it is too hard for her so our teammates waited and encouraged her to not give up, we are about to finish this day! She brushed away her tears and started to climb again. Our team was proud of her when she finished. Her father said that 50% of her credit is by herself and the other 50% is from the team that encouraged her to finish this 68km.
+        </p>
+
+        <p id="p4" class="para-anchor">
+            <a href="#tip2" class="para-num" title="See Coach Note">4</a>
+            Beyond what we achieved together, the desert had its own private lessons waiting for me. In the desert, the daylight was strong and in the night it was cold. I not only needed to adapt to the weather, but also to overcome the challenge of walking for long hours. Three days of trudging through sand and scorching heat ground me down to my last drop of energy. Carrying a bag, plodding in the middle of nowhere, the sun as my companion. Now that is a big challenge.
+        </p>
+
+        <p id="p5" class="para-anchor">
+            <a href="#tip2" class="para-num" title="See Coach Note">5</a>
+            In the night it was freezing cold, the wind whooshed making the air biting into my skin. One day I woke up at 4:00 a.m, and it was cold outside. I couldn’t believe it. In this extreme weather the team had to wake up and walk! I was sleepy and drowsy, when the cold air slapped me on the face I instantly woke up. After finishing this 68km I was happy and proud of myself. I learned that perseverance doesn’t just carry you through 68km—on the other side, it reshapes who you are on the other side.
+        </p>
+
+        <p id="p6" class="para-anchor">
+            <a href="#tip3" class="para-num" title="See Coach Note">6</a>
+            Looking back at the hills I went over, the roads I stumbled on, the challenges I overcame, I realise that the stars shining above us are not just there to shine, but to remind us about the things we had to overcome to reach until here. The bright stars are for the family members and friends, the small stars are for the things we did, the big stars for the big events and the biggest and brightest stars for traits we possess.
+        </p>
+    </div>
+
+    <div class="progress-box">
+        <strong>Great job on Draft 2!</strong> You added a scene with the six-year-old girl. You kept the star metaphor. You used "plodding" — excellent verb! Now we do one more round to make it shine.
+    </div>
+</div>
+
+<div class="gold-divider">
+    <div class="line"></div>
+    <div class="diamond"></div>
+    <div class="line"></div>
+</div>
+
+<!-- ========== PART 2: ROUND 2 COACH NOTES ========== -->
+<div class="section">
+    <div class="section-label">Part Two</div>
+    <div class="section-title">Five Revision Hints — You Fill in the Blanks</div>
+
+    <div class="warn-box">
+        <strong>Rule:</strong> These notes give you <strong>directions + keywords + fill-in-the-blank hints</strong>. They do <strong>not</strong> give you full sentences. You must write every sentence yourself.
+    </div>
+
+    <!-- Tip 1 -->
+    <div class="tip-card" id="tip1">
+        <div class="tip-header">
+            <div class="tip-left">
+                <div class="tip-number">01</div>
+                <div class="tip-meta">
+                    <div class="tip-title">The Girl on the Dune — Bring the Camera Closer</div>
+                    <span class="tip-type idea">Idea</span>
+                </div>
+            </div>
+        </div>
+        <div class="tip-body">
+            <p><strong>What you did:</strong> You added the scene with the girl crying on the dune. That is your best new writing!</p>
+            <p><strong>What to do next:</strong> Zoom in closer. Right now you say: <em>"he was crying... She brushed away her tears."</em> That is still far away. Bring the camera to her face, her hands, her voice.</p>
+
+            <div class="keyword-box">
+                <div class="keyword-label">Power Words to Try</div>
+                <div class="keyword-list">
+                    <span class="keyword-tag">cheeks</span>
+                    <span class="keyword-tag">streaked</span>
+                    <span class="keyword-tag">tears</span>
+                    <span class="keyword-tag">fists</span>
+                    <span class="keyword-tag">gripped</span>
+                    <span class="keyword-tag">sand</span>
+                    <span class="keyword-tag">sobbed</span>
+                    <span class="keyword-tag">shaky</span>
+                    <span class="keyword-tag">sleeve</span>
+                </div>
+            </div>
+
+            <p><strong>Hint:</strong> Instead of "she brushed away her tears," try showing <em>how</em> she brushed them. With what? A sleeve? A dirty hand?</p>
+
+            <p><strong>Incomplete sentence to finish:</strong></p>
+            <p style="margin-left:16px">Her <span class="fill-blank">______</span> were streaked with <span class="fill-blank">______</span>, and her small <span class="fill-blank">______</span> gripped the <span class="fill-blank">______</span> as the wind tried to knock her down.</p>
+
+            <div class="mini-exercise">
+                <div class="mini-exercise-label">Try This (5 minutes)</div>
+                <p>Write 3 sentences about the girl using only body parts and actions. No feelings. No "she was sad." Just: face, hands, legs, voice.</p>
+            </div>
+        </div>
+        <div class="tip-actions">
+            <a href="#p3" class="jump-link">← Back to Paragraph 3</a>
+        </div>
+    </div>
+
+    <!-- Tip 2 -->
+    <div class="tip-card" id="tip2">
+        <div class="tip-header">
+            <div class="tip-left">
+                <div class="tip-number">02</div>
+                <div class="tip-meta">
+                    <div class="tip-title">Show the Cold and Heat — Don’t Name Them</div>
+                    <span class="tip-type word">Keywords</span>
+                </div>
+            </div>
+        </div>
+        <div class="tip-body">
+            <p><strong>What to fix:</strong> You still say <em>"the daylight was strong"</em> and <em>"freezing cold."</em> These words <strong>tell</strong> the reader. Strong writers make readers <strong>guess</strong> from clues.</p>
+
+            <div class="keyword-box">
+                <div class="keyword-label">Power Words to Try</div>
+                <div class="keyword-list">
+                    <span class="keyword-tag">hammered</span>
+                    <span class="keyword-tag">plunged</span>
+                    <span class="keyword-tag">cutting</span>
+                    <span class="keyword-tag">bone</span>
+                    <span class="keyword-tag">ice</span>
+                    <span class="keyword-tag">baked</span>
+                    <span class="keyword-tag">alive</span>
+                    <span class="keyword-tag">slapped</span>
+                </div>
+            </div>
+
+            <p><strong>Incomplete sentence to finish:</strong></p>
+            <p style="margin-left:16px">By day, the sunlight <span class="fill-blank">______</span> down without <span class="fill-blank">______</span>. By night, the <span class="fill-blank">______</span> plunged until the wind felt like it was <span class="fill-blank">______</span> straight to <span class="fill-blank">______</span>.</p>
+
+            <div class="mini-exercise">
+                <div class="mini-exercise-label">Try This (5 minutes)</div>
+                <p>Rewrite "it was freezing cold" using zero cold words. Use only: skin, breath, fingers, jacket, metal. Let the reader figure out it is cold.</p>
+            </div>
+        </div>
+        <div class="tip-actions">
+            <a href="#p4" class="jump-link">← Back to Paragraph 4</a>
+            <a href="#p5" class="jump-link">← Back to Paragraph 5</a>
+        </div>
+    </div>
+
+    <!-- Tip 3 -->
+    <div class="tip-card" id="tip3">
+        <div class="tip-header">
+            <div class="tip-left">
+                <div class="tip-number">03</div>
+                <div class="tip-meta">
+                    <div class="tip-title">Your Ending Lists Stars — Turn the List into One Image</div>
+                    <span class="tip-type structure">Structure</span>
+                </div>
+            </div>
+        </div>
+        <div class="tip-body">
+            <p><strong>What to fix:</strong> Your ending lists four kinds of stars (family, things, events, traits). A list opens up. An ending should <strong>squeeze</strong> into one strong picture.</p>
+
+            <p><strong>Think of it this way:</strong></p>
+            <p style="margin-left:16px">A list = “Here are many things.”<br>
+            One image = “Here is what matters most.”</p>
+
+            <div class="keyword-box">
+                <div class="keyword-label">Power Words to Try</div>
+                <div class="keyword-list">
+                    <span class="keyword-tag">mirrors</span>
+                    <span class="keyword-tag">reflected</span>
+                    <span class="keyword-tag">moments</span>
+                    <span class="keyword-tag">chose</span>
+                    <span class="keyword-tag">give up</span>
+                </div>
+            </div>
+
+            <p><strong>Incomplete sentence to finish:</strong></p>
+            <p style="margin-left:16px">The stars were not just distant <span class="fill-blank">______</span>. They were <span class="fill-blank">______</span>. Each one <span class="fill-blank">______</span> something we had done. The brightest stars were not the biggest ones. They were the <span class="fill-blank">______</span> when someone chose not to <span class="fill-blank">______</span>.</p>
+
+            <div class="mini-exercise">
+                <div class="mini-exercise-label">Try This (5 minutes)</div>
+                <p>Write your ending in exactly <strong>two sentences</strong>. No lists. No counting. Just one powerful picture about stars and what they mean to you.</p>
+            </div>
+        </div>
+        <div class="tip-actions">
+            <a href="#p6" class="jump-link">← Back to Paragraph 6</a>
+        </div>
+    </div>
+
+    <!-- Tip 4 -->
+    <div class="tip-card" id="tip4">
+        <div class="tip-header">
+            <div class="tip-left">
+                <div class="tip-number">04</div>
+                <div class="tip-meta">
+                    <div class="tip-title">He or She? Check Every Pronoun</div>
+                    <span class="tip-type word">Keywords</span>
+                </div>
+            </div>
+        </div>
+        <div class="tip-body">
+            <p><strong>What to fix:</strong> You wrote: <em>"he was crying that it is too hard for her."</em></p>
+            <p>Three problems:</p>
+            <p style="margin-left:16px">1. The girl is a <strong>she</strong>, not a he.<br>
+            2. "It is" should be <strong>"it was"</strong> (past tense).<br>
+            3. "Reach until here" should be <strong>"get here"</strong> or <strong>"come this far."</strong></p>
+
+            <div class="mini-exercise">
+                <div class="mini-exercise-label">Try This (3 minutes)</div>
+                <p>Read your whole essay out loud. Any sentence that makes your tongue stumble has a problem. Circle it. Fix it.</p>
+            </div>
+        </div>
+        <div class="tip-actions">
+            <a href="#p3" class="jump-link">← Back to Paragraph 3</a>
+        </div>
+    </div>
+
+    <!-- Tip 5 -->
+    <div class="tip-card" id="tip5">
+        <div class="tip-header">
+            <div class="tip-left">
+                <div class="tip-number">05</div>
+                <div class="tip-meta">
+                    <div class="tip-title">Paragraph 2 Is Still Too Long — Break It into Three</div>
+                    <span class="tip-type structure">Structure</span>
+                </div>
+            </div>
+        </div>
+        <div class="tip-body">
+            <p><strong>What to fix:</strong> Paragraph 2 talks about: captain, co-captain, flag raiser, GPS, mistakes. That is five topics. One paragraph = one topic.</p>
+
+            <p><strong>Your new outline:</strong></p>
+            <p style="margin-left:16px"><strong>New Paragraph 2:</strong> Captain + co-captain + flag raiser (team roles).<br>
+            <strong>New Paragraph 3:</strong> You as GPS + your mistakes.<br>
+            <strong>New Paragraph 4:</strong> The girl on the dune (already written — move it here).</p>
+
+            <div class="mini-exercise">
+                <div class="mini-exercise-label">Try This (5 minutes)</div>
+                <p>Get three sticky notes. Write one sentence for each new paragraph. If a note has two sentences, split it again.</p>
+            </div>
+        </div>
+        <div class="tip-actions">
+            <a href="#p2" class="jump-link">← Back to Paragraph 2</a>
+        </div>
+    </div>
+
+    <div class="coach-box" style="margin-top:36px">
+        <strong>Kelly, you are doing great.</strong> Draft 2 is stronger than Draft 1. Now pick <strong>just two</strong> of these five hints. Finish the fill-in-the-blank sentences. Do the mini-exercises. Then put it all together. <strong>You</strong> write every sentence. I am here when you are ready for Draft 3.
+    </div>
+</div>
+
+<div class="footer">
+    Writing Coach Review &middot; Desert Odyssey &middot; Kelly Zhang &middot; Round 2 &middot; May 11, 2026
+</div>
+
+</body>
+</html>

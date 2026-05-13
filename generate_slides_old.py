@@ -1,0 +1,1171 @@
+#!/usr/bin/env python3
+# -*- coding: utf-8 -*-
+
+HEAD = '''<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>点燃孩子，从"我能行"开始</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/reveal.js/4.5.0/reveal.min.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.2/css/all.min.css">
+    <link href="https://fonts.googleapis.com/css2?family=Noto+Serif+SC:wght@400;600;700&family=Noto+Sans+SC:wght@300;400;500;700&display=swap" rel="stylesheet">
+    <style>
+        :root {
+            --soil-dark: #5D4037;
+            --soil-mid: #8D6E63;
+            --sprout: #7CB342;
+            --sun-gold: #FFB300;
+            --sky: #4FC3F7;
+            --cream: #FFF8E1;
+            --cream-light: #FFFDE7;
+            --text-dark: #3E2723;
+            --danger: #C62828;
+            --success: #2E7D32;
+        }
+        .reveal {
+            font-family: 'Noto Sans SC', sans-serif;
+            font-size: 28px;
+            color: var(--text-dark);
+        }
+        .reveal h1, .reveal h2, .reveal h3, .reveal h4 {
+            font-family: 'Noto Serif SC', serif;
+            font-weight: 700;
+            color: var(--soil-dark);
+            text-transform: none;
+            letter-spacing: 1px;
+        }
+        .reveal .slides section {
+            text-align: left;
+            padding: 40px;
+            box-sizing: border-box;
+        }
+        .bg-cream { background: linear-gradient(135deg, var(--cream) 0%, var(--cream-light) 100%); }
+        .bg-soil { background: linear-gradient(135deg, var(--soil-dark) 0%, #4E342E 100%); color: var(--cream); }
+        .bg-soil h1, .bg-soil h2, .bg-soil h3, .bg-soil h4 { color: var(--cream); }
+        .bg-sprout { background: linear-gradient(135deg, #558B2F 0%, var(--sprout) 100%); color: white; }
+        .bg-sprout h1, .bg-sprout h2, .bg-sprout h3, .bg-sprout h4 { color: white; }
+        .text-center { text-align: center; }
+        .text-right { text-align: right; }
+        .text-gold { color: var(--sun-gold); }
+        .text-sprout { color: var(--sprout); }
+        .text-sky { color: var(--sky); }
+        .text-danger { color: var(--danger); }
+        .text-success { color: var(--success); }
+        .text-cream { color: var(--cream); }
+        .text-white { color: white; }
+        .font-serif { font-family: 'Noto Serif SC', serif; }
+        .card {
+            background: white;
+            border-radius: 16px;
+            padding: 24px;
+            box-shadow: 0 8px 32px rgba(93, 64, 55, 0.12);
+        }
+        .card-dark {
+            background: rgba(255,255,255,0.1);
+            backdrop-filter: blur(10px);
+            border-radius: 16px;
+            padding: 24px;
+        }
+        .quote-box {
+            border-left: 5px solid var(--sprout);
+            padding-left: 24px;
+            margin: 24px 0;
+            font-style: italic;
+            font-size: 1.1em;
+            color: var(--soil-mid);
+        }
+        .reveal table {
+            width: 100%;
+            border-collapse: separate;
+            border-spacing: 0;
+            font-size: 0.85em;
+            margin: 20px 0;
+        }
+        .reveal table th {
+            background: var(--soil-dark);
+            color: var(--cream);
+            padding: 14px 16px;
+            text-align: left;
+            font-weight: 600;
+        }
+        .reveal table th:first-child { border-radius: 10px 0 0 0; }
+        .reveal table th:last-child { border-radius: 0 10px 0 0; }
+        .reveal table td {
+            padding: 14px 16px;
+            border-bottom: 1px solid rgba(93, 64, 55, 0.1);
+            background: rgba(255,255,255,0.7);
+        }
+        .reveal table tr:last-child td:first-child { border-radius: 0 0 0 10px; }
+        .reveal table tr:last-child td:last-child { border-radius: 0 0 10px 0; }
+        .reveal ul { list-style: none; padding-left: 0; }
+        .reveal ul li {
+            position: relative;
+            padding-left: 32px;
+            margin-bottom: 16px;
+            line-height: 1.6;
+        }
+        .reveal ul li::before {
+            content: "\\f111";
+            font-family: "Font Awesome 6 Free";
+            font-weight: 400;
+            position: absolute;
+            left: 0;
+            top: 4px;
+            color: var(--sprout);
+            font-size: 0.7em;
+        }
+        .step-badge {
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
+            width: 48px;
+            height: 48px;
+            background: var(--sprout);
+            color: white;
+            border-radius: 50%;
+            font-weight: 700;
+            font-size: 1.2em;
+            margin-right: 16px;
+            box-shadow: 0 4px 12px rgba(124, 179, 66, 0.4);
+        }
+        .seed {
+            position: absolute;
+            width: 8px;
+            height: 10px;
+            background: var(--sun-gold);
+            border-radius: 50% 50% 50% 50% / 60% 60% 40% 40%;
+            opacity: 0.6;
+            animation: float 8s infinite ease-in-out;
+        }
+        @keyframes float {
+            0%, 100% { transform: translateY(0) rotate(0deg); opacity: 0.6; }
+            50% { transform: translateY(-30px) rotate(180deg); opacity: 1; }
+        }
+        .sprout-container {
+            position: relative;
+            width: 200px;
+            height: 240px;
+            margin: 0 auto;
+        }
+        .soil {
+            position: absolute;
+            bottom: 0;
+            width: 200px;
+            height: 80px;
+            background: linear-gradient(to bottom, #8D6E63, #5D4037);
+            border-radius: 50% 50% 20px 20px;
+        }
+        .sprout-stem {
+            position: absolute;
+            bottom: 50px;
+            left: 50%;
+            transform: translateX(-50%);
+            width: 6px;
+            height: 0;
+            background: var(--sprout);
+            border-radius: 3px;
+            transition: height 1.5s ease-out;
+        }
+        .sprout-leaf-left, .sprout-leaf-right {
+            position: absolute;
+            width: 0;
+            height: 0;
+            background: var(--sprout);
+            border-radius: 0 50% 0 50%;
+            opacity: 0;
+            transition: all 0.8s ease-out 1.2s;
+        }
+        .sprout-leaf-left {
+            bottom: 120px;
+            left: calc(50% - 6px);
+            transform: rotate(-45deg);
+        }
+        .sprout-leaf-right {
+            bottom: 140px;
+            left: calc(50% + 6px);
+            transform: rotate(135deg);
+        }
+        .present .sprout-stem { height: 100px; }
+        .present .sprout-leaf-left { width: 30px; height: 30px; opacity: 1; }
+        .present .sprout-leaf-right { width: 35px; height: 35px; opacity: 1; }
+        .speech-bubble {
+            background: white;
+            border-radius: 16px;
+            padding: 14px 18px;
+            font-size: 0.75em;
+            color: var(--text-dark);
+            box-shadow: 0 4px 16px rgba(0,0,0,0.1);
+            position: relative;
+            max-width: 260px;
+            margin: 10px auto;
+        }
+        .speech-bubble::after {
+            content: '';
+            position: absolute;
+            bottom: -10px;
+            left: 50%;
+            transform: translateX(-50%);
+            border-width: 10px 10px 0;
+            border-style: solid;
+            border-color: white transparent transparent transparent;
+        }
+        .flow-arrow {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: var(--soil-mid);
+            font-size: 1.5em;
+            margin: 10px 0;
+        }
+        .stairs {
+            display: flex;
+            flex-direction: column;
+            gap: 8px;
+            margin: 20px 0;
+        }
+        .stair-step {
+            background: linear-gradient(90deg, var(--sprout), #9CCC65);
+            color: white;
+            padding: 12px 20px;
+            border-radius: 8px;
+            font-size: 0.8em;
+            font-weight: 500;
+            box-shadow: 0 4px 12px rgba(124, 179, 66, 0.3);
+            transform: translateX(-50px);
+            opacity: 0;
+            transition: all 0.6s ease-out;
+        }
+        .present .stair-step:nth-child(1) { transform: translateX(0); opacity: 1; transition-delay: 0.2s; }
+        .present .stair-step:nth-child(2) { transform: translateX(40px); opacity: 1; transition-delay: 0.5s; }
+        .present .stair-step:nth-child(3) { transform: translateX(80px); opacity: 1; transition-delay: 0.8s; }
+        .present .stair-step:nth-child(4) { transform: translateX(120px); opacity: 1; transition-delay: 1.1s; }
+        .book-card {
+            background: white;
+            border-radius: 8px;
+            padding: 16px;
+            box-shadow: 0 4px 16px rgba(93, 64, 55, 0.15);
+            text-align: center;
+            transition: transform 0.3s;
+        }
+        .book-card:hover { transform: translateY(-5px); }
+        .book-spine {
+            width: 60px;
+            height: 80px;
+            background: linear-gradient(135deg, var(--soil-dark), var(--soil-mid));
+            border-radius: 4px;
+            margin: 0 auto 12px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: white;
+            font-size: 0.6em;
+            font-weight: 700;
+        }
+        .reveal .slides section .fragment.grow-up {
+            opacity: 0;
+            transform: translateY(30px);
+            transition: all 0.8s ease;
+        }
+        .reveal .slides section .fragment.grow-up.visible {
+            opacity: 1;
+            transform: translateY(0);
+        }
+        .grid-2 {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 30px;
+            align-items: start;
+        }
+        .grid-3 {
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+            gap: 24px;
+            align-items: start;
+        }
+        .grid-4 {
+            display: grid;
+            grid-template-columns: repeat(4, 1fr);
+            gap: 20px;
+        }
+        .kid-avatar {
+            width: 100px;
+            height: 100px;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 3em;
+            margin: 0 auto 16px;
+            background: white;
+            box-shadow: 0 6px 20px rgba(0,0,0,0.1);
+        }
+        .flow-node {
+            background: white;
+            border-radius: 12px;
+            padding: 18px 24px;
+            text-align: center;
+            font-weight: 500;
+            box-shadow: 0 4px 16px rgba(93, 64, 55, 0.12);
+            border-left: 4px solid var(--sprout);
+        }
+        .section-line {
+            width: 80px;
+            height: 4px;
+            background: var(--sprout);
+            border-radius: 2px;
+            margin: 16px 0 24px;
+        }
+        .section-line.center { margin: 16px auto 24px; }
+        .section-line.gold { background: var(--sun-gold); }
+        .reveal .progress {
+            background: rgba(93, 64, 55, 0.1);
+            height: 6px;
+        }
+        .reveal .progress span {
+            background: var(--sprout);
+        }
+        .text-small { font-size: 0.85em; }
+        .text-large { font-size: 1.2em; }
+        .text-xl { font-size: 1.8em; }
+        .text-xxl { font-size: 2.4em; }
+        .badge {
+            display: inline-block;
+            padding: 4px 12px;
+            border-radius: 20px;
+            font-size: 0.75em;
+            font-weight: 600;
+            margin-right: 8px;
+        }
+        .badge-danger { background: #FFEBEE; color: #C62828; }
+        .badge-success { background: #E8F5E9; color: #2E7D32; }
+        .badge-gold { background: #FFF8E1; color: #F57F17; }
+        .cover-title {
+            font-size: 2.2em;
+            line-height: 1.3;
+            margin-bottom: 0.3em;
+        }
+        .cover-subtitle {
+            font-size: 1em;
+            opacity: 0.9;
+            margin-bottom: 2em;
+            font-weight: 300;
+        }
+        .cover-meta {
+            font-size: 0.8em;
+            opacity: 0.7;
+            letter-spacing: 2px;
+        }
+        .stat-number {
+            font-size: 3em;
+            font-weight: 700;
+            color: var(--sprout);
+            line-height: 1;
+        }
+        .split-layout {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 40px;
+            height: 100%;
+            align-items: center;
+        }
+        .img-placeholder {
+            background: linear-gradient(135deg, #E0E0E0, #F5F5F5);
+            border-radius: 12px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: #9E9E9E;
+            font-size: 0.9em;
+            min-height: 200px;
+        }
+        .compare-wrong {
+            border-left: 4px solid var(--danger);
+            padding-left: 20px;
+        }
+        .compare-right {
+            border-left: 4px solid var(--success);
+            padding-left: 20px;
+        }
+        /* Additional interactive elements */
+        .hover-lift {
+            transition: transform 0.3s ease, box-shadow 0.3s ease;
+        }
+        .hover-lift:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 12px 40px rgba(93, 64, 55, 0.2);
+        }
+        .pulse-icon {
+            animation: pulse 2s infinite;
+        }
+        @keyframes pulse {
+            0%, 100% { transform: scale(1); }
+            50% { transform: scale(1.1); }
+        }
+        .flip-card {
+            perspective: 1000px;
+        }
+        .flip-card-inner {
+            position: relative;
+            width: 100%;
+            transition: transform 0.8s;
+            transform-style: preserve-3d;
+        }
+        .flip-card:hover .flip-card-inner {
+            transform: rotateY(180deg);
+        }
+        .flip-card-front, .flip-card-back {
+            backface-visibility: hidden;
+            border-radius: 16px;
+            padding: 24px;
+        }
+        .flip-card-back {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            transform: rotateY(180deg);
+            background: var(--soil-dark);
+            color: white;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+        /* Ensure table text doesn't overflow */
+        .reveal table td, .reveal table th {
+            word-wrap: break-word;
+            vertical-align: top;
+        }
+    </style>
+</head>
+<body>
+    <div class="reveal">
+        <div class="slides">
+'''
+
+SLIDES = []
+
+# P1
+SLIDES.append('''            <section class="bg-soil text-center" data-background-transition="fade">
+                <div class="seed" style="top: 15%; left: 20%; animation-delay: 0s;"></div>
+                <div class="seed" style="top: 25%; left: 80%; animation-delay: 1s;"></div>
+                <div class="seed" style="top: 60%; left: 15%; animation-delay: 2s;"></div>
+                <div class="seed" style="top: 70%; left: 85%; animation-delay: 3s;"></div>
+                <div class="seed" style="top: 40%; left: 10%; animation-delay: 1.5s;"></div>
+                <div class="seed" style="top: 50%; left: 90%; animation-delay: 2.5s;"></div>
+                <div style="margin-top: 60px;">
+                    <p class="cover-meta"><i class="fas fa-seedling"></i> 家长工作坊·60分钟互动课程</p>
+                    <h1 class="cover-title font-serif" style="color: var(--cream);">点燃孩子，从“我能行”开始</h1>
+                    <div class="section-line center gold"></div>
+                    <p class="cover-subtitle">基于心理学视角，培养3-6岁孩子的内驱力与胜任感</p>
+                    <p class="text-cream" style="font-size: 0.9em; margin-top: 60px; opacity: 0.8;">
+                        <i class="fas fa-quote-left" style="margin-right: 8px; color: var(--sun-gold);"></i>
+                        孩子是一粒种子，“我能行”是TA内在的生长密码。<br><strong>家长是园丁，不是木匠。</strong>
+                        <i class="fas fa-quote-right" style="margin-left: 8px; color: var(--sun-gold);"></i>
+                    </p>
+                </div>
+            </section>''')
+
+# P2
+SLIDES.append('''            <section class="bg-cream" data-transition="slide">
+                <div style="display: flex; align-items: center; height: 100%;">
+                    <div style="flex: 1;">
+                        <div class="badge badge-danger fragment fade-up">第一部分</div>
+                        <h2 class="fragment fade-up" style="margin-top: 16px;">孩子说“我不会！”</h2>
+                        <div class="section-line fragment fade-up"></div>
+                        <p class="text-large fragment fade-up" style="color: var(--soil-mid); line-height: 1.8;">在开始今天的分享之前，让我们先“看见”自己和孩子。</p>
+                        <p class="fragment fade-up" style="margin-top: 30px; color: var(--soil-mid);">
+                            <i class="fas fa-eye text-sprout" style="margin-right: 8px;"></i>
+                            当孩子说出这三个字时，TA的内心正在发生什么？
+                        </p>
+                    </div>
+                    <div style="flex: 1; text-align: center;">
+                        <div class="fragment zoom-in" style="font-size: 8em; opacity: 0.9;">😢</div>
+                        <p class="fragment fade-up" style="font-size: 1.2em; color: var(--soil-mid); margin-top: 20px;">“妈妈，我不会穿鞋……”</p>
+                    </div>
+                </div>
+            </section>''')
+
+# P3
+SLIDES.append('''            <section class="bg-cream" data-transition="zoom">
+                <h3 class="text-center">“我不会”背后，种子正在怎样生长？</h3>
+                <div class="section-line center"></div>
+                <div style="display: flex; align-items: flex-end; justify-content: center; margin-top: 30px; gap: 40px;">
+                    <div style="display: flex; flex-direction: column; gap: 16px; padding-bottom: 40px;">
+                        <div class="speech-bubble fragment grow-up">“穿鞋是妈妈的事，反正她会帮我。”</div>
+                        <div class="speech-bubble fragment grow-up" style="border-left: 3px solid var(--sun-gold);">“我可能真的不行，因为每次我穿都会被说。”</div>
+                        <div class="speech-bubble fragment grow-up" style="border-left: 3px solid var(--danger);">“穿鞋这件事让我不开心，以后我不想试了。”</div>
+                    </div>
+                    <div class="sprout-container fragment fade-up">
+                        <div class="sprout-stem"></div>
+                        <div class="sprout-leaf-left"></div>
+                        <div class="sprout-leaf-right"></div>
+                        <div class="soil"></div>
+                    </div>
+                </div>
+                <p class="text-center text-large fragment fade-up" style="margin-top: 30px; color: var(--danger); font-weight: 600;">
+                    <i class="fas fa-exclamation-triangle" style="margin-right: 8px;"></i>“习得性无助”正在萌芽
+                </p>
+            </section>''')
+
+# P4
+SLIDES.append('''            <section class="bg-cream" data-transition="slide">
+                <h3 class="text-center">孩子学会的不是“穿鞋的方法”，而是——</h3>
+                <p class="text-center text-xxl text-danger font-serif" style="margin: 20px 0;">“我不行。”</p>
+                <div class="section-line center"></div>
+                <div class="grid-3" style="margin-top: 40px;">
+                    <div class="card text-center fragment grow-up hover-lift">
+                        <div class="kid-avatar">😐</div>
+                        <p style="font-size: 1.1em; font-weight: 600; color: var(--soil-dark);">无所事事</p>
+                        <p class="badge badge-danger">代劳</p>
+                    </div>
+                    <div class="card text-center fragment grow-up hover-lift" style="transition-delay: 0.2s;">
+                        <div class="kid-avatar">😨</div>
+                        <p style="font-size: 1.1em; font-weight: 600; color: var(--soil-dark);">谨小慎微</p>
+                        <p class="badge badge-danger">批评</p>
+                    </div>
+                    <div class="card text-center fragment grow-up hover-lift" style="transition-delay: 0.4s;">
+                        <div class="kid-avatar">😠</div>
+                        <p style="font-size: 1.1em; font-weight: 600; color: var(--soil-dark);">发怒</p>
+                        <p class="badge badge-danger">威胁</p>
+                    </div>
+                </div>
+            </section>''')
+
+# P5
+SLIDES.append('''            <section class="bg-cream" data-transition="convex">
+                <div class="badge badge-danger fragment fade-up">核心概念</div>
+                <h2 class="fragment fade-up" style="margin-top: 16px;">“习得性无助”掎杀孩子天生的探索欲</h2>
+                <div class="section-line fragment fade-up"></div>
+                <div style="display: flex; flex-direction: column; align-items: center; margin-top: 40px; gap: 20px;">
+                    <div class="flow-node fragment grow-up" style="max-width: 700px; border-left-color: var(--danger);">
+                        <i class="fas fa-brain" style="color: var(--danger); margin-right: 10px;"></i>
+                        个体从经验中“学会”了：<br>
+                        <span class="text-large text-danger" style="font-weight: 600;">“无论我怎么做都没有用。”</span>
+                    </div>
+                    <div class="flow-arrow fragment fade-up"><i class="fas fa-arrow-down"></i></div>
+                    <div class="flow-node fragment grow-up" style="max-width: 600px; border-left-color: var(--sun-gold);">
+                        <i class="fas fa-hand-paper" style="color: var(--sun-gold); margin-right: 10px;"></i>
+                        于是放弃努力
+                    </div>
+                    <div class="flow-arrow fragment fade-up"><i class="fas fa-arrow-down"></i></div>
+                    <div class="flow-node fragment grow-up" style="max-width: 600px; border-left-color: var(--soil-mid);">
+                        <i class="fas fa-times-circle" style="color: var(--soil-mid); margin-right: 10px;"></i>
+                        即使机会出现，也不再尝试
+                    </div>
+                </div>
+            </section>''')
+
+# P6
+SLIDES.append('''            <section class="bg-cream" data-transition="slide">
+                <h3 class="text-center">幼儿会形成“习得性无助”吗？</h3>
+                <p class="text-center" style="color: var(--soil-mid); margin-bottom: 20px;">四个日常场景的心理链条</p>
+                <table class="fragment fade-up">
+                    <thead>
+                        <tr><th style="width: 35%;">孩子的体验</th><th style="width: 35%;">心理翻译</th><th style="width: 30%;">长期后果</th></tr>
+                    </thead>
+                    <tbody>
+                        <tr class="fragment grow-up">
+                            <td>多次尝试穿鞋失败 + 被家长批评/代劳</td>
+                            <td class="text-danger">“我永远也学不会穿鞋”</td>
+                            <td>放弃自理尝试</td>
+                        </tr>
+                        <tr class="fragment grow-up">
+                            <td>每次搭积木倒塌都被说“你怎么这么笨”</td>
+                            <td class="text-danger">“我就是搭不好积木的人”</td>
+                            <td>逃避建构类游戏</td>
+                        </tr>
+                        <tr class="fragment grow-up">
+                            <td>画画被说“不像”或直接被代笔</td>
+                            <td class="text-danger">“我画的东西不够好”</td>
+                            <td>不敢自由表达</td>
+                        </tr>
+                        <tr class="fragment grow-up">
+                            <td>求助时被拒绝或嘲笑</td>
+                            <td class="text-danger">“我的需求不重要”</td>
+                            <td>不敢主动求助</td>
+                        </tr>
+                    </tbody>
+                </table>
+            </section>''')
+
+# P7
+SLIDES.append('''            <section class="bg-sprout text-center" data-transition="fade">
+                <div style="display: flex; flex-direction: column; justify-content: center; height: 100%;">
+                    <p class="text-cream" style="font-size: 1.1em; opacity: 0.9; margin-bottom: 30px;">
+                        <i class="fas fa-lightbulb" style="color: var(--sun-gold); margin-right: 10px;"></i>关键认知
+                    </p>
+                    <h2 class="font-serif fragment fade-up" style="font-size: 1.8em; line-height: 1.6; color: white;">
+                        习得性无助不是天生的，<br>
+                        <span style="color: var(--sun-gold);">是教出来的。</span><br>
+                        同样，乐观也是可以习得的。
+                    </h2>
+                </div>
+            </section>''')
+
+# P8
+SLIDES.append('''            <section class="bg-cream" data-transition="slide">
+                <div class="badge badge-gold fragment fade-up">案例分析</div>
+                <h3 class="fragment fade-up" style="margin-top: 12px;">6岁男孩伊恩的故事</h3>
+                <p class="fragment fade-up" style="color: var(--soil-mid); margin-bottom: 20px;">家长做错了什么？</p>
+                <table class="fragment fade-up">
+                    <thead>
+                        <tr><th style="width: 8%;">#</th><th style="width: 45%;">具体表现</th><th style="width: 47%;">对孩子的影响</th></tr>
+                    </thead>
+                    <tbody>
+                        <tr class="fragment grow-up">
+                            <td class="text-center"><span class="badge badge-danger">1</span></td>
+                            <td>说的每件事几乎都不是真的<br><span class="text-small" style="color: var(--soil-mid);">（伊恩知道自己做得不好）</span></td>
+                            <td>孩子感到被敷衍，不信任父母的反馈</td>
+                        </tr>
+                        <tr class="fragment grow-up">
+                            <td class="text-center"><span class="badge badge-danger">2</span></td>
+                            <td>替孩子做了他自己做不到的事</td>
+                            <td>传达信息：“当事情不如意时，放弃，让别人来解救你”<br><span class="text-danger text-small">——这恰恰是在教孩子无助</span></td>
+                        </tr>
+                        <tr class="fragment grow-up">
+                            <td class="text-center"><span class="badge badge-danger">3</span></td>
+                            <td>没有对孩子的悲观解释提出反证</td>
+                            <td>孩子坚信“我什么都做不好”的悲观结论，并且用消极方式应对</td>
+                        </tr>
+                    </tbody>
+                </table>
+            </section>''')
+
+# P9
+SLIDES.append('''            <section class="bg-cream text-center" data-transition="fade">
+                <div style="display: flex; flex-direction: column; justify-content: center; height: 100%;">
+                    <p class="fragment fade-up" style="font-size: 1.3em; color: var(--soil-mid); margin-bottom: 30px;">
+                        我们想让孩子“感觉满意”，<br>却忘了教孩子如何“表现满意”。
+                    </p>
+                    <div class="section-line center fragment fade-up"></div>
+                    <p class="font-serif fragment fade-up" style="font-size: 1.6em; color: var(--soil-dark); font-weight: 700;">
+                        而真正的自信，只能来自后者。
+                    </p>
+                </div>
+            </section>''')
+
+# P10
+SLIDES.append('''            <section class="bg-cream" data-transition="slide">
+                <h3 class="text-center">为什么幼儿期容易形成习得性无助？</h3>
+                <p class="text-center" style="color: var(--soil-mid); margin-bottom: 20px;">幼儿的认知发展特点：具体思维、自我中心、权威依赖</p>
+                <table class="fragment fade-up">
+                    <thead>
+                        <tr><th style="width: 22%;">特点</th><th style="width: 42%;">孩子自己解释</th><th style="width: 36%;">风险</th></tr>
+                    </thead>
+                    <tbody>
+                        <tr class="fragment grow-up">
+                            <td><span class="badge badge-gold">具体思维</span></td>
+                            <td>孩子很难理解“这次失败不代表永远失败”</td>
+                            <td class="text-danger">一次失败 = “我就是不行”</td>
+                        </tr>
+                        <tr class="fragment grow-up">
+                            <td><span class="badge badge-gold">自我中心</span></td>
+                            <td>孩子倾向于把一切归因于自己</td>
+                            <td class="text-danger">父母吵架 = “是我不好”</td>
+                        </tr>
+                        <tr class="fragment grow-up">
+                            <td><span class="badge badge-gold">权威依赖</span></td>
+                            <td>幼儿高度依赖成人的评价</td>
+                            <td class="text-danger">父母说“你笨” = “我真的笨”</td>
+                        </tr>
+                    </tbody>
+                </table>
+            </section>''')
+
+# P11
+SLIDES.append('''            <section class="bg-cream" data-transition="slide">
+                <h3 class="text-center">幼儿期是“解释风格”形成的关键期</h3>
+                <p class="text-center" style="color: var(--soil-mid); margin-bottom: 20px;">三个维度的解释风格</p>
+                <div style="display: flex; justify-content: center; margin-top: 40px;">
+                    <div class="card fragment fade-up" style="max-width: 700px; width: 100%;">
+                        <table style="margin: 0;">
+                            <thead>
+                                <tr><th>维度</th><th class="text-danger">悲观解释（危险）</th></tr>
+                            </thead>
+                            <tbody>
+                                <tr class="fragment grow-up">
+                                    <td><span class="badge badge-gold">永久性</span></td>
+                                    <td class="text-danger">"我永远也学不会。"</td>
+                                </tr>
+                                <tr class="fragment grow-up">
+                                    <td><span class="badge badge-gold">普遍性</span></td>
+                                    <td class="text-danger">"我什么都做不好。"</td>
+                                </tr>
+                                <tr class="fragment grow-up">
+                                    <td><span class="badge badge-gold">个人化</span></td>
+                                    <td class="text-danger">"都是因为我笨。"</td>
+                                </tr>
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+            </section>''')
+
+# P12
+SLIDES.append('''            <section class="bg-cream" data-transition="convex">
+                <h3 class="text-center">悲观解释 vs 乐观解释</h3>
+                <p class="text-center" style="color: var(--soil-mid); margin-bottom: 20px;">同一件事，不同的内心对话</p>
+                <table class="fragment fade-up">
+                    <thead>
+                        <tr><th style="width: 18%;">维度</th><th style="width: 41%;" class="text-danger">悲观解释（危险）</th><th style="width: 41%;" class="text-success">乐观解释（健康）</th></tr>
+                    </thead>
+                    <tbody>
+                        <tr class="fragment grow-up">
+                            <td><span class="badge badge-gold">永久性</span></td>
+                            <td class="text-danger">"我永远也学不会。"</td>
+                            <td class="text-success"><strong>暂时化：</strong>"我只是还没学会。"</td>
+                        </tr>
+                        <tr class="fragment grow-up">
+                            <td><span class="badge badge-gold">普遍性</span></td>
+                            <td class="text-danger">"我什么都做不好。"</td>
+                            <td class="text-success"><strong>特殊化：</strong>"这件事我没做好。"</td>
+                        </tr>
+                        <tr class="fragment grow-up">
+                            <td><span class="badge badge-gold">个人化</span></td>
+                            <td class="text-danger">"都是因为我笨。"</td>
+                            <td class="text-success"><strong>行为化：</strong>"方法不对，换一种试试。"</td>
+                        </tr>
+                    </tbody>
+                </table>
+            </section>''')
+
+# P13
+SLIDES.append('''            <section class="bg-cream" data-transition="slide">
+                <h3 class="text-center">从“习得性无助”到“习得性乐观”</h3>
+                <table class="fragment fade-up">
+                    <thead>
+                        <tr><th style="width: 50%;" class="text-danger">错误的做法（感觉满意）</th><th style="width: 50%;" class="text-success">正确的做法（表现满意）</th></tr>
+                    </thead>
+                    <tbody>
+                        <tr class="fragment grow-up">
+                            <td class="text-danger">孩子失败后说“没关系，你是最棒的”</td>
+                            <td class="text-success">孩子失败后说“我们看看哪里出了问题”</td>
+                        </tr>
+                        <tr class="fragment grow-up">
+                            <td class="text-danger">替孩子完成他做不到的事</td>
+                            <td class="text-success">搭脚手架，让孩子自己完成大部分</td>
+                        </tr>
+                        <tr class="fragment grow-up">
+                            <td class="text-danger">空洞表扬“你真聪明”</td>
+                            <td class="text-success">具体反馈“你刚才很努力”</td>
+                        </tr>
+                        <tr class="fragment grow-up">
+                            <td class="text-danger">避免让孩子体验失败</td>
+                            <td class="text-success">允许失败，并教他正确归因</td>
+                        </tr>
+                    </tbody>
+                </table>
+            </section>''')
+
+# P14
+SLIDES.append('''            <section class="bg-cream" data-transition="slide">
+                <h3 class="text-center">还可以批评吗？</h3>
+                <p class="text-center" style="color: var(--soil-mid); margin-bottom: 20px;">争议本身不可怕，可怕的是我们的“解释风格”</p>
+                <table class="fragment fade-up">
+                    <thead>
+                        <tr><th style="width: 50%;" class="text-danger">错误批评（制造无助）</th><th style="width: 50%;" class="text-success">正确批评（培养乐观）</th></tr>
+                    </thead>
+                    <tbody>
+                        <tr class="fragment grow-up">
+                            <td class="text-danger">"你怎么总是这么粗心？"（永久性）</td>
+                            <td class="text-success">"今天这道题你有点着急，下次慢慢检查。"（暂时性）</td>
+                        </tr>
+                        <tr class="fragment grow-up">
+                            <td class="text-danger">"你什么事都做不好！"（普遍性）</td>
+                            <td class="text-success">"今天积木没搭好，但你之前画画很棒。"（特殊性）</td>
+                        </tr>
+                        <tr class="fragment grow-up">
+                            <td class="text-danger">"你就是个不听话的孩子！"（个人化/标签）</td>
+                            <td class="text-success">"今天你没有听指令，但平时你很懂事。"（针对行为）</td>
+                        </tr>
+                    </tbody>
+                </table>
+            </section>''')
+
+# P15
+SLIDES.append('''            <section class="bg-sprout text-center" data-transition="fade">
+                <div style="display: flex; flex-direction: column; justify-content: center; height: 100%;">
+                    <div class="fragment zoom-in" style="font-size: 5em; margin-bottom: 20px;">🌱</div>
+                    <h2 class="font-serif fragment fade-up" style="font-size: 1.8em; color: white; line-height: 1.6;">
+                        孩子的乐观不是天生的性格，<br>
+                        <span style="color: var(--sun-gold);">而是一种可以习得的技能。</span>
+                    </h2>
+                </div>
+            </section>''')
+
+# P16
+SLIDES.append('''            <section class="bg-cream" data-transition="slide">
+                <h2 class="text-center">“我能行！”比“你真棒！”更重要</h2>
+                <div class="section-line center"></div>
+                <div class="grid-2" style="margin-top: 30px;">
+                    <div class="card fragment grow-up hover-lift">
+                        <div style="display: flex; align-items: center; margin-bottom: 16px;">
+                            <span class="step-badge" style="background: var(--sun-gold); margin-right: 12px;">1</span>
+                            <h4 style="margin: 0;">从“他驱”到“内驱”的心理转折</h4>
+                        </div>
+                        <p style="color: var(--soil-mid); line-height: 1.7;">
+                            <strong class="text-sprout">自主感、胜任感、归属感</strong>是激发人类内在动机、促进心理健康和个人成长的关键心理营养。
+                        </p>
+                    </div>
+                    <div class="card fragment grow-up hover-lift" style="transition-delay: 0.2s;">
+                        <div style="display: flex; align-items: center; margin-bottom: 16px;">
+                            <span class="step-badge" style="background: var(--sky); margin-right: 12px;">2</span>
+                            <h4 style="margin: 0;">区分“胜任力”与“成绩/才艺”</h4>
+                        </div>
+                        <p style="color: var(--soil-mid); line-height: 1.7;">
+                            胜任力不是“会背唐诗、会弹琴”，而是<br>
+                            <strong class="text-sprout">“我能解决眼前问题的信心”。</strong>
+                        </p>
+                    </div>
+                </div>
+            </section>''')
+
+# P17
+SLIDES.append('''            <section class="bg-soil text-center" data-transition="fade">
+                <div style="display: flex; flex-direction: column; justify-content: center; height: 100%;">
+                    <p class="cover-meta" style="color: var(--sun-gold);"><i class="fas fa-fire"></i> 核心方法</p>
+                    <h2 class="font-serif fragment fade-up" style="color: var(--cream); font-size: 2em; margin: 24px 0;">
+                        点燃孩子“我能行！”的黄金三步
+                    </h2>
+                    <div class="section-line center gold"></div>
+                    <p class="text-cream" style="font-size: 1.3em; line-height: 1.8;">
+                        “先接纳情绪，再搭脚手架，<br>最后归因于努力。”
+                    </p>
+                    <div style="display: flex; justify-content: center; gap: 40px; margin-top: 50px;">
+                        <div class="fragment grow-up">
+                            <div style="width: 60px; height: 60px; background: var(--danger); border-radius: 50%; display: flex; align-items: center; justify-content: center; color: white; font-weight: 700; font-size: 1.2em; margin: 0 auto 10px;">1</div>
+                            <p style="color: var(--cream); font-size: 0.85em;">接纳</p>
+                        </div>
+                        <div class="fragment grow-up" style="transition-delay: 0.2s;">
+                            <div style="width: 60px; height: 60px; background: var(--sun-gold); border-radius: 50%; display: flex; align-items: center; justify-content: center; color: var(--soil-dark); font-weight: 700; font-size: 1.2em; margin: 0 auto 10px;">2</div>
+                            <p style="color: var(--cream); font-size: 0.85em;">脚手架</p>
+                        </div>
+                        <div class="fragment grow-up" style="transition-delay: 0.4s;">
+                            <div style="width: 60px; height: 60px; background: var(--success); border-radius: 50%; display: flex; align-items: center; justify-content: center; color: white; font-weight: 700; font-size: 1.2em; margin: 0 auto 10px;">3</div>
+                            <p style="color: var(--cream); font-size: 0.85em;">归因</p>
+                        </div>
+                    </div>
+                </div>
+            </section>''')
+
+# P18
+SLIDES.append('''            <section class="bg-cream" data-transition="slide">
+                <div class="badge badge-danger fragment fade-up">第一步</div>
+                <h2 class="fragment fade-up" style="margin-top: 12px;">先接纳，才能归还自主感</h2>
+                <div class="section-line fragment fade-up"></div>
+                <div class="grid-2" style="margin-top: 30px;">
+                    <div class="fragment grow-up">
+                        <h4 style="color: var(--soil-dark); margin-bottom: 16px;"><i class="fas fa-brain text-sprout" style="margin-right: 10px;"></i>心理学机制</h4>
+                        <ul style="font-size: 0.95em;">
+                            <li>情绪安全感是探索的前提（依恋理论，约翰·鲍比）</li>
+                            <li>孩子只有在感到“我的感受被允许”时，才敢于再次尝试，而不是逃避</li>
+                        </ul>
+                    </div>
+                    <div class="fragment grow-up" style="text-align: center;">
+                        <div style="font-size: 6em; opacity: 0.85;">🤚</div>
+                        <p style="font-size: 1.1em; color: var(--soil-mid); margin-top: 10px;">
+                            “我在这里，我看见你了。”
+                        </p>
+                    </div>
+                </div>
+            </section>''')
+
+# P19
+SLIDES.append('''            <section class="bg-cream" data-transition="slide">
+                <h3 class="text-center">话术练习：如何正确接纳孩子的情绪</h3>
+                <table class="fragment fade-up">
+                    <thead>
+                        <tr><th style="width: 22%;">场景</th><th style="width: 38%;" class="text-danger">错误回应</th><th style="width: 40%;" class="text-success">正确接纳话术</th></tr>
+                    </thead>
+                    <tbody>
+                        <tr class="fragment grow-up">
+                            <td>积木倒了发脾气</td>
+                            <td class="text-danger">"有什么好哭的？"</td>
+                            <td class="text-success">"积木倒了你好生气，要是我搭的倒了，我也会生气。我们抱一下，然后一起看看怎么办。"</td>
+                        </tr>
+                        <tr class="fragment grow-up">
+                            <td>穿不上鞋着急</td>
+                            <td class="text-danger">"别急别急"</td>
+                            <td class="text-success">"穿不进去很烦对不对？深呼吸一下，妈妈陪你。"</td>
+                        </tr>
+                        <tr class="fragment grow-up">
+                            <td>画画说“我不会”</td>
+                            <td class="text-danger">"怎么不会呢？"</td>
+                            <td class="text-success">"你觉得自己画不像，有点不敢画了，是吗？很多小朋友都这样。"</td>
+                        </tr>
+                    </tbody>
+                </table>
+            </section>''')
+
+# P20
+SLIDES.append('''            <section class="bg-cream text-center" data-transition="fade">
+                <div style="display: flex; flex-direction: column; justify-content: center; height: 100%;">
+                    <div class="fragment zoom-in" style="font-size: 5em; margin-bottom: 20px;">🧠</div>
+                    <p class="fragment fade-up" style="font-size: 1.4em; color: var(--soil-mid); line-height: 1.8;">
+                        孩子情绪上头时，<br>
+                        大脑的理性部分是不工作的。
+                    </p>
+                    <div class="section-line center fragment fade-up"></div>
+                    <h2 class="font-serif fragment fade-up" style="color: var(--soil-dark); font-size: 1.8em;">
+                        先抱抱，再讲道理。
+                    </h2>
+                </div>
+            </section>''')
+
+# P21
+SLIDES.append('''            <section class="bg-cream" data-transition="slide">
+                <div class="badge badge-gold fragment fade-up">第二步</div>
+                <h2 class="fragment fade-up" style="margin-top: 12px;">搭脚手架 — 只帮“一点点”</h2>
+                <div class="section-line fragment fade-up"></div>
+                <div class="grid-2" style="margin-top: 30px;">
+                    <div class="fragment grow-up">
+                        <h4 style="color: var(--soil-dark); margin-bottom: 16px;"><i class="fas fa-brain text-sprout" style="margin-right: 10px;"></i>心理学机制</h4>
+                        <ul style="font-size: 0.95em;">
+                            <li><strong>维果茨基“最近发展区”</strong>——太难会焦虑，太易会无聊</li>
+                            <li><strong>班杜拉“自我效能感”</strong>——亲身掌握经验是自信的最强来源</li>
+                        </ul>
+                    </div>
+                    <div class="fragment grow-up" style="text-align: center;">
+                        <div style="font-size: 6em; opacity: 0.85;">🧱</div>
+                        <p style="font-size: 1.1em; color: var(--soil-mid); margin-top: 10px;">
+                            “我只帮你一点点，剩下的你来。”
+                        </p>
+                    </div>
+                </div>
+            </section>''')
+
+# P22
+SLIDES.append('''            <section class="bg-cream" data-transition="convex">
+                <h3 class="text-center">场景演练：脚手架怎么搭？</h3>
+                <div style="display: flex; align-items: center; justify-content: center; margin-top: 20px; gap: 40px;">
+                    <div class="stairs" style="flex: 1;">
+                        <div class="stair-step" style="margin-left: 0;"><strong>场景：</strong>穿鞋</div>
+                        <div class="stair-step" style="margin-left: 40px;"><strong>孩子做不到的：</strong>鞋舌卷进去，脚后跟踹不进</div>
+                        <div class="stair-step" style="margin-left: 80px;"><strong>脚手架：</strong>“我按住鞋舌，你来踹脚后跟”</div>
+                        <div class="stair-step" style="margin-left: 120px;"><strong>孩子完成：</strong>90%（用力踹进去）</div>
+                    </div>
+                    <div style="font-size: 4em; color: var(--sun-gold);">🏆</div>
+                </div>
+                <div style="display: flex; gap: 20px; margin-top: 20px;">
+                    <div class="card fragment grow-up" style="flex: 1; padding: 16px;">
+                        <p class="text-small" style="margin-bottom: 8px;"><strong>积木</strong></p>
+                        <p class="text-small" style="color: var(--soil-mid);">孩子做不到的：第5层开始不稳</p>
+                        <p class="text-small text-success">脚手架：“我扶住下面三层，你来加第四层”</p>
+                        <p class="text-small"><strong>孩子完成：</strong>70%</p>
+                    </div>
+                    <div class="card fragment grow-up" style="flex: 1; padding: 16px; transition-delay: 0.3s;">
+                        <p class="text-small" style="margin-bottom: 8px;"><strong>画画</strong></p>
+                        <p class="text-small" style="color: var(--soil-mid);">孩子做不到的：不会画小狗耳朵</p>
+                        <p class="text-small text-success">脚手架：“我来画耳朵，你画脑袋和眼睛”</p>
+                        <p class="text-small"><strong>孩子完成：</strong>60%</p>
+                    </div>
+                </div>
+            </section>''')
+
+# P23
+SLIDES.append('''            <section class="bg-cream" data-transition="slide">
+                <h3 class="text-center">脚手架三原则</h3>
+                <div class="section-line center"></div>
+                <div class="grid-3" style="margin-top: 40px;">
+                    <div class="card text-center fragment grow-up hover-lift">
+                        <div style="font-size: 3em; margin-bottom: 12px;">1️⃣</div>
+                        <p style="font-weight: 600; color: var(--soil-dark);">只帮孩子“差一点点”就能做到的那一步</p>
+                    </div>
+                    <div class="card text-center fragment grow-up hover-lift" style="transition-delay: 0.2s;">
+                        <div style="font-size: 3em; margin-bottom: 12px;">2️⃣</div>
+                        <p style="font-weight: 600; color: var(--soil-dark);">孩子完成的工作量必须超过50%</p>
+                    </div>
+                    <div class="card text-center fragment grow-up hover-lift" style="transition-delay: 0.4s;">
+                        <div style="font-size: 3em; margin-bottom: 12px;">3️⃣</div>
+                        <p style="font-weight: 600; color: var(--soil-dark);">每次成功后退一步，逐步撤除帮助</p>
+                    </div>
+                </div>
+                <p class="text-center fragment fade-up" style="margin-top: 40px; font-size: 1.1em; color: var(--soil-mid); font-style: italic;">
+                    <i class="fas fa-quote-left" style="margin-right: 8px; color: var(--sprout);"></i>
+                    脚手架不是替孩子盖楼，是扶着梯子让他自己爬上去。
+                    <i class="fas fa-quote-right" style="margin-left: 8px; color: var(--sprout);"></i>
+                </p>
+            </section>''')
+
+# P24
+SLIDES.append('''            <section class="bg-cream" data-transition="slide">
+                <div class="badge badge-success fragment fade-up">第三步</div>
+                <h2 class="fragment fade-up" style="margin-top: 12px;">引导积极归因</h2>
+                <div class="section-line fragment fade-up"></div>
+                <div class="grid-2" style="margin-top: 30px;">
+                    <div class="fragment grow-up">
+                        <h4 style="color: var(--soil-dark); margin-bottom: 16px;"><i class="fas fa-brain text-sprout" style="margin-right: 10px;"></i>心理学机制</h4>
+                        <ul style="font-size: 0.95em;">
+                            <li><strong>卡罗尔·德韦克“成长型思维”</strong>——能力可以通过努力增长</li>
+                            <li><strong>归因训练</strong>——把失败归因于可控因素（努力、方法），而非不可控因素（能力）</li>
+                        </ul>
+                    </div>
+                    <div class="fragment grow-up" style="text-align: center;">
+                        <div style="font-size: 6em; opacity: 0.85;">💡</div>
+                        <p style="font-size: 1.1em; color: var(--soil-mid); margin-top: 10px;">
+                            “你的大脑像肌肉一样，越练越强。”
+                        </p>
+                    </div>
+                </div>
+            </section>''')
+
+# P25
+SLIDES.append('''            <section class="bg-cream" data-transition="slide">
+                <h3 class="text-center">家长做归因练习</h3>
+                <table class="fragment fade-up">
+                    <thead>
+                        <tr><th style="width: 20%;">场景</th><th style="width: 40%;" class="text-danger">错误归因（固定型思维）</th><th style="width: 40%;" class="text-success">正确归因（成长型思维）</th></tr>
+                    </thead>
+                    <tbody>
+                        <tr class="fragment grow-up">
+                            <td>成功穿上鞋</td>
+                            <td class="text-danger">"宝宝真聪明！"</td>
+                            <td class="text-success">"你刚才很努力地把脚后跟踹进去了，而且没有放弃。"</td>
+                        </tr>
+                        <tr class="fragment grow-up">
+                            <td>积木搭得高</td>
+                            <td class="text-danger">"你真是个小天才！"</td>
+                            <td class="text-success">"我看到你这次搭的时候，每一层都对得很齐，这个方法管用。"</td>
+                        </tr>
+                        <tr class="fragment grow-up">
+                            <td>画画被夸</td>
+                            <td class="text-danger">"你画得真像！"</td>
+                            <td class="text-success">"你观察得很仔细，小狗的耳朵是耸拉下来的，你画出来了。"</td>
+                        </tr>
+                        <tr class="fragment grow-up">
+                            <td>失败/做不好</td>
+                            <td class="text-danger">"你怎么这么不认真？"</td>
+                            <td class="text-success">"这个方法不work，我们换一个方法。你只是<strong>还没</strong>找到窍门。"</td>
+                        </tr>
+                    </tbody>
+                </table>
+            </section>''')
+
+# P26
+SLIDES.append('''            <section class="bg-cream text-center" data-transition="fade">
+                <div style="display: flex; flex-direction: column; justify-content: center; height: 100%;">
+                    <h3 class="fragment fade-up">归因口诀</h3>
+                    <div class="section-line center fragment fade-up"></div>
+                    <div class="grid-2" style="max-width: 800px; margin: 20px auto 0;">
+                        <div class="card fragment grow-up" style="border-top: 4px solid var(--success);">
+                            <p style="font-size: 1.1em; font-weight: 600; color: var(--success); margin-bottom: 12px;">✅ 成功时</p>
+                            <p style="color: var(--soil-dark); font-size: 1.1em;">議努力、議方法、議坚持</p>
+                        </div>
+                        <div class="card fragment grow-up" style="border-top: 4px solid var(--sky); transition-delay: 0.2s;">
+                            <p style="font-size: 1.1em; font-weight: 600; color: var(--sky); margin-bottom: 12px;">❌ 失败时</p>
+                            <p style="color: var(--soil-dark); font-size: 1.1em;">加个“还没”、换个方法、不贴标签</p>
+                        </div>
+                    </div>
+                    <p class="font-serif fragment fade-up" style="font-size: 1.5em; color: var(--soil-dark); margin-top: 40px; font-weight: 700;">
+                        <span class="text-danger">"你真聪明"</span>是毒药，<br>
+                        <span class="text-success">"你很努力"</span>是燃料。
+                    </p>
+                </div>
+            </section>''')
+
+# P27
+SLIDES.append('''            <section class="bg-cream" data-transition="slide">
+                <h3 class="text-center">综合练习：平衡车故事</h3>
+                <div style="display: flex; align-items: center; justify-content: center; gap: 40px; margin-top: 20px;">
+                    <div style="text-align: center;">
+                        <div style="font-size: 8em;">🚴</div>
+                        <p style="color: var(--soil-mid);">4岁幼儿练习平衡车，摔倒了在哭</p>
+                    </div>
+                    <div style="flex: 1; max-width: 550px;">
+                        <div class="card fragment grow-up" style="margin-bottom: 16px; border-left: 4px solid var(--danger);">
+                            <p style="font-weight: 600; color: var(--danger); margin-bottom: 6px;">第一步：接纳情绪</p>
+                            <p class="text-small">"摔倒了很疼对不对？我小时候也摔过。"</p>
+                        </div>
+                        <div class="card fragment grow-up" style="margin-bottom: 16px; border-left: 4px solid var(--sun-gold);">
+                            <p style="font-weight: 600; color: var(--sun-gold); margin-bottom: 6px;">第二步：搭脚手架</p>
+                            <p class="text-small">"我先扶着车把，你踹地，等你稳了我松手。"</p>
+                        </div>
+                        <div class="card fragment grow-up" style="border-left: 4px solid var(--success);">
+                            <p style="font-weight: 600; color: var(--success); margin-bottom: 6px;">第三步：积极归因</p>
+                            <p class="text-small">"你刚才摔倒后自己站起来了，而且试了三次，这就是坚持。"</p>
+                        </div>
+                    </div>
+                </div>
+            </section>''')
+
+# P28
+SLIDES.append('''            <section class="bg-sprout text-center" data-transition="fade">
+                <div style="display: flex; flex-direction: column; justify-content: center; height: 100%;">
+                    <div class="fragment zoom-in" style="font-size: 5em; margin-bottom: 20px;">🌟</div>
+                    <p class="text-cream" style="font-size: 1.2em; opacity: 0.9; margin-bottom: 20px;">
+                        一小时后，这个孩子骑着车回头喊：
+                    </p>
+                    <h2 class="font-serif fragment fade-up" style="font-size: 2.2em; color: var(--sun-gold); line-height: 1.5; text-shadow: 3px 3px 0px rgba(62, 39, 35, 0.4), 0 0 20px rgba(255,179,0,0.3);">
+                        “妈妈你看，<br>我自己会的！”
+                    </h2>
+                    <div class="section-line center gold" style="margin: 30px auto;"></div>
+                    <p class="text-cream" style="font-size: 1.1em; opacity: 0.9;">
+                        这就是<strong>“我能行！”</strong>的声音。
+                    </p>
+                </div>
+            </section>''')
+
+# P29
+SLIDES.append('''            <section class="bg-cream text-center" data-transition="slide">
+                <h3 style="margin-bottom: 8px;">延伸阅读</h3>
+                <div class="section-line center"></div>
+                <div class="grid-3" style="margin-top: 40px;">
+                    <div class="book-card fragment grow-up">
+                        <div class="book-spine">教出乐观</div>
+                        <p style="font-weight: 600; color: var(--soil-dark); font-size: 0.9em; margin-bottom: 4px;">《教出乐观的孩子》</p>
+                        <p style="color: var(--soil-mid); font-size: 0.75em;">马丁·塞利格曼</p>
+                    </div>
+                    <div class="book-card fragment grow-up" style="transition-delay: 0.15s;">
+                        <div class="book-spine" style="background: linear-gradient(135deg, var(--sprout), #558B2F);">活出最乐观</div>
+                        <p style="font-weight: 600; color: var(--soil-dark); font-size: 0.9em; margin-bottom: 4px;">《活出最乐观的自己》</p>
+                        <p style="color: var(--soil-mid); font-size: 0.75em;">马丁·塞利格曼</p>
+                    </div>
+                    <div class="book-card fragment grow-up" style="transition-delay: 0.3s;">
+                        <div class="book-spine" style="background: linear-gradient(135deg, var(--sky), #0288D1);">终身成长</div>
+                        <p style="font-weight: 600; color: var(--soil-dark); font-size: 0.9em; margin-bottom: 4px;">《终身成长》</p>
+                        <p style="color: var(--soil-mid); font-size: 0.75em;">卡罗尔·德韦克</p>
+                    </div>
+                </div>
+                <div style="margin-top: 30px; display: flex; justify-content: center;">
+                    <div class="book-card fragment grow-up" style="max-width: 300px; transition-delay: 0.45s;">
+                        <div class="book-spine" style="background: linear-gradient(135deg, var(--sun-gold), #F57F17); width: 70px;">自驱型成长</div>
+                        <p style="font-weight: 600; color: var(--soil-dark); font-size: 0.9em; margin-bottom: 4px;">《自驱型成长》</p>
+                        <p style="color: var(--soil-mid); font-size: 0.75em;">威廉·斯蒂克斯洛德 · 奈德·约翰逊</p>
+                    </div>
+                </div>
+                <p class="fragment fade-up" style="margin-top: 40px; color: var(--soil-mid); font-size: 0.9em;">
+                    <i class="fas fa-heart text-sprout" style="margin-right: 8px;"></i>
+                    感谢大家的倒来，让我们一起做园丁，不做木匠。
+                </p>
+            </section>''')
+
+FOOT = '''
+        </div>
+    </div>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/reveal.js/4.5.0/reveal.min.js"></script>
+    <script>
+        Reveal.initialize({
+            hash: true,
+            slideNumber: 'c/t',
+            showSlideNumber: 'all',
+            transition: 'slide',
+            transitionSpeed: 'default',
+            backgroundTransition: 'fade',
+            center: false,
+            width: 1280,
+            height: 720,
+            margin: 0.04
+        });
+    </script>
+</body>
+</html>
+'''
+
+with open('index.html', 'w', encoding='utf-8') as f:
+    f.write(HEAD)
+    f.write('\n'.join(SLIDES))
+    f.write(FOOT)
+
+print('Slides generated successfully: index.html')

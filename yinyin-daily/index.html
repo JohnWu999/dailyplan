@@ -174,123 +174,130 @@ textarea{width:100%;padding:12px;border:1px solid var(--border);border-radius:10
 <div class='gold-line'></div>
 
 <div class='container'>
+
+<!-- ==================== 第1行：今日状态 | 起居录 | 闪念胶囊 | 复盘 ==================== -->
 <div class='row' style='display:grid;grid-template-columns:1.2fr 0.75fr 1.1fr 1.15fr;gap:20px;margin-bottom:24px;align-items:stretch'>
 
-<!-- Card 1: 今日状态 -->
-<div class='card'>
-  <div class='card-title'><span class='icon' style='background:#F5E6D3;color:var(--primary)'>今</span>今日状态</div>
-  <div style='display:flex;gap:6px;margin-bottom:8px'>
-    <div style='flex:1;text-align:center;padding:5px;background:var(--bg);border-radius:8px'><div style='font-size:15px;font-weight:700;color:var(--primary)' id='stat-done'>0</div><div style='font-size:10px;color:var(--text-light)'>已完成</div></div>
-    <div style='flex:1;text-align:center;padding:5px;background:var(--bg);border-radius:8px'><div style='font-size:15px;font-weight:700;color:var(--info)' id='stat-projects'>0</div><div style='font-size:10px;color:var(--text-light)'>项目</div></div>
-    <div style='flex:1;text-align:center;padding:5px;background:var(--bg);border-radius:8px'><div style='font-size:15px;font-weight:700;color:var(--success)' id='stat-focus'>0h</div><div style='font-size:10px;color:var(--text-light)'>专注</div></div>
-    <div style='flex:1;text-align:center;padding:5px;background:var(--bg);border-radius:8px'><div style='font-size:15px;font-weight:700;color:var(--gold)' id='stat-streak'>1</div><div style='font-size:10px;color:var(--text-light)'>连续天</div></div>
-  </div>
-  <div style='display:flex;flex-direction:column;gap:4px'>
-    <div style='display:flex;gap:3px;align-items:center'>
-      <input type='date' id='report-date' style='flex:1;padding:4px 6px;border:1px solid var(--border);border-radius:8px;font-family:inherit;font-size:10px'>
-      <button onclick='generateDailyReport()' style='background:var(--success);color:white;border:none;padding:4px 8px;border-radius:8px;font-family:inherit;font-size:10px;cursor:pointer;white-space:nowrap'>日报</button>
+  <!-- Card 1: 今日状态 -->
+  <div class='card'>
+    <div class='card-title'><span class='icon' style='background:#F5E6D3;color:var(--primary)'>今</span>今日状态</div>
+    <div style='display:flex;gap:6px;margin-bottom:8px'>
+      <div style='flex:1;text-align:center;padding:5px;background:var(--bg);border-radius:8px'><div style='font-size:11px;color:var(--text-light)'>日</div><div style='font-size:15px;font-weight:700' id='day-num'>--</div></div>
+      <div style='flex:1;text-align:center;padding:5px;background:var(--bg);border-radius:8px'><div style='font-size:11px;color:var(--text-light)'>周</div><div style='font-size:15px;font-weight:700' id='week-num'>--</div></div>
+      <div style='flex:1;text-align:center;padding:5px;background:var(--bg);border-radius:8px'><div style='font-size:11px;color:var(--text-light)'>月</div><div style='font-size:15px;font-weight:700' id='month-num'>--</div></div>
+      <div style='flex:1;text-align:center;padding:5px;background:var(--bg);border-radius:8px'><div style='font-size:11px;color:var(--text-light)'>年</div><div style='font-size:15px;font-weight:700' id='year-num'>--</div></div>
     </div>
-    <div style='display:flex;gap:3px;align-items:center'>
-      <input type='week' id='report-week' style='flex:1;padding:4px 6px;border:1px solid var(--border);border-radius:8px;font-family:inherit;font-size:10px'>
-      <button onclick='generateWeeklyReport()' style='background:var(--info);color:white;border:none;padding:4px 8px;border-radius:8px;font-family:inherit;font-size:10px;cursor:pointer;white-space:nowrap'>周报</button>
+    <div style='display:flex;gap:4px;margin-bottom:10px'>
+      <button class='filter-btn active' onclick='switchReport(this,"daily")'>日报</button>
+      <button class='filter-btn' onclick='switchReport(this,"weekly")'>周报</button>
+      <button class='filter-btn' onclick='switchReport(this,"monthly")'>月报</button>
+      <button class='filter-btn' onclick='switchReport(this,"yearly")'>年报</button>
     </div>
-    <div style='display:flex;gap:3px;align-items:center'>
-      <input type='month' id='report-month' style='flex:1;padding:4px 6px;border:1px solid var(--border);border-radius:8px;font-family:inherit;font-size:10px'>
-      <button onclick='generateMonthlyReport()' style='background:var(--gold);color:white;border:none;padding:4px 8px;border-radius:8px;font-family:inherit;font-size:10px;cursor:pointer;white-space:nowrap'>月报</button>
+    <div id='report-daily' class='report-panel'>
+      <div style='font-size:12px;color:var(--text-light);margin-bottom:6px'>今日关键词</div>
+      <input type='text' id='daily-keyword' placeholder='一句话形容今天...' style='font-size:12px;width:100%;padding:6px 10px;border:1px solid var(--border);border-radius:8px;box-sizing:border-box;margin-bottom:6px'>
+      <div style='font-size:12px;color:var(--text-light);margin-bottom:6px'>今日状态</div>
+      <select id='daily-status' onchange='saveDaily()' style='font-size:12px;width:100%;padding:6px 10px;border:1px solid var(--border);border-radius:8px;margin-bottom:8px'>
+        <option value=''>选择状态...</option>
+        <option value='😊 充实满足'>😊 充实满足</option>
+        <option value='😌 平静安稳'>😌 平静安稳</option>
+        <option value='😔 有些低落'>😔 有些低落</option>
+        <option value='😰 焦虑忙碌'>😰 焦虑忙碌</option>
+        <option value='🤔 迷茫思考'>🤔 迷茫思考</option>
+      </select>
+      <div id='daily-summary' style='font-size:12px;color:var(--text-light);min-height:20px'></div>
     </div>
-  </div>
-  <div class='daily-quote-box' style='margin-top:8px'><div class='daily-quote-text' id='daily-quote-text'></div></div>
-</div>
-
-<!-- Card 2: 起居录 -->
-<div class='card'>
-  <div class='card-title'><span class='icon' style='background:#E8F5E9;color:var(--success)'>起</span>起居录</div>
-  <div id='log-panel'>
-    <div style='display:grid;grid-template-columns:1fr 1fr 1fr;gap:6px;margin-bottom:8px'>
-      <div>
-        <div style='font-size:10px;color:var(--text-light);margin-bottom:2px;text-align:center'>心情</div>
-        <div style='display:flex;align-items:center;gap:2px'>
-          <select id='log-mood' onchange="handleLogSelect('mood',this.value)" style='flex:1;padding:5px 4px;border:1px solid var(--border);border-radius:8px;font-size:11px;font-family:inherit;background:var(--card);color:var(--text)'></select>
-          <button onclick='openMoodSettings()' title='自定义心情选项' style='background:none;border:1px solid var(--border);border-radius:6px;cursor:pointer;font-size:10px;padding:2px 4px;flex-shrink:0'>⚙️</button>
-        </div>
-        <input type='text' id='log-mood-custom' class='custom-input' placeholder='备注' onchange="saveLog('mood',this.value)">
-      </div>
-      <div>
-        <div style='font-size:10px;color:var(--text-light);margin-bottom:2px;text-align:center'>运动</div>
-        <select id='log-exercise' onchange="handleLogSelect('exercise',this.value)" style='width:100%;padding:5px 4px;border:1px solid var(--border);border-radius:8px;font-size:11px;font-family:inherit;background:var(--card);color:var(--text)'><option value=''>选择...</option><option value='无'>无</option><option value='散步'>散步</option><option value='跑步'>跑步</option><option value='健身'>健身</option><option value='瑜伽'>瑜伽</option><option value='游泳'>游泳</option><option value='骑行'>骑行</option><option value='球类运动'>球类运动</option><option value='其他'>其他</option></select>
-        <input type='text' id='log-exercise-custom' class='custom-input' placeholder='备注' onchange="saveLog('exercise',this.value)">
-      </div>
-      <div>
-        <div style='font-size:10px;color:var(--text-light);margin-bottom:2px;text-align:center'>睡眠</div>
-        <select id='log-sleep' onchange="handleLogSelect('sleep',this.value)" style='width:100%;padding:5px 4px;border:1px solid var(--border);border-radius:8px;font-size:11px;font-family:inherit;background:var(--card);color:var(--text)'><option value=''>选择...</option><option value='充足'>充足</option><option value='一般'>一般</option><option value='不足'>不足</option><option value='失眠'>失眠</option><option value='熬夜'>熬夜</option><option value='早睡'>早睡</option><option value='多梦'>多梦</option><option value='其他'>其他</option></select>
-        <input type='text' id='log-sleep-custom' class='custom-input' placeholder='备注' onchange="saveLog('sleep',this.value)">
-      </div>
+    <div id='report-weekly' class='report-panel' style='display:none'>
+      <div style='font-size:12px;color:var(--text-light);margin-bottom:6px'>本周主题</div>
+      <input type='text' id='weekly-theme' placeholder='一句话形容本周...' style='font-size:12px;width:100%;padding:6px 10px;border:1px solid var(--border);border-radius:8px;box-sizing:border-box;margin-bottom:8px'>
+      <div id='weekly-summary' style='font-size:12px;color:var(--text-light);min-height:20px'></div>
     </div>
-    <div style='display:grid;grid-template-columns:repeat(3,1fr);gap:6px'>
-      <div>
-        <div style='font-size:10px;color:var(--text-light);margin-bottom:2px;text-align:center'>早餐</div>
-        <select id='log-breakfast' onchange="saveLog('breakfast',this.value)" style='width:100%;padding:5px 4px;border:1px solid var(--border);border-radius:8px;font-size:11px;font-family:inherit;background:var(--card);color:var(--text)'><option value=''>选择...</option><option value='吃了'>🍳 吃了</option><option value='跳过'>⏭️ 跳过</option><option value='外食'>🥡 外食</option><option value='自己做'>👩‍🍳 自己做</option><option value='零食代替'>🍪 零食代替</option><option value='其他'>✏️ 其他</option></select>
-        <input type='text' id='log-breakfast-note' class='custom-input' placeholder='备注' onchange="saveLog('breakfastNote',this.value)">
-      </div>
-      <div>
-        <div style='font-size:10px;color:var(--text-light);margin-bottom:2px;text-align:center'>午餐</div>
-        <select id='log-lunch' onchange="saveLog('lunch',this.value)" style='width:100%;padding:5px 4px;border:1px solid var(--border);border-radius:8px;font-size:11px;font-family:inherit;background:var(--card);color:var(--text)'><option value=''>选择...</option><option value='吃了'>🍱 吃了</option><option value='跳过'>⏭️ 跳过</option><option value='外食'>🥡 外食</option><option value='自己做'>👩‍🍳 自己做</option><option value='聚餐'>🎉 聚餐</option><option value='其他'>✏️ 其他</option></select>
-        <input type='text' id='log-lunch-note' class='custom-input' placeholder='备注' onchange="saveLog('lunchNote',this.value)">
-      </div>
-      <div>
-        <div style='font-size:10px;color:var(--text-light);margin-bottom:2px;text-align:center'>晚餐</div>
-        <select id='log-dinner' onchange="saveLog('dinner',this.value)" style='width:100%;padding:5px 4px;border:1px solid var(--border);border-radius:8px;font-size:11px;font-family:inherit;background:var(--card);color:var(--text)'><option value=''>选择...</option><option value='吃了'>🍲 吃了</option><option value='跳过'>⏭️ 跳过</option><option value='外食'>🥡 外食</option><option value='自己做'>👩‍🍳 自己做</option><option value='清淡'>🥗 清淡</option><option value='重口'>🌶️ 重口</option><option value='其他'>✏️ 其他</option></select>
-        <input type='text' id='log-dinner-note' class='custom-input' placeholder='备注' onchange="saveLog('dinnerNote',this.value)">
-      </div>
+    <div id='report-monthly' class='report-panel' style='display:none'>
+      <div style='font-size:12px;color:var(--text-light);margin-bottom:6px'>本月关键词</div>
+      <input type='text' id='monthly-keyword' placeholder='一句话形容本月...' style='font-size:12px;width:100%;padding:6px 10px;border:1px solid var(--border);border-radius:8px;box-sizing:border-box;margin-bottom:8px'>
+      <div id='monthly-summary' style='font-size:12px;color:var(--text-light);min-height:20px'></div>
     </div>
-    <div style='margin-top:8px'>
-      <div style='font-size:10px;color:var(--text-light);margin-bottom:4px'>全天总评</div>
-      <div style='display:flex;gap:3px;flex-wrap:wrap' id='diet-tags'>
-        <span class='diet-tag' data-tag='16+8轻断食' onclick='toggleDietTag(this)'>16+8</span>
-        <span class='diet-tag' data-tag='喝水充足' onclick='toggleDietTag(this)'>💧喝水</span>
-        <span class='diet-tag' data-tag='零食过多' onclick='toggleDietTag(this)'>🍫零食</span>
-        <span class='diet-tag' data-tag='蔬菜吃够' onclick='toggleDietTag(this)'>🥬蔬菜</span>
-        <span class='diet-tag' data-tag='蛋白质充足' onclick='toggleDietTag(this)'>🥚蛋白</span>
-        <span class='diet-tag' data-tag='碳水超标' onclick='toggleDietTag(this)'>🍚碳水</span>
-        <span class='diet-tag' data-tag='油炸/高糖' onclick='toggleDietTag(this)'>🍩油炸</span>
-        <span class='diet-tag' data-tag='八分饱' onclick='toggleDietTag(this)'>😌八分</span>
-      </div>
-    </div>
-    <div id='custom-log-area' style='margin-top:6px'></div>
-    <div style='margin-top:4px'>
-      <button onclick='addCustomField()' style='background:none;border:1px dashed var(--border);color:var(--text-light);padding:3px 8px;border-radius:8px;font-size:10px;cursor:pointer;width:100%;font-family:inherit'>+ 添加自定义项</button>
+    <div id='report-yearly' class='report-panel' style='display:none'>
+      <div style='font-size:12px;color:var(--text-light);margin-bottom:6px'>年度关键词</div>
+      <input type='text' id='yearly-keyword' placeholder='一句话形容本年...' style='font-size:12px;width:100%;padding:6px 10px;border:1px solid var(--border);border-radius:8px;box-sizing:border-box;margin-bottom:8px'>
+      <div id='yearly-summary' style='font-size:12px;color:var(--text-light);min-height:20px'></div>
     </div>
   </div>
-</div>
 
-<!-- Card 3: 闪念胶囊 -->
-<div class='card'>
-  <div class='card-title'><span class='icon' style='background:#FFF3E0;color:var(--gold)'>&#9999;&#65039;</span>闪念胶囊</div>
-  <div class='task-input' style='margin-bottom:6px'><input id='flash-input' placeholder='想法、灵感、待办线索...' style='font-size:12px;padding:8px'><button onclick='addFlashNote()'>&#10133;</button></div>
-  <div id='flash-list' style='max-height:200px;overflow-y:auto'></div>
-</div>
-
-<!-- Card 4: 复盘 -->
-<div class='card'>
-  <div style='display:flex;justify-content:space-between;align-items:center;margin-bottom:10px'>
-    <div class='card-title' style='margin:0'><span class='icon' style='background:#E8F5E9;color:var(--success)'>复</span>复盘</div>
-    <div style='display:flex;gap:3px'>
-      <button onclick='openReview()' class='btn-primary' style='margin:0;padding:4px 7px;font-size:10px'>日</button>
-      <button onclick='openWeeklyReview()' class='btn-primary' style='margin:0;padding:4px 7px;font-size:10px;background:var(--info)'>周</button>
-      <button onclick='openMonthlyReview()' class='btn-primary' style='margin:0;padding:4px 7px;font-size:10px;background:var(--gold)'>月</button>
-      <button onclick='openYearlyReview()' class='btn-primary' style='margin:0;padding:4px 7px;font-size:10px;background:var(--love)'>年</button>
+  <!-- Card 2: 起居录 -->
+  <div class='card'>
+    <div class='card-title'><span class='icon' style='background:#E8F5E9;color:var(--success)'>居</span>起居录</div>
+    <div style='display:grid;grid-template-columns:1fr 1fr 1fr;gap:6px;margin-bottom:10px'>
+      <div>
+        <div style='font-size:11px;color:var(--text-light);margin-bottom:3px;text-align:center'>心情</div>
+        <select id='daily-mood' onchange='saveDaily()' style='font-size:12px;width:100%;padding:5px 6px;border:1px solid var(--border);border-radius:8px'>
+          <option value=''>-</option>
+          <option value='😊'>😊</option><option value='😐'>😐</option><option value='😔'>😔</option>
+          <option value='😤'>😤</option><option value='😰'>😰</option><option value='🤔'>🤔</option>
+        </select>
+      </div>
+      <div>
+        <div style='font-size:11px;color:var(--text-light);margin-bottom:3px;text-align:center'>运动</div>
+        <select id='daily-exercise' onchange='saveDaily()' style='font-size:12px;width:100%;padding:5px 6px;border:1px solid var(--border);border-radius:8px'>
+          <option value=''>-</option>
+          <option value='🧘'>🧘</option><option value='🏃'>🏃</option><option value='🚴'>🚴</option>
+          <option value='🏋️'>🏋️</option><option value='🚶'>🚶</option><option value='❌'>❌</option>
+        </select>
+      </div>
+      <div>
+        <div style='font-size:11px;color:var(--text-light);margin-bottom:3px;text-align:center'>睡眠</div>
+        <select id='daily-sleep' onchange='saveDaily()' style='font-size:12px;width:100%;padding:5px 6px;border:1px solid var(--border);border-radius:8px'>
+          <option value=''>-</option>
+          <option value='😊'>😊</option><option value='😴'>😴</option><option value='🥱'>🥱</option><option value='😵'>😵</option>
+        </select>
+      </div>
+    </div>
+    <div style='font-size:12px;font-weight:600;margin-bottom:6px'>三餐</div>
+    <div style='display:grid;grid-template-columns:1fr 1fr 1fr;gap:6px;margin-bottom:4px'>
+      <div>
+        <div style='font-size:11px;color:var(--text-light);margin-bottom:2px'>早</div>
+        <select id='meal-breakfast' onchange='saveDaily()' style='font-size:11px;width:100%;padding:4px 5px;border:1px solid var(--border);border-radius:6px'>
+          <option value=''>-</option><option value='✅'>✅</option><option value='❌'>❌</option>
+        </select>
+        <input type='text' id='meal-breakfast-remark' placeholder='备注' style='font-size:10px;width:100%;padding:3px 4px;border:1px solid var(--border);border-radius:5px;margin-top:2px;box-sizing:border-box'>
+      </div>
+      <div>
+        <div style='font-size:11px;color:var(--text-light);margin-bottom:2px'>午</div>
+        <select id='meal-lunch' onchange='saveDaily()' style='font-size:11px;width:100%;padding:4px 5px;border:1px solid var(--border);border-radius:6px'>
+          <option value=''>-</option><option value='✅'>✅</option><option value='❌'>❌</option>
+        </select>
+        <input type='text' id='meal-lunch-remark' placeholder='备注' style='font-size:10px;width:100%;padding:3px 4px;border:1px solid var(--border);border-radius:5px;margin-top:2px;box-sizing:border-box'>
+      </div>
+      <div>
+        <div style='font-size:11px;color:var(--text-light);margin-bottom:2px'>晚</div>
+        <select id='meal-dinner' onchange='saveDaily()' style='font-size:11px;width:100%;padding:4px 5px;border:1px solid var(--border);border-radius:6px'>
+          <option value=''>-</option><option value='✅'>✅</option><option value='❌'>❌</option>
+        </select>
+        <input type='text' id='meal-dinner-remark' placeholder='备注' style='font-size:10px;width:100%;padding:3px 4px;border:1px solid var(--border);border-radius:5px;margin-top:2px;box-sizing:border-box'>
+      </div>
     </div>
   </div>
-  <div id='review-preview' style='font-size:11px;color:var(--text-light);line-height:1.5'>今日尚未复盘</div>
-  <button onclick='openReview()' style='width:100%;margin-top:8px;padding:7px 12px;background:var(--primary);color:white;border:none;border-radius:8px;font-size:12px'>✏️ 填写复盘</button>
+
+  <!-- Card 3: 闪念胶囊 -->
+  <div class='card'>
+    <div class='card-title'><span class='icon' style='background:#FFF9C4;color=#F9A825'>&#20094;</span>闪念胶囊</div>
+    <div style='display:flex;gap:6px;margin-bottom:8px'>
+      <input type='text' id='flash-input' placeholder='捕捉一个闪念...' style='flex:1;font-size:12px;padding:7px 10px;border:1px solid var(--border);border-radius:8px'>
+      <button onclick='addFlash()' style='padding:7px 14px;background:var(--primary);color:white;border:none;border-radius:8px;font-size:13px;cursor:pointer'>+</button>
+    </div>
+    <div id='flash-list' style='font-size:12px;max-height:300px;overflow-y:auto'></div>
+  </div>
+
+  <!-- Card 4: 复盘 -->
+  <div class='card'>
+    <div class='card-title'><span class='icon' style='background:#FCE4EC;color:var(--love)'>&#22797;</span>复盘</div>
+    <div id='review-preview' style='font-size:12px;color:var(--text-light);min-height:60px;line-height:1.6'>今日复盘内容将在此处预览</div>
+    <button onclick='openReview()' style='width:100%;margin-top:8px;padding:7px 12px;background:var(--primary);color:white;border:none;border-radius:8px;font-size:12px;cursor:pointer'>✏️ 填写复盘</button>
+  </div>
 </div>
 
-</div>
-
-
-<div class='row' style='grid-template-columns:1fr 1fr;gap:24px;margin-bottom:24px;align-items:stretch'>
+<!-- ==================== 第2行：觉察日记 | 孩子成长 ==================== -->
 <div class='row' style='display:grid;grid-template-columns:1fr 1fr;gap:24px;margin-bottom:24px;align-items:stretch'>
-<div style='display:grid;grid-template-columns:1fr 1fr;gap:20px;align-items:stretch'>
   <div class='card'>
     <div class='card-title'><span class='icon' style='background:#E3F2FD;color:var(--info)'>觉</span>觉察日记</div>
     <div style='display:flex;flex-direction:column;gap:6px'>
@@ -322,7 +329,7 @@ textarea{width:100%;padding:12px;border:1px solid var(--border);border-radius:10
   </div>
 </div>
 
-
+<!-- ==================== 第3行：任务看板 | 项目看板 ==================== -->
 <div class='row' style='display:grid;grid-template-columns:3fr 2fr;gap:24px;margin-bottom:24px;align-items:stretch'>
     <div class='card' style='display:flex;flex-direction:column'>
       <div style='display:flex;justify-content:space-between;align-items:center;margin-bottom:12px'>
@@ -373,34 +380,29 @@ textarea{width:100%;padding:12px;border:1px solid var(--border);border-radius:10
     </div>
 </div>
 
-
+<!-- ==================== 第4行：目标 | 意识革命 | 数据备份 | 归档 ==================== -->
 <div class='row-4'>
-
     <div class='card'>
-      <div style='display:flex;flex-direction:column;gap:12px'>
-<div class='card'>
       <div class='card-title' style='cursor:pointer' onclick="toggleGoalPanel('year')"><span class='icon' style='background:#FFF3E0;color:var(--gold)'>&#24180;</span>&#24180;&#24230;&#30446;&#26631; <span id='year-goal-toggle' style='font-size:11px;color:var(--text-light);margin-left:auto'>&#23637;&#24320; &#9660;</span></div>
       <div id='year-goal-panel' style='display:none'>
         <div class='task-input'><input id='year-goal-input' placeholder='2026&#24180;&#26680;&#24515;&#30446;&#26631;...' style='font-size:12px;width:100%'><button onclick='addYearGoal()' style='padding:10px 14px'>&#35774;&#23450;</button></div>
         <div id='year-goal-list' style='font-size:12px'></div>
       </div>
-    </div><div class='card'>
+    </div>
+    <div class='card'>
       <div class='card-title' style='cursor:pointer' onclick="toggleGoalPanel('month')"><span class='icon' style='background:#FFF3E0;color:var(--gold)'>&#26376;</span>&#26376;&#24230;&#30446;&#26631; <span id='month-goal-toggle' style='font-size:11px;color:var(--text-light);margin-left:auto'>&#23637;&#24320; &#9660;</span></div>
       <div id='month-goal-panel' style='display:none'>
         <div class='task-input'><input id='month-goal-input' placeholder='&#26412;&#26376;&#30446;&#26631;...' style='font-size:12px;width:100%'><button onclick='addMonthGoal()' style='padding:10px 14px'>&#35774;&#23450;</button></div>
         <div id='month-goal-list' style='font-size:12px'></div>
       </div>
-    </div><div class='card'>
+    </div>
+    <div class='card'>
       <div class='card-title' style='cursor:pointer' onclick="toggleGoalPanel('week')"><span class='icon' style='background:#FFF3E0;color:var(--gold)'>&#21608;</span>&#26412;&#21608;&#30446;&#26631; <span id='week-goal-toggle' style='font-size:11px;color:var(--text-light);margin-left:auto'>&#23637;&#24320; &#9660;</span></div>
       <div id='week-goal-panel' style='display:none'>
         <div class='task-input'><input id='week-goal-input' placeholder='&#26412;&#21608;&#30446;&#26631;...' style='font-size:12px;width:100%'><button onclick='addWeekGoal()' style='padding:10px 14px'>&#35774;&#23450;</button></div>
         <div id='week-goal-list' style='font-size:12px'></div>
       </div>
     </div>
-  </div>
-      </div>
-    </div>
-
     <div class='card'>
       <div style='display:flex;justify-content:space-between;align-items:center;margin-bottom:12px'>
         <div class='card-title' style='margin:0'><span class='icon' style='background:#E3F2FD;color:var(--info)'>脑</span>意识革命</div>
@@ -414,11 +416,8 @@ textarea{width:100%;padding:12px;border:1px solid var(--border);border-radius:10
         <p>4. 基于以上分析，接下来应该停止做什么、开始做什么？</p>
       </div>
     </div>
-
-
-
     <div class='card'>
-      <div class='card-title'><span class='icon' style='background:#FFF3E0;color:var(--gold)'>💾</span>数据</div>
+      <div class='card-title'><span class='icon' style='background:#FFF3E0;color:var(--gold)'>&#x1F4BE;</span>数据备份</div>
       <div class='data-actions'>
         <button onclick='exportData()'>导出备份</button>
         <button onclick='document.getElementById("import-file").click()'>导入恢复</button>
@@ -426,12 +425,8 @@ textarea{width:100%;padding:12px;border:1px solid var(--border);border-radius:10
       </div>
       <div style='font-size:11px;color:var(--text-light);margin-top:8px'>
         <p>数据保存在本地浏览器中，不会上传到任何服务器。</p>
-        <p style='margin-top:4px'>任务列表是全局的，不会每天清空。每天可以继续使用。</p>
-        <p style='margin-top:4px'>每日记录（心情/运动/饮食/睡眠）按日期分开存储，每天可以重新记录。</p>
       </div>
     </div>
-
-
     <div class='card'>
       <div class='card-title'><span class='icon' style='background:#F3E5F5;color:var(--love)'>归</span>归档</div>
       <div class='archive-filters'>
@@ -443,9 +438,8 @@ textarea{width:100%;padding:12px;border:1px solid var(--border);border-radius:10
       <div id='archive-list' style='max-height:300px;overflow-y:auto'><div class='empty'>完成的事情会在这里沉淀为成长的痕迹</div></div>
     </div>
 </div>
+
 </div>
-
-
 
 <div class='modal-overlay' id='modal-four'>
   <div class='modal'>

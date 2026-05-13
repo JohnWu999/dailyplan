@@ -1,0 +1,486 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Kelly's Desert Odyssey — Writing Coach Review</title>
+    <link href="https://fonts.googleapis.com/css2?family=Noto+Serif+SC:wght@400;600;700&family=Cormorant+Garamond:ital,wght@0,400;0,600;1,400&display=swap" rel="stylesheet">
+    <style>
+        :root {
+            --burnt-orange: #E85D04;
+            --gold: #C9A961;
+            --cream: #FAF7F2;
+            --ink: #2C2420;
+            --ink-light: #5C534A;
+            --border-gold: rgba(201, 169, 97, 0.35);
+        }
+
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Noto Serif SC', 'Cormorant Garamond', Georgia, serif;
+            background: var(--cream);
+            color: var(--ink);
+            line-height: 1.9;
+            font-size: 17px;
+        }
+
+        /* ========== HEADER ========== */
+        .header {
+            text-align: center;
+            padding: 80px 20px 50px;
+            background: linear-gradient(180deg, #FFF 0%, var(--cream) 100%);
+            border-bottom: 1px solid var(--border-gold);
+        }
+
+        .header-badge {
+            display: inline-block;
+            font-size: 12px;
+            letter-spacing: 3px;
+            text-transform: uppercase;
+            color: var(--gold);
+            border: 1px solid var(--border-gold);
+            padding: 8px 24px;
+            margin-bottom: 30px;
+        }
+
+        .header h1 {
+            font-family: 'Cormorant Garamond', serif;
+            font-size: 48px;
+            font-weight: 600;
+            color: var(--ink);
+            letter-spacing: 1px;
+            margin-bottom: 12px;
+        }
+
+        .header-subtitle {
+            font-size: 15px;
+            color: var(--ink-light);
+            letter-spacing: 2px;
+        }
+
+        .header-divider {
+            width: 60px;
+            height: 2px;
+            background: var(--gold);
+            margin: 30px auto 0;
+        }
+
+        /* ========== SECTIONS ========== */
+        .section {
+            max-width: 720px;
+            margin: 0 auto;
+            padding: 60px 30px;
+        }
+
+        .section-title {
+            font-family: 'Cormorant Garamond', serif;
+            font-size: 28px;
+            font-weight: 600;
+            color: var(--burnt-orange);
+            margin-bottom: 40px;
+            padding-bottom: 16px;
+            border-bottom: 1px solid var(--border-gold);
+            display: flex;
+            align-items: center;
+            gap: 14px;
+        }
+
+        .section-title::before {
+            content: '';
+            display: inline-block;
+            width: 8px;
+            height: 8px;
+            background: var(--gold);
+            transform: rotate(45deg);
+        }
+
+        .section-label {
+            font-size: 12px;
+            letter-spacing: 2px;
+            text-transform: uppercase;
+            color: var(--gold);
+            margin-bottom: 10px;
+        }
+
+        /* ========== ESSAY BODY ========== */
+        .essay-body {
+            font-size: 17.5px;
+            line-height: 2;
+            color: var(--ink);
+        }
+
+        .essay-body p {
+            margin-bottom: 22px;
+            text-align: justify;
+            text-indent: 0;
+        }
+
+        .essay-body p + p {
+            text-indent: 2em;
+        }
+
+        .essay-body p:first-of-type {
+            text-indent: 0;
+        }
+
+        .drop-cap::first-letter {
+            font-family: 'Cormorant Garamond', serif;
+            font-size: 64px;
+            float: left;
+            line-height: 0.8;
+            padding-right: 12px;
+            padding-top: 8px;
+            color: var(--burnt-orange);
+            font-weight: 600;
+        }
+
+        /* ========== NOTES / COACH BOXES ========== */
+        .coach-box {
+            background: #fff;
+            border-left: 3px solid var(--gold);
+            padding: 24px 28px;
+            margin: 30px 0;
+            box-shadow: 0 2px 12px rgba(44, 36, 32, 0.04);
+        }
+
+        .coach-box-title {
+            font-size: 13px;
+            font-weight: 700;
+            letter-spacing: 2px;
+            text-transform: uppercase;
+            color: var(--burnt-orange);
+            margin-bottom: 12px;
+        }
+
+        .coach-box p {
+            font-size: 15.5px;
+            line-height: 1.85;
+            color: var(--ink-light);
+            margin: 0;
+        }
+
+        .coach-box code {
+            background: var(--cream);
+            padding: 2px 8px;
+            border-radius: 3px;
+            font-family: 'Noto Serif SC', serif;
+            font-size: 14px;
+            color: var(--burnt-orange);
+        }
+
+        /* ========== COMPARISON PAIRS ========== */
+        .compare-pair {
+            margin: 28px 0;
+            display: grid;
+            grid-template-columns: 1fr;
+            gap: 16px;
+        }
+
+        .compare-block {
+            padding: 20px 24px;
+            border-radius: 4px;
+        }
+
+        .compare-block.before {
+            background: #f5f0eb;
+            border-left: 3px solid #c0b5a8;
+        }
+
+        .compare-block.after {
+            background: #fff;
+            border-left: 3px solid var(--gold);
+            box-shadow: 0 2px 8px rgba(44,36,32,0.04);
+        }
+
+        .compare-label {
+            font-size: 11px;
+            letter-spacing: 2px;
+            text-transform: uppercase;
+            font-weight: 700;
+            margin-bottom: 8px;
+        }
+
+        .compare-block.before .compare-label {
+            color: #a09080;
+        }
+
+        .compare-block.after .compare-label {
+            color: var(--burnt-orange);
+        }
+
+        .compare-text {
+            font-size: 15px;
+            line-height: 1.8;
+            color: var(--ink);
+            font-style: italic;
+        }
+
+        /* ========== TIPS GRID ========== */
+        .tips-grid {
+            display: grid;
+            gap: 28px;
+            margin-top: 10px;
+        }
+
+        .tip-card {
+            background: #fff;
+            padding: 32px;
+            border-top: 2px solid var(--gold);
+            box-shadow: 0 2px 16px rgba(44,36,32,0.04);
+        }
+
+        .tip-number {
+            font-family: 'Cormorant Garamond', serif;
+            font-size: 42px;
+            font-weight: 600;
+            color: var(--border-gold);
+            line-height: 1;
+            margin-bottom: 16px;
+        }
+
+        .tip-title {
+            font-size: 19px;
+            font-weight: 700;
+            color: var(--burnt-orange);
+            margin-bottom: 14px;
+            line-height: 1.4;
+        }
+
+        .tip-body {
+            font-size: 15.5px;
+            line-height: 1.85;
+            color: var(--ink-light);
+        }
+
+        .tip-body strong {
+            color: var(--ink);
+            font-weight: 600;
+        }
+
+        /* ========== DIVIDER ========== */
+        .gold-divider {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 16px;
+            margin: 50px 0;
+        }
+
+        .gold-divider .line {
+            width: 80px;
+            height: 1px;
+            background: var(--border-gold);
+        }
+
+        .gold-divider .diamond {
+            width: 6px;
+            height: 6px;
+            background: var(--gold);
+            transform: rotate(45deg);
+        }
+
+        /* ========== FOOTER ========== */
+        .footer {
+            text-align: center;
+            padding: 50px 30px 80px;
+            border-top: 1px solid var(--border-gold);
+            color: var(--ink-light);
+            font-size: 13px;
+            letter-spacing: 1px;
+        }
+
+        /* ========== RESPONSIVE ========== */
+        @media (max-width: 640px) {
+            .header h1 {
+                font-size: 34px;
+            }
+            .section {
+                padding: 40px 20px;
+            }
+            .drop-cap::first-letter {
+                font-size: 48px;
+            }
+            .essay-body {
+                font-size: 16px;
+            }
+        }
+    </style>
+</head>
+<body>
+
+<!-- ========== HEADER ========== -->
+<div class="header">
+    <div class="header-badge">Writing Coach Review</div>
+    <h1>Desert Odyssey</h1>
+    <div class="header-subtitle">By Kelly Zhang &middot; Gobi Trek Reflection</div>
+    <div class="header-divider"></div>
+</div>
+
+<!-- ========== PART 1: REVISED ESSAY ========== -->
+<div class="section">
+    <div class="section-label">Part One</div>
+    <div class="section-title">Revised Draft</div>
+
+    <div class="essay-body">
+        <p class="drop-cap">Walking in the desert, miles and miles from civilization. No Wi-Fi, no roads—only rock, dust, and sand stretching to every horizon. This is the Gobi. It is famous for its stars, millions of them scattered across an endless sky. Believe it or not, we are those stars. We may look small and distant from one another, but together we can light up the entire night.</p>
+
+        <p>In this trek of sixty-eight kilometers, no one walked alone. Kids from all over China had gathered here, and even a six-year-old girl joined us. We were a team. A team needs a captain—someone kind, someone who understands what strength really looks like. Without our captain, we would never have finished. Our co-captain showed dedication that left us breathless: he carried three bags through the exhausting heat. Then there was our flag raiser, always at the front, the fabric snapping above the dunes so no one would lose sight of the group. He warned the co-captain not to carry too much, but the co-captain did not listen, and soon he was struggling at the back, drained by his own stubbornness.</p>
+
+        <p>I served as the team’s navigator, guiding us over sand ridges and around rocky outcrops. It sounds simple, but it was not. One wrong turn meant extra kilometers under the blazing sun, and I made mistakes. Each error burned in my chest; I hated leading us astray. Yet being the navigator was also how I made new friends. When we reached the tall hills, the group slowed to a careful crawl, every footstep tested before the next.</p>
+
+        <p>Our proudest moment came when we encouraged that six-year-old girl to finish all sixty-eight kilometers. Her father told us later that half her victory belonged to her own spirit, and the other half to the team that refused to let her quit.</p>
+
+        <p>Beyond what we achieved together, the desert had its own lessons waiting for me. By day, the sunlight hammered down without mercy. By night, the temperature plunged until the wind felt like it was cutting straight to bone. One morning I woke at four o’clock to a world of ice. I could not believe the same desert that had baked us alive twelve hours earlier could turn so cruel. Sleepy and dazed, I stepped outside, and the cold air slapped me awake.</p>
+
+        <p>For three days I trudged through sand and scorching heat, my backpack digging into my shoulders, the sun my only companion. That was challenge enough. Yet I kept going, even when my legs begged me to stop.</p>
+
+        <p>When I finally crossed that last kilometer, I was happy and proud, but something else too—changed. Perseverance does not simply carry you through sixty-eight kilometers. On the other side, it reshapes who you are. Looking back at the hills I had climbed, the paths I had traced, the obstacles I had survived, I realized that life is like the night sky over the Gobi. Most of the time we see only darkness. But if you keep going, if you do not stop, you find that you have become one of those stars—small, perhaps, but shining. For me, this desert was the first page of a new chapter, written in sweat, written in stars.</p>
+    </div>
+
+    <div class="coach-box">
+        <div class="coach-box-title">Coach Note</div>
+        <p>This revised draft keeps <strong>all of Kelly’s original ideas, characters, and events</strong> intact. The changes focus on sentence variety, precise vocabulary, sensory detail, and a consistent star motif that weaves from opening to closing. Word count remains similar (~560 words), suitable for Grade 6–7 independent-school expectations.</p>
+    </div>
+</div>
+
+<div class="gold-divider">
+    <div class="line"></div>
+    <div class="diamond"></div>
+    <div class="line"></div>
+</div>
+
+<!-- ========== PART 2: 5 COACHING POINTS ========== -->
+<div class="section">
+    <div class="section-label">Part Two</div>
+    <div class="section-title">Five Revision Strategies</div>
+
+    <div class="tips-grid">
+
+        <!-- Tip 1 -->
+        <div class="tip-card">
+            <div class="tip-number">01</div>
+            <div class="tip-title">Show, Don’t Tell — Let Readers Feel the Cold</div>
+            <div class="tip-body">
+                <p><strong>Why it matters:</strong> In Grades 6–7, the most common feedback from English teachers is "I want to <em>experience</em> the scene, not be <em>told</em> about it." Temperature numbers ("4 degrees Celsius") give facts; shivering skin and biting wind give <em>feelings</em>.</p>
+                <p style="margin-top:12px"><strong>What to look for in your draft:</strong> Any place where you state an emotion or a physical condition directly. Ask: "Can I replace this with a sensory detail—something seen, heard, felt, or smelled?"</p>
+
+                <div class="compare-pair">
+                    <div class="compare-block before">
+                        <div class="compare-label">Original (Tell)</div>
+                        <div class="compare-text">"It was about 4 degrees Celsius."</div>
+                    </div>
+                    <div class="compare-block after">
+                        <div class="compare-label">Revised (Show)</div>
+                        <div class="compare-text">"The wind howled, slicing through every layer of clothing until it felt as though it were cutting straight to bone."</div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Tip 2 -->
+        <div class="tip-card">
+            <div class="tip-number">02</div>
+            <div class="tip-title">Sentence Variety — Break the "We / I / Our" Rhythm</div>
+            <div class="tip-body">
+                <p><strong>Why it matters:</strong> Strong writers vary how their sentences begin. If every sentence starts with the same subject, the writing feels flat and repetitive—something private-school teachers flag immediately.</p>
+                <p style="margin-top:12px"><strong>Three techniques to try:</strong></p>
+                <p style="margin-top:6px"><strong>(a) Start with a prepositional phrase:</strong> <em>"Without our captain, we would never have finished."</em></p>
+                <p><strong>(b) Start with a participle (-ing verb):</strong> <em>"Carrying three bags through the exhausting heat, our co-captain showed dedication that left us breathless."</em></p>
+                <p><strong>(c) Start with an adverb or transition:</strong> <em>"Yet I kept going, even when my legs begged me to stop."</em></p>
+
+                <div class="compare-pair">
+                    <div class="compare-block before">
+                        <div class="compare-label">Original (Repetitive)</div>
+                        <div class="compare-text">"Our co-captain showed true dedication... Another role that is important in the team is the flag raiser. He holds the flag... He is always at the front... He even warned..."</div>
+                    </div>
+                    <div class="compare-block after">
+                        <div class="compare-label">Revised (Varied)</div>
+                        <div class="compare-text">"Our co-captain showed dedication that left us breathless: he carried three bags through the exhausting heat. Then there was our flag raiser, always at the front, the fabric snapping above the dunes..."</div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Tip 3 -->
+        <div class="tip-card">
+            <div class="tip-number">03</div>
+            <div class="tip-title">Precise Verbs — Retire "Walk" and "Good"</div>
+            <div class="tip-body">
+                <p><strong>Why it matters:</strong> At this grade level, teachers expect students to reach beyond "good," "big," "hard," and "walk." These are fine for first drafts, but revision is where you upgrade to precise, vivid language. Private-school rubrics often have a specific "Diction / Word Choice" category.</p>
+                <p style="margin-top:12px"><strong>Your original draft used "walk/walking/walked" 11 times.</strong> That is a clear signal to pull out the thesaurus (or ask your brain: "How <em>exactly</em> did we move?")</p>
+
+                <div class="compare-pair">
+                    <div class="compare-block before">
+                        <div class="compare-label">Original</div>
+                        <div class="compare-text">"walking 68km... walking by ourselves... walk too... walk longer... walking over which sand dunes..."</div>
+                    </div>
+                    <div class="compare-block after">
+                        <div class="compare-label">Revised</div>
+                        <div class="compare-text">"trek of sixty-eight kilometers... trudged through sand... guiding us over sand ridges... slowed to a careful crawl... crossed that last kilometer..."</div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Tip 4 -->
+        <div class="tip-card">
+            <div class="tip-number">04</div>
+            <div class="tip-title">One Paragraph, One Purpose — Give Each Section a Job</div>
+            <div class="tip-body">
+                <p><strong>Why it matters:</strong> In your original draft, the second paragraph tries to do everything at once: introduce the team, describe the captain, the co-captain, the flag raiser, <em>and</em> the GPS role, plus a mistake. That is five topics in one paragraph. Readers get lost.</p>
+                <p style="margin-top:12px"><strong>The fix:</strong> Before you write (or revise) a paragraph, ask: "What is the <em>one</em> thing this paragraph must communicate?" If you find two or three answers, split them.</p>
+
+                <div class="compare-pair">
+                    <div class="compare-block before">
+                        <div class="compare-label">Original (Crowded)</div>
+                        <div class="compare-text">One paragraph covers: team introduction, captain, co-captain, flag raiser, GPS role, and navigation mistake.</div>
+                    </div>
+                    <div class="compare-block after">
+                        <div class="compare-label">Revised (Focused)</div>
+                        <div class="compare-text">Paragraph 1: Team roles (captain, co-captain, flag raiser).<br>Paragraph 2: GPS role and its challenges.<br>Paragraph 3: The proudest team moment (six-year-old girl).</div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Tip 5 -->
+        <div class="tip-card">
+            <div class="tip-number">05</div>
+            <div class="tip-title">A Consistent Motif — Make Your Opening and Closing Talk to Each Other</div>
+            <div class="tip-body">
+                <p><strong>Why it matters:</strong> Advanced middle-school writing uses a recurring image or symbol (called a <em>motif</em>) to tie the whole essay together. Your original draft opened with stars, jumped to a book in the middle, and then tried to mash both together at the end. The result felt disconnected.</p>
+                <p style="margin-top:12px"><strong>The strategy:</strong> Pick <em>one</em> central image—in your case, the <strong>stars</strong>—and sprinkle references to it throughout. Then the closing line feels earned, not forced.</p>
+
+                <div class="compare-pair">
+                    <div class="compare-block before">
+                        <div class="compare-label">Original (Mixed Metaphors)</div>
+                        <div class="compare-text">Open: stars. Middle: no star imagery. Close: "life is like a book... written in sweet, sweat, and stars." (Stars reappear suddenly.)</div>
+                    </div>
+                    <div class="compare-block after">
+                        <div class="compare-label">Revised (Consistent Motif)</div>
+                        <div class="compare-text">Open: "we are those stars." Middle: "the fabric snapping above the dunes" (like a guiding light). Close: "you find that you have become one of those stars—small, perhaps, but shining."</div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+    </div>
+
+    <div class="coach-box" style="margin-top:40px">
+        <div class="coach-box-title">Next Step for Kelly</div>
+        <p>Read through the <strong>Revised Draft</strong> above and the <strong>Five Strategies</strong> carefully. Then, open a fresh document and rewrite your own version—keeping your original story and characters, but applying the techniques that feel right to <em>your</em> voice. When you are finished, send the new draft back. I will give you a second round of feedback focused on polish and flair.</p>
+    </div>
+</div>
+
+<!-- ========== FOOTER ========== -->
+<div class="footer">
+    Writing Coach Review &middot; Desert Odyssey &middot; May 11, 2026
+</div>
+
+</body>
+</html>

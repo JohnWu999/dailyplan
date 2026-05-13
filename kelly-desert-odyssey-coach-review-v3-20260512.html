@@ -1,0 +1,829 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Desert Odyssey — Writing Coach Review for Kelly</title>
+    <link href="https://fonts.googleapis.com/css2?family=Noto+Serif+SC:wght@400;600;700&family=Cormorant+Garamond:ital,wght@0,400;0,600;1,400&family=Source+Sans+Pro:wght@400;600&display=swap" rel="stylesheet">
+    <style>
+        :root {
+            --burnt-orange: #E85D04;
+            --gold: #C9A961;
+            --cream: #FAF7F2;
+            --ink: #2C2420;
+            --ink-light: #5C534A;
+            --ink-lighter: #8A7E72;
+            --border-gold: rgba(201, 169, 97, 0.35);
+            --idea-color: #8B5CF6;
+            --word-color: #0891B2;
+            --structure-color: #E85D04;
+        }
+
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+
+        html { scroll-behavior: smooth; }
+
+        body {
+            font-family: 'Source Sans Pro', 'Noto Serif SC', sans-serif;
+            background: var(--cream);
+            color: var(--ink);
+            line-height: 1.85;
+            font-size: 16px;
+        }
+
+        /* ========== HEADER ========== */
+        .header {
+            text-align: center;
+            padding: 70px 20px 45px;
+            background: linear-gradient(180deg, #FFF 0%, var(--cream) 100%);
+            border-bottom: 1px solid var(--border-gold);
+        }
+
+        .header-badge {
+            display: inline-block;
+            font-size: 11px;
+            letter-spacing: 3px;
+            text-transform: uppercase;
+            color: var(--gold);
+            border: 1px solid var(--border-gold);
+            padding: 7px 22px;
+            margin-bottom: 24px;
+        }
+
+        .header h1 {
+            font-family: 'Cormorant Garamond', serif;
+            font-size: 44px;
+            font-weight: 600;
+            color: var(--ink);
+            letter-spacing: 1px;
+            margin-bottom: 10px;
+        }
+
+        .header-subtitle {
+            font-size: 15px;
+            color: var(--ink-light);
+            font-family: 'Cormorant Garamond', serif;
+            font-style: italic;
+        }
+
+        .header-divider {
+            width: 50px;
+            height: 2px;
+            background: var(--gold);
+            margin: 28px auto 0;
+        }
+
+        /* ========== HIGHLIGHTS SECTION ========== */
+        .highlights {
+            max-width: 760px;
+            margin: 0 auto;
+            padding: 50px 28px 30px;
+        }
+
+        .highlights-label {
+            font-size: 11px;
+            letter-spacing: 2.5px;
+            text-transform: uppercase;
+            color: var(--gold);
+            margin-bottom: 8px;
+            font-weight: 600;
+        }
+
+        .highlights-title {
+            font-family: 'Cormorant Garamond', serif;
+            font-size: 32px;
+            font-weight: 600;
+            color: var(--burnt-orange);
+            margin-bottom: 28px;
+            padding-bottom: 14px;
+            border-bottom: 1px solid var(--border-gold);
+            display: flex;
+            align-items: center;
+            gap: 12px;
+        }
+
+        .highlights-title::before {
+            content: '';
+            display: inline-block;
+            width: 7px;
+            height: 7px;
+            background: var(--gold);
+            transform: rotate(45deg);
+        }
+
+        .highlight-card {
+            background: #fff;
+            border-radius: 4px;
+            padding: 28px 32px;
+            margin-bottom: 16px;
+            box-shadow: 0 2px 16px rgba(44,36,32,0.04);
+            border-left: 3px solid var(--gold);
+        }
+
+        .highlight-card p {
+            font-size: 15.5px;
+            color: var(--ink-light);
+            line-height: 1.85;
+        }
+
+        .highlight-card strong {
+            color: var(--ink);
+        }
+
+        .highlight-card em {
+            color: var(--burnt-orange);
+            font-style: italic;
+        }
+
+        /* ========== SECTIONS ========== */
+        .section {
+            max-width: 760px;
+            margin: 0 auto;
+            padding: 50px 28px;
+        }
+
+        .section-label {
+            font-size: 11px;
+            letter-spacing: 2.5px;
+            text-transform: uppercase;
+            color: var(--gold);
+            margin-bottom: 8px;
+            font-weight: 600;
+        }
+
+        .section-title {
+            font-family: 'Cormorant Garamond', serif;
+            font-size: 32px;
+            font-weight: 600;
+            color: var(--burnt-orange);
+            margin-bottom: 36px;
+            padding-bottom: 14px;
+            border-bottom: 1px solid var(--border-gold);
+            display: flex;
+            align-items: center;
+            gap: 12px;
+        }
+
+        .section-title::before {
+            content: '';
+            display: inline-block;
+            width: 7px;
+            height: 7px;
+            background: var(--gold);
+            transform: rotate(45deg);
+        }
+
+        /* ========== ORIGINAL ESSAY ========== */
+        .essay-original {
+            background: #fff;
+            padding: 44px 48px;
+            border-radius: 4px;
+            box-shadow: 0 2px 20px rgba(44,36,32,0.05);
+            position: relative;
+        }
+
+        .essay-original .essay-title {
+            font-family: 'Cormorant Garamond', serif;
+            font-size: 28px;
+            font-weight: 600;
+            text-align: center;
+            margin-bottom: 6px;
+            color: var(--ink);
+        }
+
+        .essay-original .essay-author {
+            text-align: center;
+            font-size: 14px;
+            color: var(--ink-lighter);
+            margin-bottom: 36px;
+            font-style: italic;
+        }
+
+        .essay-original p {
+            font-family: 'Source Sans Pro', sans-serif;
+            font-size: 16.5px;
+            line-height: 1.9;
+            color: var(--ink);
+            margin-bottom: 18px;
+            text-align: justify;
+        }
+
+        .essay-original p + p {
+            text-indent: 2em;
+        }
+
+        /* Anchor markers in essay */
+        .para-anchor {
+            position: relative;
+            padding-left: 16px;
+            border-left: 2px solid transparent;
+            transition: all 0.3s ease;
+        }
+
+        .para-anchor:target {
+            border-left-color: var(--gold);
+            background: rgba(201, 169, 97, 0.06);
+            padding: 12px 12px 12px 20px;
+            margin: -12px -12px 6px -12px;
+            border-radius: 0 4px 4px 0;
+        }
+
+        .para-num {
+            position: absolute;
+            left: -40px;
+            top: 2px;
+            width: 28px;
+            height: 28px;
+            background: var(--cream);
+            border: 1px solid var(--border-gold);
+            border-radius: 50%;
+            font-size: 12px;
+            font-weight: 600;
+            color: var(--gold);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            cursor: pointer;
+            text-decoration: none;
+            transition: all 0.2s;
+        }
+
+        .para-num:hover {
+            background: var(--gold);
+            color: #fff;
+        }
+
+        /* ========== COACH NOTE ========== */
+        .coach-note {
+            background: linear-gradient(135deg, #fff 0%, #fdfbf7 100%);
+            border-left: 3px solid var(--gold);
+            padding: 18px 24px;
+            margin: 30px 0 10px;
+            font-size: 14.5px;
+            color: var(--ink-light);
+            line-height: 1.75;
+        }
+
+        .coach-note strong {
+            color: var(--burnt-orange);
+            font-weight: 600;
+        }
+
+        /* ========== TIP CARDS ========== */
+        .tip-card {
+            background: #fff;
+            border-radius: 4px;
+            padding: 32px;
+            margin-bottom: 24px;
+            box-shadow: 0 2px 16px rgba(44,36,32,0.04);
+            border-top: 3px solid var(--gold);
+            position: relative;
+        }
+
+        .tip-card:target {
+            box-shadow: 0 4px 24px rgba(232, 93, 4, 0.1);
+            border-top-color: var(--burnt-orange);
+        }
+
+        .tip-header {
+            display: flex;
+            align-items: flex-start;
+            justify-content: space-between;
+            margin-bottom: 16px;
+            flex-wrap: wrap;
+            gap: 10px;
+        }
+
+        .tip-left {
+            display: flex;
+            align-items: center;
+            gap: 14px;
+        }
+
+        .tip-number {
+            font-family: 'Cormorant Garamond', serif;
+            font-size: 36px;
+            font-weight: 600;
+            color: var(--border-gold);
+            line-height: 1;
+        }
+
+        .tip-meta {
+            display: flex;
+            flex-direction: column;
+            gap: 4px;
+        }
+
+        .tip-title {
+            font-size: 18px;
+            font-weight: 700;
+            color: var(--ink);
+            line-height: 1.35;
+        }
+
+        .tip-type {
+            display: inline-block;
+            font-size: 10.5px;
+            letter-spacing: 1.5px;
+            text-transform: uppercase;
+            font-weight: 700;
+            padding: 4px 10px;
+            border-radius: 3px;
+        }
+
+        .tip-type.idea {
+            background: rgba(139, 92, 246, 0.1);
+            color: var(--idea-color);
+        }
+
+        .tip-type.word {
+            background: rgba(8, 145, 178, 0.1);
+            color: var(--word-color);
+        }
+
+        .tip-type.structure {
+            background: rgba(232, 93, 4, 0.08);
+            color: var(--structure-color);
+        }
+
+        .tip-body {
+            font-size: 15px;
+            line-height: 1.8;
+            color: var(--ink-light);
+        }
+
+        .tip-body p {
+            margin-bottom: 12px;
+        }
+
+        .tip-body p:last-child {
+            margin-bottom: 0;
+        }
+
+        .tip-body strong {
+            color: var(--ink);
+            font-weight: 600;
+        }
+
+        .tip-body em {
+            color: var(--ink);
+            font-style: italic;
+        }
+
+        .tip-quote {
+            background: var(--cream);
+            padding: 14px 18px;
+            border-radius: 4px;
+            margin: 14px 0;
+            font-size: 14.5px;
+            color: var(--ink-light);
+            border-left: 2px solid var(--border-gold);
+            font-style: italic;
+        }
+
+        .tip-actions {
+            margin-top: 18px;
+            display: flex;
+            gap: 10px;
+            flex-wrap: wrap;
+        }
+
+        .jump-link {
+            display: inline-flex;
+            align-items: center;
+            gap: 6px;
+            font-size: 13px;
+            color: var(--burnt-orange);
+            text-decoration: none;
+            padding: 6px 14px;
+            border: 1px solid rgba(232, 93, 4, 0.25);
+            border-radius: 4px;
+            transition: all 0.2s;
+            font-weight: 600;
+        }
+
+        .jump-link:hover {
+            background: var(--burnt-orange);
+            color: #fff;
+        }
+
+        /* ========== MINI EXERCISES ========== */
+        .mini-exercise {
+            background: #fff;
+            border: 1px dashed var(--border-gold);
+            padding: 20px 24px;
+            margin: 16px 0;
+            border-radius: 4px;
+        }
+
+        .mini-exercise-label {
+            font-size: 11px;
+            letter-spacing: 1.5px;
+            text-transform: uppercase;
+            color: var(--gold);
+            font-weight: 700;
+            margin-bottom: 10px;
+        }
+
+        .mini-exercise p {
+            font-size: 14.5px;
+            color: var(--ink-light);
+            line-height: 1.75;
+            margin: 0;
+        }
+
+        /* ========== DIVIDER ========== */
+        .gold-divider {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 16px;
+            margin: 40px 0;
+        }
+
+        .gold-divider .line {
+            width: 80px;
+            height: 1px;
+            background: var(--border-gold);
+        }
+
+        .gold-divider .diamond {
+            width: 6px;
+            height: 6px;
+            background: var(--gold);
+            transform: rotate(45deg);
+        }
+
+        /* ========== LEGEND ========== */
+        .legend-bar {
+            display: flex;
+            gap: 20px;
+            flex-wrap: wrap;
+            margin-bottom: 30px;
+            padding: 14px 18px;
+            background: #fff;
+            border-radius: 4px;
+            box-shadow: 0 1px 8px rgba(44,36,32,0.04);
+        }
+
+        .legend-item {
+            display: flex;
+            align-items: center;
+            gap: 8px;
+            font-size: 13px;
+            color: var(--ink-light);
+        }
+
+        .legend-dot {
+            width: 10px;
+            height: 10px;
+            border-radius: 2px;
+        }
+
+        .legend-dot.idea { background: var(--idea-color); }
+        .legend-dot.word { background: var(--word-color); }
+        .legend-dot.structure { background: var(--structure-color); }
+
+        /* ========== CLOSING ========== */
+        .closing-section {
+            max-width: 760px;
+            margin: 0 auto;
+            padding: 0 28px 60px;
+        }
+
+        .closing-card {
+            background: linear-gradient(135deg, #fffdf8 0%, #fff 100%);
+            border: 1px solid var(--border-gold);
+            border-radius: 4px;
+            padding: 36px 40px;
+            text-align: center;
+        }
+
+        .closing-card p {
+            font-family: 'Cormorant Garamond', serif;
+            font-size: 17px;
+            color: var(--ink-light);
+            line-height: 1.9;
+            margin-bottom: 16px;
+        }
+
+        .closing-card p:last-child {
+            margin-bottom: 0;
+        }
+
+        .closing-card strong {
+            color: var(--burnt-orange);
+        }
+
+        .closing-card em {
+            color: var(--ink);
+            font-style: italic;
+        }
+
+        /* ========== FOOTER ========== */
+        .footer {
+            text-align: center;
+            padding: 50px 30px 70px;
+            border-top: 1px solid var(--border-gold);
+            color: var(--ink-lighter);
+            font-size: 13px;
+            letter-spacing: 0.5px;
+        }
+
+        /* ========== RESPONSIVE ========== */
+        @media (max-width: 640px) {
+            .header h1 { font-size: 32px; }
+            .section { padding: 36px 18px; }
+            .highlights { padding: 36px 18px 20px; }
+            .closing-section { padding: 0 18px 60px; }
+            .essay-original { padding: 28px 24px; }
+            .tip-card { padding: 24px; }
+            .para-num { display: none; }
+        }
+    </style>
+</head>
+<body>
+
+<!-- ========== HEADER ========== -->
+<div class="header">
+    <div class="header-badge">Writing Coach Review</div>
+    <h1>Desert Odyssey</h1>
+    <div class="header-subtitle">By Kelly Zhang &middot; Draft V3 &middot; Coach: Round 3 Feedback</div>
+    <div class="header-divider"></div>
+</div>
+
+<!-- ========== PART 0: HIGHLIGHTS ========== -->
+<div class="highlights">
+    <div class="highlights-label">What Worked</div>
+    <div class="highlights-title">V2 → V3 Progress Highlights</div>
+
+    <div class="highlight-card">
+        <p><strong>★ The six-year-old girl's scene is now the emotional centrepiece of the essay.</strong> You expanded it from a passing mention into a full paragraph — the tall sand dune, the ferociously blowing wind, tears streaking down to her chin, the戴手套的手 brushing away tears, teammates waiting and encouraging her. <em>This is the moment readers will remember.</em></p>
+    </div>
+
+    <div class="highlight-card">
+        <p><strong>★ The star metaphor gains a companion.</strong> In V2, you had only the stars metaphor closing the essay. Now you layer it with <em>the dust</em> — "each grain of sand is like a small chapter." This double motif gives the ending a richer, more resonant texture. The book metaphor from earlier drafts has also been sharpened into something more precise.</p>
+    </div>
+
+    <div class="highlight-card">
+        <p><strong>★ The GPS role has gained emotional honesty.</strong> "Sometimes, I make mistakes. I am not really satisfied by that" — this willingness to admit imperfection makes you a more believable narrator. V2 had a polished-but-distant quality; V3 feels more like a real person reflecting on a real experience.</p>
+    </div>
+
+    <div class="highlight-card">
+        <p><strong>★ Sensory details are starting to anchor the abstract.</strong> "Wind whooshed making the air biting into my skin" is a genuine sensory sentence — the cold becomes a thing that acts, that has teeth. This is exactly the direction we want to keep pushing.</p>
+    </div>
+
+    <div class="highlight-card">
+        <p><strong>★ Vocabulary precision is improving.</strong> "Trudging through sand," "plodding in the middle of nowhere," "biting into my skin" — these show a writer who is starting to choose words deliberately rather than reaching for the first one that comes.</p>
+    </div>
+</div>
+
+<div class="gold-divider">
+    <div class="line"></div>
+    <div class="diamond"></div>
+    <div class="line"></div>
+</div>
+
+<!-- ========== PART 1: ORIGINAL ESSAY ========== -->
+<div class="section">
+    <div class="section-label">Part One</div>
+    <div class="section-title">Your Draft V3 — Preserved Exactly</div>
+
+    <div class="essay-original">
+        <div class="essay-title">Desert Odyssey</div>
+        <div class="essay-author">By: Kelly Zhang</div>
+
+        <p id="p1" class="para-anchor">
+            <a href="#tip3" class="para-num" title="See Coach Note">1</a>
+            Walking in the desert, miles and miles away from civilisation. No Wi-Fi, no roads, only rock, dust, and sand. This is the Gobi desert. It is famous for its stars and sky, holding millions of bright stars. Believe it or not, we are those stars shining in the big vast sky. We may look small — but together, we can light up the entire sky.
+        </p>
+
+        <p id="p2" class="para-anchor">
+            <a href="#tip4" class="para-num" title="See Coach Note">2</a>
+            In this trip of walking 68km, we are not walking by ourselves. Kids from all over China came to join for walking 68km, not only that, a six-year old kid came to walk too! We were a team. A good team needs a great captain and co-captain. The captain is kind, understands what a strong team looks like, and most importantly, has leadership. Without a captain, our team would not have finished the 68km. Our athletic co-captain showed true dedication by carrying three bags, despite the exhausting heat. Another role that is important in the team is the flag raiser. He holds the flag up high to show teammates where the team is if someone falls behind. He is always at the front and helps to carry bags. He even warned the co-captain not to carry too many bags—but the co-captain did not listen, and as a result he grew exhausted and fell behind the team. Because we are in the desert, we need a GPS. I was the GPS, and my role is to guide the team. It may sound easy, but it is actually hard. Knowing which way to go climbing over which sand dunes… Sometimes, I make mistakes. I am not really satisfied by that because when I lead the group to the wrong direction, then we will have to find the right way and walk longer.
+        </p>
+
+        <p id="p3" class="para-anchor">
+            <a href="#tip1" class="para-num" title="See Coach Note">3</a>
+            When we were at big and tall hills, the group had to slow down to carefully cross these hills in case of anyone getting hurt. It was fun, being the GPS also making new friends! Our team was really successful. Our biggest advantage is we encouraged the six-year old kid to finish the 68km. One time, there was a tall sand dune and the whole group had to cross over it, the wind was blowing ferociously making the team hard to go over that tall dune. The six-year old kid stopped at the middle of the way climbing, tears was streaking down to her chin. She think it is too hard for her to climb over this dune. Our teammates waited and encouraged her to not give up, we are about to finish this day! She brushed away her tears with her gloved hand and started to climb again. Our team was proud of her when she finished. Her father said that 50% of her credit is by herself and the other 50% is from the team that encouraged her to finish this 68km.
+        </p>
+
+        <p id="p4" class="para-anchor">
+            <a href="#tip2" class="para-num" title="See Coach Note">4</a>
+            Beyond what we achieved together, the desert had its own private lessons waiting for me. In the desert, the day was hot and in the night was like ice. I not only needed to adapt to the weather, but also to overcome the challenge of walking for long hours. Three days of trudging through sand and scorching heat ground me down to my last drop of energy. Carrying a bag, plodding in the middle of nowhere, the sun as my only companion. In the night, the wind whooshed making the air biting into my skin, my hands were like ice. One day I woke up at 4:00 a.m, and outside it was like a refrigerator. I couldn't believe it. In this extreme weather the team had to wake up and walk! I was sleepy and drowsy, when the cold air slapped me on the face I instantly woke up. After finishing this 68km I was happy and proud of myself. I learned that perseverance doesn't just carry you through 68km—on the other side, it reshapes who you are on the other side.
+        </p>
+
+        <p id="p5" class="para-anchor">
+            <a href="#tip5" class="para-num" title="See Coach Note">5</a>
+            Looking back at the hills I went over, the roads I stumbled on, the challenges I overcame, I realise that the stars shining above us are not just there to shine. Every star, no matter big or small is there to remind you about the things you to reach until here. Each grain of sand in the Gobi desert is like a small chapter of my life, each of them written in sweat, stars, and dust. All the struggles and happiness are in there, they made me who I am today.
+        </p>
+    </div>
+
+    <div class="coach-note">
+        <strong>How to use this page:</strong> Each paragraph above has a numbered circle on the left. Click any number to jump to the coach note for that section. In Part Two, click any "Jump to Paragraph" button to come back to the exact spot in your draft. <strong>Your words are kept exactly as you wrote them.</strong>
+    </div>
+</div>
+
+<div class="gold-divider">
+    <div class="line"></div>
+    <div class="diamond"></div>
+    <div class="line"></div>
+</div>
+
+<!-- ========== PART 2: COACH NOTES ========== -->
+<div class="section">
+    <div class="section-label">Part Two</div>
+    <div class="section-title">Coach Notes</div>
+
+    <div class="legend-bar">
+        <div class="legend-item">
+            <div class="legend-dot idea"></div>
+            <span><strong>Idea</strong> — Content, creativity, depth</span>
+        </div>
+        <div class="legend-item">
+            <div class="legend-dot word"></div>
+            <span><strong>Keywords</strong> — Word choice, grammar, precision</span>
+        </div>
+        <div class="legend-item">
+            <div class="legend-dot structure"></div>
+            <span><strong>Structure</strong> — Organisation, flow, paragraph focus</span>
+        </div>
+    </div>
+
+    <!-- TIP 1 -->
+    <div class="tip-card" id="tip1">
+        <div class="tip-header">
+            <div class="tip-left">
+                <div class="tip-number">01</div>
+                <div class="tip-meta">
+                    <div class="tip-title">Zoom the Camera Closer on the Girl's Face</div>
+                    <span class="tip-type idea">Idea</span>
+                </div>
+            </div>
+        </div>
+        <div class="tip-body">
+            <p><strong>What I noticed:</strong> The six-year-old girl's paragraph (Paragraph 3) is the best scene in the essay — but it still reads like a summary of what happened rather than a moment-by-moment experience. You have the right ingredients (wind, tears, gloved hand, teammates), but the camera is still a wide shot. At 7th grade level, you can push in closer.</p>
+
+            <div class="tip-quote">
+                "The six-year old kid stopped at the middle of the way climbing, tears was streaking down to her chin. She think it is too hard for her to climb over this dune."
+            </div>
+
+            <p><strong>Your mission:</strong> In this one paragraph, replace two "telling" phrases with one body-part close-up each. The wind is ferociously blowing — what does she feel on her face at that exact moment? Her tears are streaking — do they hit her collar, her jacket zipper, the inside of her glove? Pick two body-part moments and write them in.</p>
+
+            <div class="mini-exercise">
+                <div class="mini-exercise-label">Try This</div>
+                <p>Fill in the blanks without finishing the thought first:<br>
+                Her _____ (body part) was _____ (physical sensation).<br>
+                The wind _____ (verb) her _____ (body part) like _____ (simile).<br>
+                When she brushed her face, her glove came away _____ (detail).</p>
+            </div>
+        </div>
+        <div class="tip-actions">
+            <a href="#p3" class="jump-link">← Jump to Paragraph 3</a>
+        </div>
+    </div>
+
+    <!-- TIP 2 -->
+    <div class="tip-card" id="tip2">
+        <div class="tip-header">
+            <div class="tip-left">
+                <div class="tip-number">02</div>
+                <div class="tip-meta">
+                    <div class="tip-title">Two More "Tell" Phrases to Replace</div>
+                    <span class="tip-type word">Keywords</span>
+                </div>
+            </div>
+        </div>
+        <div class="tip-body">
+            <p><strong>What I noticed:</strong> The sensory work in Paragraph 4 is mostly excellent — "the wind whooshed making the air biting into my skin" and "my hands were like ice" are both strong. But two older habits are still hiding in the paragraph:</p>
+
+            <div class="tip-quote">
+                "despite the exhausting heat" (Paragraph 2) and "In this extreme weather" (Paragraph 4)
+            </div>
+
+            <p><strong>Your mission:</strong> Both tell us the conditions were harsh without letting us feel it. The good news: you already know how to do this — you did it with "air biting into my skin." Apply that same move to heat and to "extreme weather."</p>
+
+            <div class="mini-exercise">
+                <div class="mini-exercise-label">Try This</div>
+                <p>For <em>exhausting heat</em>, try one of these substitution strategies:<br>
+                — Replace the adjective with what the heat did to a body part<br>
+                — Replace it with what the heat made impossible to do<br>
+                For <em>extreme weather</em>, replace it with one specific thing the cold or heat forced you to do that ordinary weather would not.</p>
+            </div>
+        </div>
+        <div class="tip-actions">
+            <a href="#p2" class="jump-link">← Jump to Paragraph 2</a>
+            <a href="#p4" class="jump-link">← Jump to Paragraph 4</a>
+        </div>
+    </div>
+
+    <!-- TIP 3 -->
+    <div class="tip-card" id="tip3">
+        <div class="tip-header">
+            <div class="tip-left">
+                <div class="tip-number">03</div>
+                <div class="tip-meta">
+                    <div class="tip-title">Openings: The First Sentence Needs a Hook</div>
+                    <span class="tip-type structure">Structure</span>
+                </div>
+            </div>
+        </div>
+        <div class="tip-body">
+            <p><strong>What I noticed:</strong> Paragraph 1 opens with "Walking in the desert, miles and miles away from civilisation." This is a functional sentence — it tells us where and what — but it doesn't pull the reader in yet. Compare it to your own writing later in the essay: "I was sleepy and drowsy, when the cold air slapped me on the face" — that one has energy because the cold does something.</p>
+
+            <div class="tip-quote">
+                "Walking in the desert, miles and miles away from civilisation."
+            </div>
+
+            <p><strong>Your mission:</strong> Write three different first sentences for Paragraph 1. Each one should make the reader feel something in their body in the first five words — not "I walked" or "The desert was." One should be about the heat, one about the silence, one about the scale of the space. You only need to pick one for your final draft, but writing three gives you options.</p>
+
+            <div class="mini-exercise">
+                <div class="mini-exercise-label">Try This</div>
+                <p>Start each sentence with a physical sensation, a sound, or a scale comparison — not with "Walking" or "In the desert":<br>
+                _____ (sensation/sound/scale), _____ (what you noticed/experienced).</p>
+            </div>
+        </div>
+        <div class="tip-actions">
+            <a href="#p1" class="jump-link">← Jump to Paragraph 1</a>
+        </div>
+    </div>
+
+    <!-- TIP 4 -->
+    <div class="tip-card" id="tip4">
+        <div class="tip-header">
+            <div class="tip-left">
+                <div class="tip-number">04</div>
+                <div class="tip-meta">
+                    <div class="tip-title">Three Grammar Errors to Fix</div>
+                    <span class="tip-type word">Keywords</span>
+                </div>
+            </div>
+        </div>
+        <div class="tip-body">
+            <p><strong>What I noticed:</strong> These are small fixes but they matter — a reader (or an admissions officer) who sees these will wonder if the writer rushed. All three can be caught by reading aloud:</p>
+
+            <div class="tip-quote">
+                1. "tears was streaking" → should be "tears were streaking" (plural subject)<br>
+                2. "She think it is too hard" → should be "She thinks it is too hard" (third-person singular verb)<br>
+                3. "the things you to reach until here" → grammatically incomplete — what is the subject doing? Reaching what?
+            </div>
+
+            <p><strong>Your mission:</strong> Read Paragraph 3 and Paragraph 5 aloud. Your ear will catch the first two. For the third, trace the sentence from "Every star" to the end: "is there to remind you about the things you to reach until here." What is you doing in this sentence? Reaching what? Rewrite that clause so it makes a complete, grammatical statement. A version that works: "is there to remind you of how far you have come."</p>
+        </div>
+        <div class="tip-actions">
+            <a href="#p3" class="jump-link">← Jump to Paragraph 3</a>
+            <a href="#p5" class="jump-link">← Jump to Paragraph 5</a>
+        </div>
+    </div>
+
+    <!-- TIP 5 -->
+    <div class="tip-card" id="tip5">
+        <div class="tip-header">
+            <div class="tip-left">
+                <div class="tip-number">05</div>
+                <div class="tip-meta">
+                    <div class="tip-title">Closing: Narrow the Focus, Not the Meaning</div>
+                    <span class="tip-type structure">Structure</span>
+                </div>
+            </div>
+        </div>
+        <div class="tip-body">
+            <p><strong>What I noticed:</strong> The closing (Paragraph 5) tries to do three things at once: comment on stars, comment on sand as chapters, and make a statement about identity. The stars metaphor and the sand-as-chapters metaphor are both strong — but presenting them back-to-back without breathing room makes the paragraph feel rushed rather than powerful.</p>
+
+            <div class="tip-quote">
+                "Looking back at the hills I went over, the roads I stumbled on, the challenges I overcame, I realise that the stars shining above us are not just there to shine. Every star, no matter big or small is there to remind you about the things you to reach until here. Each grain of sand in the Gobi desert is like a small chapter of my life..."
+            </div>
+
+            <p><strong>Your mission:</strong> Choose one of the two closing metaphors (stars OR sand-as-chapters) to lead the final sentence. The other can be a short phrase — one line at most. Strong closings narrow to one powerful image, not a list of two. Ask yourself: when a reader closes the essay, which image do I want them to see in their head — the stars, or the sand?</p>
+
+            <div class="mini-exercise">
+                <div class="mini-exercise-label">Try This</div>
+                <p>Write the final sentence of the essay using only one of these images:<br>
+                — One specific star (not "stars" plural) and what it does<br>
+                — One specific grain of sand and what is written on it<br>
+                No metaphors about books, chapters, or identity. Just one image, precisely described.</p>
+            </div>
+        </div>
+        <div class="tip-actions">
+            <a href="#p5" class="jump-link">← Jump to Paragraph 5</a>
+        </div>
+    </div>
+
+</div>
+
+<!-- ========== PART 3: CLOSING ========== -->
+<div class="closing-section">
+    <div class="closing-card">
+        <p>These are <strong>invitations</strong>, not corrections. You have written something genuinely moving — the six-year-old girl's moment of doubt and recommitment is the kind of scene that stays with a reader. The desert sounds real because you were there.</p>
+        <p>Pick <strong>2–3 notes</strong> that excite you most. Try them. See what happens. The gap between V3 and a final polished draft is not talent — it is one more careful pass with these notes in your hand.</p>
+        <p>Send Draft V4 when you are ready. I will be here.</p>
+    </div>
+</div>
+
+<!-- ========== FOOTER ========== -->
+<div class="footer">
+    Desert Odyssey &middot; Kelly Zhang &middot; Draft V3 Coach Review &middot; Writing Coach: Round 3
+</div>
+
+</body>
+</html>
