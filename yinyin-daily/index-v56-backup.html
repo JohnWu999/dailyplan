@@ -112,21 +112,8 @@ textarea{width:100%;padding:12px;border:1px solid var(--border);border-radius:10
 .row{display:grid;grid-template-columns:1fr 1fr;gap:24px;margin-bottom:24px;align-items:stretch}
 .row-4{display:grid;grid-template-columns:repeat(4,1fr);gap:24px;margin-bottom:24px}
 .card-col{display:flex;flex-direction:column;gap:16px;height:100%}.card-col>.card{flex:1}
-  @media(max-width:1200px){.row-4{grid-template-columns:repeat(2,1fr)}.row{grid-template-columns:1fr}}
-  @media(max-width:768px){.row-4{grid-template-columns:1fr}.row{grid-template-columns:1fr}.container{padding:16px}}
-  /* 手机上：第1行4卡片改为单列排列，宽度一致，高度适中 */
-  @media(max-width:600px){
-    .top4-grid{grid-template-columns:1fr!important;align-items:start!important}
-    .top4-grid>.card{max-height:320px;overflow-y:auto}
-  }
-  /* 平板：2列 */
-  @media(min-width:601px) and (max-width:900px){
-    .top4-grid{grid-template-columns:repeat(2,1fr)!important}
-  }
-  /* 手机上：第2行（觉察+孩子）改为1列 */
-  @media(max-width:600px){
-    .two-col-grid{grid-template-columns:1fr!important}
-  }
+@media(max-width:1200px){.row-4{grid-template-columns:repeat(2,1fr)}.row{grid-template-columns:1fr}}
+@media(max-width:768px){.row-4{grid-template-columns:1fr}.row{grid-template-columns:1fr}.container{padding:16px}}
 .kanban-row{display:grid;grid-template-columns:1fr 1fr;gap:12px}.kanban-col-full{grid-column:1/-1}
 #daily-quote{background:#E85D04;color:#fff;text-align:center;padding:10px 16px;border-radius:10px;margin-top:12px;font-size:13px;line-height:1.5;font-weight:500;letter-spacing:0.5px}
 .daily-quote-box{text-align:center;padding:14px 16px;margin-top:12px;background:linear-gradient(135deg,#F5F0E8,#FAF7F2);border-radius:10px;border:1px solid #C9A961;position:relative}
@@ -189,58 +176,28 @@ textarea{width:100%;padding:12px;border:1px solid var(--border);border-radius:10
 <div class='container'>
 
 <!-- ==================== 第1行：今日状态 | 起居录 | 闪念胶囊 | 复盘 ==================== -->
-<div class='top4-grid' style='display:grid;grid-template-columns:1fr 1fr 1fr 1fr;gap:20px;margin-bottom:24px;align-items:stretch'>
+<div class='row' style='display:grid;grid-template-columns:1fr 1fr 1fr 1fr;gap:20px;margin-bottom:24px;align-items:stretch'>
 
   <!-- Card 1: 今日状态 -->
   <div class='card' style='flex:1;display:flex;flex-direction:column'>
-    <div class='card-title'>
-      <span class='icon' style='background:#F5E6D3;color:var(--primary)'>今</span>今日状态
-      <div style='margin-left:auto;display:flex;gap:4px'>
-        <button id='btn-year' onclick='switchStatusDate(this,"year")' style='padding:2px 8px;border:1px solid var(--border);background:var(--bg);border-radius:6px;font-size:11px;cursor:pointer'>年</button>
-        <button id='btn-month' onclick='switchStatusDate(this,"month")' style='padding:2px 8px;border:1px solid var(--border);background:var(--bg);border-radius:6px;font-size:11px;cursor:pointer'>月</button>
-        <button id='btn-day' onclick='switchStatusDate(this,"day")' style='padding:2px 8px;border:1px solid var(--primary);background:var(--primary);color:white;border-radius:6px;font-size:11px;cursor:pointer'>日</button>
-      </div>
+    <div class='card-title'><span class='icon' style='background:#F5E6D3;color:var(--primary)'>今</span>今日状态</div>
+    <div style='display:flex;gap:4px;margin-bottom:5px'>
+      <div style='flex:1;text-align:center;padding:3px;background:var(--bg);border-radius:6px'><div style='font-size:10px;color:var(--text-light)'>日</div><div style='font-size:13px;font-weight:700' id='day-num'>--</div></div>
+      <div style='flex:1;text-align:center;padding:3px;background:var(--bg);border-radius:6px'><div style='font-size:10px;color:var(--text-light)'>周</div><div style='font-size:13px;font-weight:700' id='week-num'>--</div></div>
+      <div style='flex:1;text-align:center;padding:3px;background:var(--bg);border-radius:6px'><div style='font-size:10px;color:var(--text-light)'>月</div><div style='font-size:13px;font-weight:700' id='month-num'>--</div></div>
+      <div style='flex:1;text-align:center;padding:3px;background:var(--bg);border-radius:6px'><div style='font-size:10px;color:var(--text-light)'>年</div><div style='font-size:13px;font-weight:700' id='year-num'>--</div></div>
     </div>
-    <div class='status-now' style='margin-bottom:6px'>
-      <div class='label' id='now-label'>正在进行</div>
-      <div class='value' id='now-focus' style='font-size:14px;overflow:hidden;text-overflow:ellipsis;white-space:nowrap'>—</div>
+    <div style='display:flex;flex-direction:column;gap:3px;margin-bottom:6px'>
+      <button class='filter-btn active' onclick='switchReport(this,&quot;daily&quot;)' style='font-size:11px;padding:4px 8px'>日报</button>
+      <button class='filter-btn' onclick='switchReport(this,&quot;weekly&quot;)' style='font-size:11px;padding:4px 8px'>周报</button>
+      <button class='filter-btn' onclick='switchReport(this,&quot;monthly&quot;)' style='font-size:11px;padding:4px 8px'>月报</button>
+      <button class='filter-btn' onclick='switchReport(this,&quot;yearly&quot;)' style='font-size:11px;padding:4px 8px'>年报</button>
     </div>
-    <div class='status-next' style='margin-bottom:6px'>
-      <div class='label' style='font-size:11px;color:var(--text-light);margin-bottom:2px'>下一项</div>
-      <div class='value' id='next-up' style='font-size:13px;overflow:hidden;text-overflow:ellipsis;white-space:nowrap'>—</div>
-    </div>
-    <div class='suggestion' style='margin-bottom:6px;font-size:12px;line-height:1.5' id='status-suggestion'>
-      先定个小目标，开始就是进步 ✨
-    </div>
-    <div style='display:grid;grid-template-columns:1fr 1fr 1fr 1fr;gap:4px;margin-bottom:6px'>
-      <div style='text-align:center;padding:6px 2px;background:var(--bg);border-radius:8px'>
-        <div style='font-size:16px;font-weight:700;color:var(--primary)' id='stat-done'>0</div>
-        <div style='font-size:10px;color:var(--text-light)'>已完成</div>
-      </div>
-      <div style='text-align:center;padding:6px 2px;background:var(--bg);border-radius:8px'>
-        <div style='font-size:16px;font-weight:700;color:var(--info)' id='stat-projects'>0</div>
-        <div style='font-size:10px;color:var(--text-light)'>项目</div>
-      </div>
-      <div style='text-align:center;padding:6px 2px;background:var(--bg);border-radius:8px'>
-        <div style='font-size:16px;font-weight:700;color:var(--success)' id='stat-focus'>1h</div>
-        <div style='font-size:10px;color:var(--text-light)'>专注</div>
-      </div>
-      <div style='text-align:center;padding:6px 2px;background:var(--bg);border-radius:8px'>
-        <div style='font-size:16px;font-weight:700;color:var(--gold)' id='stat-streak'>1</div>
-        <div style='font-size:10px;color:var(--text-light)'>连续天</div>
-      </div>
-    </div>
-    <div style='display:flex;flex-direction:column;gap:4px;margin-bottom:6px'>
-      <button class='filter-btn active' id='btn-report-daily' onclick='switchReport(this,"daily")' style='font-size:11px;padding:5px 8px;text-align:left'>📅 日报</button>
-      <button class='filter-btn' id='btn-report-weekly' onclick='switchReport(this,"weekly")' style='font-size:11px;padding:5px 8px;text-align:left'>📆 周报</button>
-      <button class='filter-btn' id='btn-report-monthly' onclick='switchReport(this,"monthly")' style='font-size:11px;padding:5px 8px;text-align:left'>🗓️ 月报</button>
-      <button class='filter-btn' id='btn-report-yearly' onclick='switchReport(this,"yearly")' style='font-size:11px;padding:5px 8px;text-align:left'>📊 年报</button>
-    </div>
-    <div id='report-daily' class='report-panel' style='flex:1'>
-      <div style='font-size:11px;color:var(--text-light);margin-bottom:4px'>今日关键词</div>
-      <input type='text' id='daily-keyword' placeholder='一句话形容今天...' onchange='saveDailyKeyword(this.value)' style='font-size:12px;width:100%;padding:6px 8px;border:1px solid var(--border);border-radius:8px;box-sizing:border-box;margin-bottom:6px'>
-      <div style='font-size:11px;color:var(--text-light);margin-bottom:4px'>今日状态</div>
-      <select id='daily-status' style='font-size:12px;width:100%;padding:6px 8px;border:1px solid var(--border);border-radius:8px;box-sizing:border-box;margin-bottom:4px'>
+    <div id='report-daily' class='report-panel'>
+      <div style='font-size:12px;color:var(--text-light);margin-bottom:6px'>今日关键词</div>
+      <input type='text' id='daily-keyword' placeholder='一句话形容今天...' style='font-size:12px;width:100%;padding:6px 10px;border:1px solid var(--border);border-radius:8px;box-sizing:border-box;margin-bottom:6px'>
+      <div style='font-size:12px;color:var(--text-light);margin-bottom:6px'>今日状态</div>
+      <select id='daily-status' onchange='saveDaily()' style='font-size:12px;width:100%;padding:6px 10px;border:1px solid var(--border);border-radius:8px;margin-bottom:8px'>
         <option value=''>选择状态...</option>
         <option value='😊 充实满足'>😊 充实满足</option>
         <option value='😌 平静安稳'>😌 平静安稳</option>
@@ -248,40 +205,24 @@ textarea{width:100%;padding:12px;border:1px solid var(--border);border-radius:10
         <option value='😰 焦虑忙碌'>😰 焦虑忙碌</option>
         <option value='🤔 迷茫思考'>🤔 迷茫思考</option>
       </select>
-      <div style='display:flex;gap:4px'>
-        <button onclick='openReportModal("daily")' style='flex:1;padding:6px;font-size:11px;background:var(--success);color:white;border:none;border-radius:6px;cursor:pointer'>查看日报</button>
-        <button onclick='exportReport("daily")' style='flex:1;padding:6px;font-size:11px;background:var(--bg);color:var(--text);border:1px solid var(--border);border-radius:6px;cursor:pointer'>导出</button>
-      </div>
+      <div id='daily-summary' style='font-size:12px;color:var(--text-light);min-height:20px'></div>
     </div>
-    <div id='report-weekly' class='report-panel' style='display:none;flex:1'>
-      <div style='font-size:11px;color:var(--text-light);margin-bottom:4px'>本周主题</div>
-      <input type='text' id='weekly-theme' placeholder='一句话形容本周...' onchange='saveWeeklyTheme(this.value)' style='font-size:12px;width:100%;padding:6px 8px;border:1px solid var(--border);border-radius:8px;box-sizing:border-box;margin-bottom:6px'>
-      <div style='display:flex;gap:4px'>
-        <button onclick='openReportModal("weekly")' style='flex:1;padding:6px;font-size:11px;background:var(--success);color:white;border:none;border-radius:6px;cursor:pointer'>查看周报</button>
-        <button onclick='exportReport("weekly")' style='flex:1;padding:6px;font-size:11px;background:var(--bg);color:var(--text);border:1px solid var(--border);border-radius:6px;cursor:pointer'>导出</button>
-      </div>
+    <div id='report-weekly' class='report-panel' style='display:none'>
+      <div style='font-size:12px;color:var(--text-light);margin-bottom:6px'>本周主题</div>
+      <input type='text' id='weekly-theme' placeholder='一句话形容本周...' style='font-size:12px;width:100%;padding:6px 10px;border:1px solid var(--border);border-radius:8px;box-sizing:border-box;margin-bottom:8px'>
+      <div id='weekly-summary' style='font-size:12px;color:var(--text-light);min-height:20px'></div>
     </div>
-    <div id='report-monthly' class='report-panel' style='display:none;flex:1'>
-      <div style='font-size:11px;color:var(--text-light);margin-bottom:4px'>本月关键词</div>
-      <input type='text' id='monthly-keyword' placeholder='一句话形容本月...' onchange='saveMonthlyKeyword(this.value)' style='font-size:12px;width:100%;padding:6px 8px;border:1px solid var(--border);border-radius:8px;box-sizing:border-box;margin-bottom:6px'>
-      <div style='display:flex;gap:4px'>
-        <button onclick='openReportModal("monthly")' style='flex:1;padding:6px;font-size:11px;background:var(--success);color:white;border:none;border-radius:6px;cursor:pointer'>查看月报</button>
-        <button onclick='exportReport("monthly")' style='flex:1;padding:6px;font-size:11px;background:var(--bg);color:var(--text);border:1px solid var(--border);border-radius:6px;cursor:pointer'>导出</button>
-      </div>
+    <div id='report-monthly' class='report-panel' style='display:none'>
+      <div style='font-size:12px;color:var(--text-light);margin-bottom:6px'>本月关键词</div>
+      <input type='text' id='monthly-keyword' placeholder='一句话形容本月...' style='font-size:12px;width:100%;padding:6px 10px;border:1px solid var(--border);border-radius:8px;box-sizing:border-box;margin-bottom:8px'>
+      <div id='monthly-summary' style='font-size:12px;color:var(--text-light);min-height:20px'></div>
     </div>
-    <div id='report-yearly' class='report-panel' style='display:none;flex:1'>
-      <div style='font-size:11px;color:var(--text-light);margin-bottom:4px'>年度关键词</div>
-      <input type='text' id='yearly-keyword' placeholder='一句话形容本年...' onchange='saveYearlyKeyword(this.value)' style='font-size:12px;width:100%;padding:6px 8px;border:1px solid var(--border);border-radius:8px;box-sizing:border-box;margin-bottom:6px'>
-      <div style='display:flex;gap:4px'>
-        <button onclick='openReportModal("yearly")' style='flex:1;padding:6px;font-size:11px;background:var(--success);color:white;border:none;border-radius:6px;cursor:pointer'>查看年报</button>
-        <button onclick='exportReport("yearly")' style='flex:1;padding:6px;font-size:11px;background:var(--bg);color:var(--text);border:1px solid var(--border);border-radius:6px;cursor:pointer'>导出</button>
-      </div>
-    </div>
-    <div class='daily-quote-box' style='margin-top:auto'>
-      <div class='daily-quote-text' id='daily-quote-text'></div>
+    <div id='report-yearly' class='report-panel' style='display:none'>
+      <div style='font-size:12px;color:var(--text-light);margin-bottom:6px'>年度关键词</div>
+      <input type='text' id='yearly-keyword' placeholder='一句话形容本年...' style='font-size:12px;width:100%;padding:6px 10px;border:1px solid var(--border);border-radius:8px;box-sizing:border-box;margin-bottom:8px'>
+      <div id='yearly-summary' style='font-size:12px;color:var(--text-light);min-height:20px'></div>
     </div>
   </div>
-
 
   <!-- Card 2: 起居录 -->
   <div class='card' style='flex:1;display:flex;flex-direction:column'>
@@ -362,7 +303,7 @@ textarea{width:100%;padding:12px;border:1px solid var(--border);border-radius:10
 </div>
 
 <!-- ==================== 第2行：觉察日记 | 孩子成长 ==================== -->
-<div class='two-col-grid' style='display:grid;grid-template-columns:1fr 1fr;gap:24px;margin-bottom:24px;align-items:stretch'>
+<div class='row' style='display:grid;grid-template-columns:1fr 1fr;gap:24px;margin-bottom:24px;align-items:stretch'>
   <div class='card'>
     <div class='card-title'><span class='icon' style='background:#E3F2FD;color:var(--info)'>觉</span>觉察日记</div>
     <div style='display:flex;flex-direction:column;gap:6px'>
@@ -602,7 +543,7 @@ textarea{width:100%;padding:12px;border:1px solid var(--border);border-radius:10
 <div class='modal-overlay' id='modal-report'>
   <div class='modal' style='max-width:560px'>
     <button class='modal-close' onclick='closeModal("modal-report")'>&times;</button>
-    <div style='font-size:16px;font-weight:700;margin-bottom:12px' id='report-title'>&#x1f4cb; 日报</div>
+    <div style='font-size:16px;font-weight:700;margin-bottom:12px' id='report-title'>&#ud83d;&#udccb; 日报</div>
     <textarea id='report-content' style='min-height:300px;font-size:13px;line-height:1.6;background:var(--bg)' readonly></textarea>
     <div style='display:flex;gap:10px;margin-top:12px'>
       <button class='btn-primary' onclick='copyReport()' style='flex:1'>📋 一键复制</button>
@@ -855,181 +796,12 @@ function toggleLogPanel(){
   else{p.style.display='none';t.textContent='▶'}
 }
 
-function render(){renderQuote();renderNow();renderCatFiltered();renderProjs();renderArc();renderStats();renderLog();renderReviewPreview();renderQuickReview();renderYearGoals();renderMonthGoals();renderWeekGoals();renderAwareness();renderFlashNotes();renderNextDayHints();renderChildPreview()}
+function render(){renderNow();renderCatFiltered();renderProjs();renderArc();renderStats();renderLog();renderReviewPreview();renderQuickReview();renderYearGoals();renderMonthGoals();renderWeekGoals();renderAwareness();renderFlashNotes();renderNextDayHints();renderChildPreview()}
 
-function renderNow(){
-  var doneCount=D.tasks.filter(function(t){return t.status==='done'}).length;
-  var nowTasks=D.tasks.filter(function(t){return t.status==='now'});
-  var highPri=D.tasks.filter(function(t){return t.status==='next'&&t.priority==='high'});
-  var nextTasks=D.tasks.filter(function(t){return t.status==='next'});
-  var el=document.getElementById('now-focus');
-  if(el){
-    el.textContent=nowTasks.length?nowTasks[0].title:'\u2014';
-    var lbl=document.getElementById('now-label');
-    if(lbl)lbl.textContent=nowTasks.length?'\u6b63\u5728\u8fdb\u884c':'\u6682\u65e0\u8fdb\u884c\u4e2d';
-  }
-  var nx=highPri[0]||nextTasks[0];
-  var nu=document.getElementById('next-up');
-  if(nu)nu.textContent=nx?nx.title:'\u2014';
-  var sug=document.getElementById('status-suggestion');
-  if(sug){
-    var msgs=[];
-    if(nowTasks.length>0)msgs.push('\u73b0\u5728\u5c31\u505a\uff1a'+nowTasks[0].title);
-    else if(nx)msgs.push('\u63a5\u4e0b\u6765\u505a\uff1a'+nx.title);
-    else msgs.push('\u6ca1\u6709\u8fde\u518c\u4efb\u52a1\uff0c\u8d76\u5feb\u8bb0\u5f55\u5427 \u2728');
-    if(doneCount>0)msgs.push('\u4eca\u5929\u5df2\u5b8c\u6210'+doneCount+'\u4ef6\uff0c\u7ee7\u7eed\u52a0\u6cb9 \ud83d\udcaa');
-    sug.textContent=msgs[0]||'\u5148\u5b9a\u4e2a\u5c0f\u76ee\u6807\uff0c\u5f00\u59cb\u5c31\u662f\u8fdb\u6b65 \u2728';
-  }
-  var dEl=document.getElementById('stat-done');
-  if(dEl)dEl.textContent=doneCount;
-  var pEl=document.getElementById('stat-projects');
-  if(pEl){
-    var activeProj=D.tasks.filter(function(t){return t.status==='now'||t.status==='next'}).length;
-    pEl.textContent=activeProj;
-  }
-}
+function renderNow(){let now=D.tasks.filter(t=>t.status==='now');let high=D.tasks.filter(t=>t.status==='next'&&t.priority==='high');let next=D.tasks.filter(t=>t.status==='next');document.getElementById('now-focus').textContent=now.length?now[0].title:'\u2014';document.getElementById('now-focus').parentElement.querySelector('.label').textContent=now.length?'\u6b63\u5728\u8fdb\u884c':'\u6682\u65e0\u8fdb\u884c\u4e2d';let nx=high[0]||next[0];document.getElementById('next-up').textContent=nx?nx.title:'\u2014';let h=new Date().getHours();let s='';if(h<9)s='\u6e05\u6668\u662f\u8ba4\u77e5\u9ad8\u5cf0\uff0c\u9002\u5408\u5904\u7406\u6700\u70e7\u8111\u7684\u5de5\u4f5c\u6216\u5b66\u4e60\u4efb\u52a1\u3002';else if(h<12)s='\u4e0a\u5348\u4e2d\u6bb5\uff0c\u9002\u5408\u63a8\u8fdb\u8fdb\u884c\u4e2d\u7684\u9879\u76ee\uff0c\u907f\u514d\u5f00\u65b0\u5751\u3002';else if(h<14)s='\u5348\u9910\u65f6\u95f4\u5230\u4e86\uff0c\u5982\u679c\u8282\u594f\u5b88\u62a4\u63d0\u9192\u4e86\uff0c\u5c31\u53bb\u5403\u996d\u5427\u3002';else if(h<17)s='\u4e0b\u5348\u9002\u5408\u5904\u7406\u96f6\u6563\u4e8b\u52a1\u3001\u6c9f\u901a\u548c\u4eb2\u5b50\u966a\u4f34\u3002';else if(h<20)s='\u508d\u665a\u662f\u590d\u76d8\u548c\u89c4\u5212\u660e\u5929\u7684\u597d\u65f6\u6bb5\u3002';else s='\u665a\u95f4\u9002\u5408\u8f7b\u91cf\u5b66\u4e60\u6216\u4f11\u606f\uff0c\u4e3a\u660e\u5929\u84c4\u80fd\u3002';let u=D.tasks.filter(t=>t.status!=='done').length;if(u>5)s+=' \u4f60\u8fd8\u6709'+u+'\u4ef6\u4e8b\u5f85\u529e\uff0c\u5efa\u8bae\u53ea\u63111\u4ef6\u6700\u91cd\u8981\u7684\u63a8\u8fdb\u3002';if(!now.length&&next.length)s='\u70b9\u51fb\u4efb\u52a1\u65c1\u8fb9\u7684 \u25b6 \u6309\u94ae\uff0c把\u4efb\u52a1\u8bbe\u4e3a\u8fdb\u884c\u4e2d\u3002'+s;document.getElementById('ai-suggestion').textContent=s}
 
 
 let taskFilter='all';
-
-function switchStatusDate(btn,view){
-  var b;
-  ['day','month','year'].forEach(function(v){
-    b=document.getElementById('btn-'+v);
-    if(b){
-      if(v===view){
-        b.style.border='1px solid var(--primary)';
-        b.style.background='var(--primary)';
-        b.style.color='white';
-      } else {
-        b.style.border='1px solid var(--border)';
-        b.style.background='var(--bg)';
-        b.style.color='var(--text)';
-      }
-    }
-  });
-  ['daily','weekly','monthly','yearly'].forEach(function(t){
-    var p=document.getElementById('report-'+t);
-    var rb=document.getElementById('btn-report-'+t);
-    if(rb)rb.classList.remove('active');
-    if(p)p.style.display='none';
-  });
-  if(view==='day'){
-    var dp=document.getElementById('report-daily');
-    var db=document.getElementById('btn-report-daily');
-    if(dp)dp.style.display='block';
-    if(db)db.classList.add('active');
-  } else if(view==='month'){
-    var mp=document.getElementById('report-monthly');
-    var mb=document.getElementById('btn-report-monthly');
-    if(mp)mp.style.display='block';
-    if(mb)mb.classList.add('active');
-  } else if(view==='year'){
-    var yp=document.getElementById('report-yearly');
-    var yb=document.getElementById('btn-report-yearly');
-    if(yp)yp.style.display='block';
-    if(yb)yb.classList.add('active');
-  }
-}
-
-function switchReport(btn,type){
-  if(!btn)return;
-  ['daily','weekly','monthly','yearly'].forEach(function(t){
-    var b=document.getElementById('btn-report-'+t);
-    if(b)b.classList.remove('active');
-    var p=document.getElementById('report-'+t);
-    if(p)p.style.display='none';
-  });
-  btn.classList.add('active');
-  var p=document.getElementById('report-'+type);
-  if(p)p.style.display='block';
-}
-
-function openReportModal(type){
-  var t=td();
-  var titles={'daily':'日报','weekly':'周报','monthly':'月报','yearly':'年报'};
-  var title=titles[type]||'报告';
-  var content='';
-  if(type==='daily'){
-    var d=D.dailyLog[t]||{};
-    var done=D.tasks.filter(function(x){return x.status==='done'&&x.completedAt&&new Date(x.completedAt).toISOString().split('T')[0]===t});
-    var now=D.tasks.filter(function(x){return x.status==='now'});
-    var next=D.tasks.filter(function(x){return x.status==='next'}).slice(0,3);
-    content='\u3010'+title+' '+t+'\u3011\n\n';
-    if(d.keyword)content+='\u5173\u952e\u8bcd\uff1a'+d.keyword+'\n';
-    if(d.mood)content+='\u5fc3\u60c5\uff1a'+d.mood+'\n';
-    content+='\n\u6b63\u5728\u8fdb\u884c\uff1a'+(now.length?now.map(function(x){return x.title}).join(', '):'\u65e0')+'\n';
-    content+='\u5df2\u5b8c\u6210\uff08'+done.length+'\u4ef6\uff09\uff1a'+(done.length?done.map(function(x){return x.title}).join(', '):'\u65e0')+'\n';
-    content+='\u5f85\u529e\uff1a'+(next.length?next.map(function(x){return x.title}).join(', '):'\u65e0')+'\n';
-  } else if(type==='weekly'){
-    var theme='';
-    var inp=document.getElementById('weekly-theme');
-    if(inp)theme=inp.value;
-    content='\u3010\u5468\u62a5\u3011\n\u672c\u5468\u4e3b\u9898\uff1a'+theme+'\n';
-  } else if(type==='monthly'){
-    var kw='';
-    var inp=document.getElementById('monthly-keyword');
-    if(inp)kw=inp.value;
-    content='\u3010\u6708\u62a5\u3011\n\u672c\u6708\u5173\u952e\u8bcd\uff1a'+kw+'\n';
-  } else {
-    var kw='';
-    var inp=document.getElementById('yearly-keyword');
-    if(inp)kw=inp.value;
-    content='\u3010\u5e74\u62a5\u3011\n\u672c\u5e74\u5173\u952e\u8bcd\uff1a'+kw+'\n';
-  }
-  var mt=document.getElementById('report-title');
-  if(mt)mt.textContent='\u300a'+title+'\u300b';
-  var mc=document.getElementById('report-content');
-  if(mc)mc.value=content;
-  var modal=document.getElementById('modal-report');
-  if(modal)modal.classList.add('show');
-}
-
-function exportReport(type){
-  openReportModal(type);
-  setTimeout(function(){
-    var ta=document.getElementById('report-content');
-    if(ta&&ta.value&&navigator.clipboard){
-      navigator.clipboard.writeText(ta.value).then(function(){toast('\u5df2\u590d\u5236','\u62a5\u544a\u5185\u5bb9\u5df2\u590d\u5236\u5230\u526a\u8d34\u677f');}).catch(function(){toast('\u590d\u5236\u5931\u8d25','\u8bf7\u624b\u52a8\u590d\u5236')});
-    }
-  },100);
-}
-
-function copyReport(){
-  var ta=document.getElementById('report-content');
-  if(ta&&ta.value&&navigator.clipboard){
-    navigator.clipboard.writeText(ta.value).then(function(){toast('\u5df2\u590d\u5236','\u62a5\u544a\u5185\u5bb9\u5df2\u590d\u5236\u5230\u526a\u8d34\u677f');}).catch(function(){toast('\u590d\u5236\u5931\u8d25','\u8bf7\u624b\u52a8\u590d\u5236')});
-  }
-}
-
-function saveDailyKeyword(v){
-  var t=td();
-  if(!D.dailyLog[t])D.dailyLog[t]={};
-  D.dailyLog[t].keyword=v;
-  save();
-}
-
-function saveWeeklyTheme(v){
-  var t=td();
-  if(!D.dailyLog[t])D.dailyLog[t]={};
-  D.dailyLog[t].weeklyTheme=v;
-  save();
-}
-
-function saveMonthlyKeyword(v){
-  var t=td();
-  if(!D.dailyLog[t])D.dailyLog[t]={};
-  D.dailyLog[t].monthlyKeyword=v;
-  save();
-}
-
-function saveYearlyKeyword(v){
-  var t=td();
-  if(!D.dailyLog[t])D.dailyLog[t]={};
-  D.dailyLog[t].yearlyKeyword=v;
-  save();
-}
-
 function filterTaskView(mode,btn){taskFilter=mode;document.querySelectorAll('.card:nth-child(1) .filter-btn').forEach(b=>b.classList.remove('active'));if(btn)btn.classList.add('active');renderCatFiltered()}
 function renderCatFiltered(){['work','learn','life','parenting'].forEach(c=>{let list=document.getElementById(c+'-list');let today=td();let weekStart=new Date();weekStart.setDate(weekStart.getDate()-weekStart.getDay());let weekEnd=new Date(weekStart);weekEnd.setDate(weekStart.getDate()+6);let ws=weekStart.toLocaleDateString('en-CA');let we=weekEnd.toLocaleDateString('en-CA');let base=D.tasks.filter(t=>(t.category||'work')===c&&t.status!=='done');let filtered=base.filter(t=>{if(taskFilter==='yesterday'){let yd=new Date();yd.setDate(yd.getDate()-1);return t.createdAt&&new Date(t.createdAt).toLocaleDateString('en-CA')===yd.toLocaleDateString('en-CA');}if(taskFilter==='today')return t.createdAt&&new Date(t.createdAt).toLocaleDateString('en-CA')===today;if(taskFilter==='week'){let cd=t.createdAt?new Date(t.createdAt).toLocaleDateString('en-CA'):'';return cd>=ws&&cd<=we}return true});let doneCount=D.tasks.filter(t=>(t.category||'work')===c&&t.status==='done').length;document.getElementById(c+'-count').textContent=filtered.length+'项'+(doneCount?' (已归档'+doneCount+'项)':'');if(!filtered.length){list.innerHTML='<div class="empty">暂无'+catLabel(c)+'任务</div>';return}list.innerHTML=filtered.map(t=>'<div class="task-item cat-'+(t.category||'work')+'"><div class="task-check" onclick="toggleTask(\''+t.id+'\')"></div><div class="task-body"><div class="task-title">'+t.title+'</div><div class="task-meta">'+priStyle(t.priority)+(t.status==='now'?' \u00b7 <span style="color:var(--primary);font-weight:600">▶ 进行中</span>':'')+'</div></div><div class="task-actions">'+(t.status!=='now'?'<button onclick="setStatus(\''+t.id+'\',\'now\')">▶</button>':'')+(t.status==='now'?'<button onclick="setStatus(\''+t.id+'\',\'next\')">⏸</button>':'')+'<button onclick="editTask(\''+t.id+'\')">✏</button><button onclick="delTask(\''+t.id+'\')">✕</button></div></div>').join('')})}
 function editTask(id){let t=D.tasks.find(x=>x.id===id);if(!t)return;let nv=prompt('修改任务名称：',t.title);if(nv&&nv.trim()){t.title=nv.trim();save();render();toast('任务已更新')}}
