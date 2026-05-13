@@ -383,24 +383,23 @@ textarea{width:100%;padding:12px;border:1px solid var(--border);border-radius:10
 <!-- ==================== 第4行：目标 | 意识革命 | 数据备份 | 归档 ==================== -->
 <div class='row-4'>
     <div class='card'>
-      <div class='card-title' style='cursor:pointer' onclick="toggleGoalPanel('year')"><span class='icon' style='background:#FFF3E0;color:var(--gold)'>&#24180;</span>&#24180;&#24230;&#30446;&#26631; <span id='year-goal-toggle' style='font-size:11px;color:var(--text-light);margin-left:auto'>&#23637;&#24320; &#9660;</span></div>
-      <div id='year-goal-panel' style='display:none'>
-        <div class='task-input'><input id='year-goal-input' placeholder='2026&#24180;&#26680;&#24515;&#30446;&#26631;...' style='font-size:12px;width:100%'><button onclick='addYearGoal()' style='padding:10px 14px'>&#35774;&#23450;</button></div>
-        <div id='year-goal-list' style='font-size:12px'></div>
-      </div>
-    </div>
-    <div class='card'>
-      <div class='card-title' style='cursor:pointer' onclick="toggleGoalPanel('month')"><span class='icon' style='background:#FFF3E0;color:var(--gold)'>&#26376;</span>&#26376;&#24230;&#30446;&#26631; <span id='month-goal-toggle' style='font-size:11px;color:var(--text-light);margin-left:auto'>&#23637;&#24320; &#9660;</span></div>
-      <div id='month-goal-panel' style='display:none'>
-        <div class='task-input'><input id='month-goal-input' placeholder='&#26412;&#26376;&#30446;&#26631;...' style='font-size:12px;width:100%'><button onclick='addMonthGoal()' style='padding:10px 14px'>&#35774;&#23450;</button></div>
-        <div id='month-goal-list' style='font-size:12px'></div>
-      </div>
-    </div>
-    <div class='card'>
-      <div class='card-title' style='cursor:pointer' onclick="toggleGoalPanel('week')"><span class='icon' style='background:#FFF3E0;color:var(--gold)'>&#21608;</span>&#26412;&#21608;&#30446;&#26631; <span id='week-goal-toggle' style='font-size:11px;color:var(--text-light);margin-left:auto'>&#23637;&#24320; &#9660;</span></div>
-      <div id='week-goal-panel' style='display:none'>
-        <div class='task-input'><input id='week-goal-input' placeholder='&#26412;&#21608;&#30446;&#26631;...' style='font-size:12px;width:100%'><button onclick='addWeekGoal()' style='padding:10px 14px'>&#35774;&#23450;</button></div>
-        <div id='week-goal-list' style='font-size:12px'></div>
+      <div class='card-title'><span class='icon' style='background:#FFF3E0;color:var(--gold)'>&#24180;</span>&#30446;&#26631;</div>
+      <div style='display:flex;flex-direction:column;gap:10px'>
+        <div>
+          <div style='font-size:11px;color:var(--text-light);margin-bottom:3px'>年</div>
+          <div class='task-input'><input id='year-goal-input' placeholder='2026&#24180;&#26680;&#24515;&#30446;&#26631;...' style='font-size:12px;width:calc(100% - 60px)'><button onclick='addYearGoal()' style='padding:8px 12px'>设</button></div>
+          <div id='year-goal-list' style='font-size:12px;margin-top:4px'></div>
+        </div>
+        <div>
+          <div style='font-size:11px;color:var(--text-light);margin-bottom:3px'>月</div>
+          <div class='task-input'><input id='month-goal-input' placeholder='&#26412;&#26376;&#30446;&#26631;...' style='font-size:12px;width:calc(100% - 60px)'><button onclick='addMonthGoal()' style='padding:8px 12px'>设</button></div>
+          <div id='month-goal-list' style='font-size:12px;margin-top:4px'></div>
+        </div>
+        <div>
+          <div style='font-size:11px;color:var(--text-light);margin-bottom:3px'>周</div>
+          <div class='task-input'><input id='week-goal-input' placeholder='&#26412;&#21608;&#30446;&#26631;...' style='font-size:12px;width:calc(100% - 60px)'><button onclick='addWeekGoal()' style='padding:8px 12px'>设</button></div>
+          <div id='week-goal-list' style='font-size:12px;margin-top:4px'></div>
+        </div>
       </div>
     </div>
     <div class='card'>
