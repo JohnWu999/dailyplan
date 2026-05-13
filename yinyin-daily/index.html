@@ -114,10 +114,11 @@ textarea{width:100%;padding:12px;border:1px solid var(--border);border-radius:10
 .card-col{display:flex;flex-direction:column;gap:16px;height:100%}.card-col>.card{flex:1}
   @media(max-width:1200px){.row-4{grid-template-columns:repeat(2,1fr)}.row{grid-template-columns:1fr}}
   @media(max-width:768px){.row-4{grid-template-columns:1fr}.row{grid-template-columns:1fr}.container{padding:16px}}
-  /* 手机上：第1行4卡片改为单列排列，宽度一致，高度适中 */
+  /* 手机上：第3行（任务看板|项目看板）改为单列 */
   @media(max-width:600px){
     .top4-grid{grid-template-columns:1fr!important;align-items:start!important}
     .top4-grid>.card{max-height:320px;overflow-y:auto}
+    .row{grid-template-columns:1fr!important}
   }
   /* 平板：2列 */
   @media(min-width:601px) and (max-width:900px){
