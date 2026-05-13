@@ -68,7 +68,7 @@ body{font-family:'Noto Serif SC',serif;background:var(--bg);color:var(--text);li
 .archive-filters{display:flex;gap:8px;margin-bottom:12px}
 .filter-btn{padding:6px 12px;border:1px solid var(--border);background:white;border-radius:20px;font-size:12px;cursor:pointer}
 .filter-btn.active{background:var(--primary);color:white;border-color:var(--primary)}
-.stats-grid{display:grid;grid-template-columns:repeat(2,1fr);gap:12px}
+.stats-grid{display:grid;grid-template-columns:1fr;gap:8px}
 .stat-item{text-align:center;padding:12px;background:var(--bg);border-radius:10px}
 .stat-value{font-size:24px;font-weight:700;color:var(--primary)}
 .stat-label{font-size:11px;color:var(--text-light);margin-top:4px}
@@ -92,7 +92,7 @@ textarea{width:100%;padding:12px;border:1px solid var(--border);border-radius:10
 .toast-msg{font-size:13px;color:var(--text-light)}
 .data-actions{display:flex;gap:8px;margin-top:12px}
 .data-actions button{padding:8px 14px;border:1px solid var(--border);background:white;border-radius:8px;font-size:12px;cursor:pointer}
-.log-grid{display:grid;grid-template-columns:1fr;gap:16px;margin-top:16px}
+.log-grid{display:grid;grid-template-columns:1fr;gap:10px;margin-top:10px}
 .log-item{text-align:left}
 .log-item label{display:block;font-size:16px;color:var(--text);font-weight:600;margin-bottom:8px;letter-spacing:1px}
 .log-item select{width:100%;padding:10px 12px;border:2px solid var(--border);border-radius:10px;font-size:14px;font-family:inherit;background:var(--card);color:var(--text);cursor:pointer;transition:all .2s;appearance:none;-webkit-appearance:none;background-image:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='16' height='16' viewBox='0 0 24 24' fill='none' stroke='%23999' stroke-width='2'%3E%3Cpath d='M6 9l6 6 6-6'/%3E%3C/svg%3E");background-repeat:no-repeat;background-position:right 10px center;padding-right:36px}
@@ -248,7 +248,7 @@ textarea{width:100%;padding:12px;border:1px solid var(--border);border-radius:10
       </div>
       <div class='log-item' style='grid-column:1/-1'>
         <label style='font-size:12px;font-weight:700;color:var(--text);margin-bottom:8px;display:block'>🍽️ 三餐记录</label>
-        <div style='display:grid;grid-template-columns:repeat(3,1fr);gap:8px;margin-bottom:8px'>
+        <div style='display:grid;grid-template-columns:repeat(3,1fr);gap:6px;margin-bottom:6px'>
           <div>
             <div style='font-size:10px;color:var(--text-light);margin-bottom:2px'>早餐</div>
             <select id='log-breakfast' onchange="saveLog('breakfast',this.value)" style='width:100%;padding:6px 8px;border:1px solid var(--border);border-radius:8px;font-size:12px;font-family:inherit;background:var(--card);color:var(--text)'>
