@@ -121,6 +121,7 @@ textarea{width:100%;padding:12px;border:1px solid var(--border);border-radius:10
     .top4-grid>.card{max-height:320px;overflow-y:auto}
     .row{grid-template-columns:1fr!important}
     div.row.kanban-balance{flex-direction:column!important}
+    .task-categories{grid-template-columns:1fr!important}
   }
   /* 平板：2列 */
   @media(min-width:601px) and (max-width:900px){
@@ -409,7 +410,7 @@ textarea{width:100%;padding:12px;border:1px solid var(--border);border-radius:10
           <button class='filter-btn' onclick='filterTaskView("week",this)'>&#26412;&#21608;</button>
         </div>
       </div>
-      <div style='display:grid;grid-template-columns:repeat(2,1fr);gap:16px'>
+      <div style='display:grid;grid-template-columns:repeat(2,1fr);gap:16px' class='task-categories'>
         <div>
           <div style='display:flex;justify-content:space-between;align-items:center;margin-bottom:8px'><span style='font-size:13px;font-weight:600'>&#128188; &#24037;&#20316;</span><span style='font-size:11px;color:var(--text-light)' id='work-count'>0 &#20010;</span></div>
           <div class='task-input'><input id='work-input' placeholder='&#28155;&#21152;&#24037;&#20316;&#20219;&#21153;...'><select id='work-priority'><option value='high'>&#39640;</option><option value='medium' selected>&#20013;</option><option value='low'>&#20302;</option></select><button onclick='addTask("work")'>+</button></div>
