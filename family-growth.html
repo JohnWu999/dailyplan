@@ -358,6 +358,63 @@
       color: var(--primary);
     }
 
+    /* 本周心情曲线 */
+    .week-mood-card {
+      background: var(--card);
+      border-radius: 16px;
+      padding: 20px;
+      margin-bottom: 24px;
+      border: 1px solid var(--border);
+    }
+    .week-mood-row {
+      display: flex;
+      justify-content: space-between;
+      align-items: flex-end;
+      margin-bottom: 8px;
+      height: 60px;
+    }
+    .week-mood-item {
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      gap: 4px;
+      flex: 1;
+    }
+    .week-mood-emoji {
+      font-size: 1.8rem;
+      cursor: pointer;
+      transition: transform 0.2s;
+    }
+    .week-mood-emoji:hover {
+      transform: scale(1.2);
+    }
+    .week-mood-dot {
+      width: 6px;
+      height: 6px;
+      border-radius: 50%;
+      background: var(--border);
+    }
+    .week-mood-dot.recorded {
+      background: var(--success);
+    }
+    .week-mood-dot.today {
+      background: var(--primary);
+    }
+    .week-mood-dates {
+      display: flex;
+      justify-content: space-between;
+      font-size: 0.7rem;
+      color: var(--text-light);
+    }
+    .week-mood-dates span {
+      flex: 1;
+      text-align: center;
+    }
+    .week-mood-dates span.today-label {
+      color: var(--primary);
+      font-weight: 600;
+    }
+
     /* 晨间打卡 */
     .morning-checkin {
       background: var(--card);
@@ -894,6 +951,13 @@
       </div>
     </div>
 
+    <!-- 本周心情曲线 -->
+    <div class="section-title">本周心情</div>
+    <div class="week-mood-card">
+      <div class="week-mood-row" id="weekMoodRow"></div>
+      <div class="week-mood-dates" id="weekMoodDates"></div>
+    </div>
+
     <!-- 今日三件事 -->
     <div class="section-title">今日三件事</div>
     <div class="top3-grid" id="top3Grid">
@@ -1225,6 +1289,7 @@ function renderAll() {
   renderCheckins();
   renderFlash();
   renderAchievements();
+  renderWeekMood();
   renderAwarenessHistory();
   renderReviewHistory();
   renderKidTimeline();
@@ -1792,6 +1857,48 @@ function renderAchievements() {
   const streak = appData.streak;
   document.getElementById('ach-7days').classList.toggle('locked', streak < 7);
   document.getElementById('ach-30days').classList.toggle('locked', streak < 30);
+}
+
+// ========== 本周心情曲线 ==========
+function renderWeekMood() {
+  const today = getToday();
+  const todayDate = new Date(today + 'T00:00:00');
+  const dayOfWeek = todayDate.getDay();
+
+  // 计算本周起始日（周日）
+  const startDate = new Date(todayDate);
+  startDate.setDate(startDate.getDate() - dayOfWeek);
+
+  const weekdays = ['周日', '周一', '周二', '周三', '周四', '周五', '周六'];
+  let moodRowHtml = '';
+  let dateRowHtml = '';
+  const moodMap = appData.moodByDate || {};
+
+  for (let i = 0; i < 7; i++) {
+    const d = new Date(startDate);
+    d.setDate(d.getDate() + i);
+    const dateStr = getDateStr(d);
+    const isToday = dateStr === today;
+    const mood = moodMap[dateStr];
+
+    // emoji列
+    moodRowHtml += `<div class="week-mood-item">
+      <div class="week-mood-emoji" onclick="goToDate('${dateStr}')">${mood ? mood.emoji : '○'}</div>
+      <div class="week-mood-dot ${mood ? 'recorded' : ''} ${isToday ? 'today' : ''}"></div>
+    </div>`;
+
+    // 日期标签
+    const dayLabel = isToday ? '今天' : weekdays[d.getDay()];
+    dateRowHtml += `<span class="${isToday ? 'today-label' : ''}">${dayLabel}</span>`;
+  }
+
+  document.getElementById('weekMoodRow').innerHTML = moodRowHtml;
+  document.getElementById('weekMoodDates').innerHTML = dateRowHtml;
+}
+
+function goToDate(dateStr) {
+  selectedDate = dateStr;
+  renderAll();
 }
 
 // ========== 导航 ==========
