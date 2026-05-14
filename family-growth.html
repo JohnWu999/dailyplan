@@ -1,0 +1,1503 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>家庭成长录</title>
+  <link href="https://fonts.googleapis.com/css2?family=Noto+Serif+SC:wght@400;600;700&family=ZCOOL+XiaoWei&display=swap" rel="stylesheet">
+  <style>
+    :root {
+      --primary: #E85D04;
+      --gold: #C9A961;
+      --bg: #FAF7F2;
+      --text: #3D3D3D;
+      --text-light: #8B8680;
+      --card: #FFFFFF;
+      --border: #E8E4DE;
+      --success: #4A9B7F;
+      --warm: #F5E6D3;
+    }
+    * { margin: 0; padding: 0; box-sizing: border-box; }
+    body {
+      font-family: 'Noto Serif SC', serif;
+      background: var(--bg);
+      color: var(--text);
+      min-height: 100vh;
+      line-height: 1.6;
+    }
+
+    /* 顶部导航 */
+    .top-bar {
+      background: var(--card);
+      border-bottom: 1px solid var(--border);
+      padding: 12px 20px;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      position: sticky;
+      top: 0;
+      z-index: 100;
+    }
+    .top-bar .logo {
+      font-family: 'ZCOOL XiaoWei', serif;
+      font-size: 1.4rem;
+      color: var(--primary);
+      letter-spacing: 2px;
+    }
+    .top-bar .date-info {
+      font-size: 0.85rem;
+      color: var(--text-light);
+    }
+    .top-bar .streak-badge {
+      background: linear-gradient(135deg, var(--gold), #D4AF37);
+      color: white;
+      padding: 4px 12px;
+      border-radius: 20px;
+      font-size: 0.8rem;
+      font-weight: 600;
+    }
+
+    /* 主容器 */
+    .container {
+      max-width: 800px;
+      margin: 0 auto;
+      padding: 20px;
+      padding-bottom: 80px;
+    }
+
+    /* 区块标题 */
+    .section-title {
+      font-size: 0.75rem;
+      color: var(--text-light);
+      letter-spacing: 3px;
+      text-transform: uppercase;
+      margin-bottom: 12px;
+      display: flex;
+      align-items: center;
+      gap: 8px;
+    }
+    .section-title::after {
+      content: '';
+      flex: 1;
+      height: 1px;
+      background: var(--border);
+    }
+
+    /* 每日状态区 */
+    .daily-hero {
+      background: linear-gradient(135deg, var(--primary) 0%, #D45203 100%);
+      border-radius: 20px;
+      padding: 24px;
+      color: white;
+      margin-bottom: 24px;
+      position: relative;
+      overflow: hidden;
+    }
+    .daily-hero::before {
+      content: '';
+      position: absolute;
+      top: -50%;
+      right: -20%;
+      width: 200px;
+      height: 200px;
+      background: rgba(255,255,255,0.1);
+      border-radius: 50%;
+    }
+    .hero-date {
+      font-size: 0.85rem;
+      opacity: 0.9;
+      margin-bottom: 8px;
+    }
+    .hero-mood {
+      font-size: 2.5rem;
+      margin-bottom: 4px;
+    }
+    .hero-label {
+      font-size: 0.9rem;
+      opacity: 0.9;
+    }
+    .hero-keyword {
+      margin-top: 16px;
+      padding-top: 16px;
+      border-top: 1px solid rgba(255,255,255,0.2);
+      font-size: 0.95rem;
+      font-style: italic;
+    }
+
+    /* 今日三件事 */
+    .top3-section {
+      margin-bottom: 24px;
+    }
+    .top3-grid {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: 12px;
+    }
+    .top3-card {
+      background: var(--card);
+      border-radius: 16px;
+      padding: 16px;
+      border: 2px solid var(--border);
+      cursor: pointer;
+      transition: all 0.3s ease;
+      min-height: 100px;
+      display: flex;
+      flex-direction: column;
+      justify-content: space-between;
+    }
+    .top3-card:hover {
+      border-color: var(--gold);
+      transform: translateY(-2px);
+      box-shadow: 0 8px 24px rgba(201,169,97,0.15);
+    }
+    .top3-card.done {
+      background: var(--warm);
+      border-color: var(--success);
+    }
+    .top3-card .card-num {
+      font-size: 1.5rem;
+      font-weight: 700;
+      color: var(--gold);
+    }
+    .top3-card.done .card-num {
+      color: var(--success);
+    }
+    .top3-card .card-text {
+      font-size: 0.9rem;
+      color: var(--text);
+      margin-top: 8px;
+      line-height: 1.4;
+    }
+    .top3-card .card-check {
+      margin-top: 8px;
+      font-size: 0.8rem;
+      color: var(--text-light);
+    }
+    .top3-card.done .card-check {
+      color: var(--success);
+    }
+    .add-top3 {
+      background: var(--card);
+      border: 2px dashed var(--border);
+      border-radius: 16px;
+      padding: 16px;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      cursor: pointer;
+      min-height: 100px;
+      transition: all 0.3s;
+    }
+    .add-top3:hover {
+      border-color: var(--gold);
+      background: var(--warm);
+    }
+    .add-top3 .plus {
+      font-size: 1.5rem;
+      color: var(--gold);
+    }
+    .add-top3 span {
+      font-size: 0.8rem;
+      color: var(--text-light);
+      margin-top: 4px;
+    }
+
+    /* 成就展示 */
+    .achievement-bar {
+      display: flex;
+      gap: 8px;
+      margin-bottom: 24px;
+      flex-wrap: wrap;
+    }
+    .achieve-item {
+      background: var(--card);
+      border-radius: 12px;
+      padding: 10px 14px;
+      display: flex;
+      align-items: center;
+      gap: 8px;
+      font-size: 0.85rem;
+      border: 1px solid var(--border);
+    }
+    .achieve-item .icon {
+      font-size: 1.2rem;
+    }
+    .achieve-item.locked {
+      opacity: 0.4;
+      filter: grayscale(1);
+    }
+    .achieve-item .num {
+      font-weight: 700;
+      color: var(--primary);
+    }
+
+    /* 晨间打卡 */
+    .morning-checkin {
+      background: var(--card);
+      border-radius: 20px;
+      padding: 24px;
+      margin-bottom: 24px;
+      border: 1px solid var(--border);
+    }
+    .checkin-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(140px, 1fr));
+      gap: 16px;
+      margin-top: 16px;
+    }
+    .checkin-item {
+      text-align: center;
+      padding: 16px;
+      border-radius: 12px;
+      background: var(--bg);
+      cursor: pointer;
+      transition: all 0.3s;
+    }
+    .checkin-item:hover {
+      background: var(--warm);
+    }
+    .checkin-item.done {
+      background: linear-gradient(135deg, var(--success), #3D8B6B);
+      color: white;
+    }
+    .checkin-item .ci-icon {
+      font-size: 2rem;
+      margin-bottom: 8px;
+    }
+    .checkin-item .ci-label {
+      font-size: 0.85rem;
+    }
+    .checkin-item .ci-status {
+      font-size: 0.75rem;
+      margin-top: 4px;
+      opacity: 0.7;
+    }
+
+    /* 觉察日记 */
+    .awareness-card {
+      background: var(--card);
+      border-radius: 20px;
+      padding: 24px;
+      margin-bottom: 24px;
+      border: 1px solid var(--border);
+    }
+    .awareness-q {
+      margin-bottom: 16px;
+    }
+    .awareness-q .q-label {
+      font-size: 0.8rem;
+      color: var(--gold);
+      margin-bottom: 8px;
+      display: flex;
+      align-items: center;
+      gap: 6px;
+    }
+    .awareness-q textarea {
+      width: 100%;
+      border: 1px solid var(--border);
+      border-radius: 12px;
+      padding: 12px;
+      font-family: inherit;
+      font-size: 0.9rem;
+      resize: vertical;
+      min-height: 60px;
+      transition: border-color 0.3s;
+      background: var(--bg);
+    }
+    .awareness-q textarea:focus {
+      outline: none;
+      border-color: var(--gold);
+    }
+    .awareness-q textarea::placeholder {
+      color: var(--text-light);
+    }
+    .awareness-submit {
+      width: 100%;
+      background: linear-gradient(135deg, var(--primary), #D45203);
+      color: white;
+      border: none;
+      padding: 14px;
+      border-radius: 12px;
+      font-family: inherit;
+      font-size: 1rem;
+      cursor: pointer;
+      margin-top: 16px;
+      transition: transform 0.2s, box-shadow 0.2s;
+    }
+    .awareness-submit:hover {
+      transform: translateY(-2px);
+      box-shadow: 0 8px 24px rgba(232,93,4,0.3);
+    }
+    .awareness-submit:disabled {
+      opacity: 0.6;
+      cursor: not-allowed;
+      transform: none;
+      box-shadow: none;
+    }
+
+    /* 孩子成长 */
+    .kids-section {
+      margin-bottom: 24px;
+    }
+    .kid-tabs {
+      display: flex;
+      gap: 8px;
+      margin-bottom: 16px;
+    }
+    .kid-tab {
+      padding: 8px 16px;
+      border-radius: 20px;
+      border: 1px solid var(--border);
+      background: var(--card);
+      cursor: pointer;
+      font-size: 0.85rem;
+      transition: all 0.3s;
+    }
+    .kid-tab.active {
+      background: var(--primary);
+      color: white;
+      border-color: var(--primary);
+    }
+    .kid-card {
+      background: var(--card);
+      border-radius: 20px;
+      padding: 24px;
+      border: 1px solid var(--border);
+    }
+    .kid-record-form {
+      display: none;
+    }
+    .kid-record-form.active {
+      display: block;
+    }
+    .kid-record-input {
+      width: 100%;
+      border: 1px solid var(--border);
+      border-radius: 12px;
+      padding: 12px;
+      font-family: inherit;
+      font-size: 0.9rem;
+      margin-bottom: 12px;
+      background: var(--bg);
+    }
+    .kid-record-input:focus {
+      outline: none;
+      border-color: var(--gold);
+    }
+    .kid-record-select {
+      display: flex;
+      gap: 8px;
+      flex-wrap: wrap;
+      margin-bottom: 12px;
+    }
+    .kid-emoji-btn {
+      font-size: 1.5rem;
+      padding: 8px 12px;
+      border-radius: 12px;
+      border: 2px solid var(--border);
+      background: var(--bg);
+      cursor: pointer;
+      transition: all 0.2s;
+    }
+    .kid-emoji-btn:hover, .kid-emoji-btn.selected {
+      border-color: var(--gold);
+      background: var(--warm);
+    }
+    .kid-save-btn {
+      background: var(--primary);
+      color: white;
+      border: none;
+      padding: 12px 24px;
+      border-radius: 12px;
+      font-family: inherit;
+      cursor: pointer;
+      width: 100%;
+    }
+    .kid-timeline {
+      margin-top: 20px;
+    }
+    .timeline-item {
+      display: flex;
+      gap: 12px;
+      padding: 12px 0;
+      border-bottom: 1px solid var(--border);
+    }
+    .timeline-item:last-child {
+      border-bottom: none;
+    }
+    .timeline-date {
+      font-size: 0.75rem;
+      color: var(--text-light);
+      min-width: 60px;
+    }
+    .timeline-content {
+      flex: 1;
+    }
+    .timeline-emoji {
+      font-size: 1.2rem;
+    }
+    .timeline-text {
+      font-size: 0.9rem;
+      margin-top: 4px;
+    }
+
+    /* 复盘 */
+    .review-section {
+      background: var(--card);
+      border-radius: 20px;
+      padding: 24px;
+      margin-bottom: 24px;
+      border: 1px solid var(--border);
+    }
+    .review-4step {
+      display: grid;
+      gap: 16px;
+      margin-top: 16px;
+    }
+    .review-step {
+      padding: 16px;
+      border-radius: 12px;
+      background: var(--bg);
+    }
+    .review-step .step-num {
+      font-size: 0.75rem;
+      color: var(--primary);
+      font-weight: 700;
+      margin-bottom: 8px;
+    }
+    .review-step textarea {
+      width: 100%;
+      border: none;
+      background: transparent;
+      font-family: inherit;
+      font-size: 0.9rem;
+      resize: vertical;
+      min-height: 50px;
+    }
+    .review-step textarea:focus {
+      outline: none;
+    }
+    .review-submit {
+      width: 100%;
+      background: linear-gradient(135deg, var(--gold), #B8944F);
+      color: white;
+      border: none;
+      padding: 14px;
+      border-radius: 12px;
+      font-family: inherit;
+      font-size: 1rem;
+      cursor: pointer;
+      margin-top: 16px;
+      transition: all 0.3s;
+    }
+    .review-submit:hover {
+      transform: translateY(-2px);
+      box-shadow: 0 8px 24px rgba(201,169,97,0.4);
+    }
+
+    /* 闪念胶囊 */
+    .flash-section {
+      background: var(--card);
+      border-radius: 20px;
+      padding: 24px;
+      margin-bottom: 24px;
+      border: 1px solid var(--border);
+    }
+    .flash-input-wrap {
+      display: flex;
+      gap: 8px;
+      margin-top: 12px;
+    }
+    .flash-input-wrap input {
+      flex: 1;
+      border: 1px solid var(--border);
+      border-radius: 12px;
+      padding: 12px;
+      font-family: inherit;
+      font-size: 0.9rem;
+      background: var(--bg);
+    }
+    .flash-input-wrap input:focus {
+      outline: none;
+      border-color: var(--gold);
+    }
+    .flash-add-btn {
+      background: var(--primary);
+      color: white;
+      border: none;
+      padding: 12px 20px;
+      border-radius: 12px;
+      cursor: pointer;
+    }
+    .flash-list {
+      margin-top: 16px;
+      display: flex;
+      flex-direction: column;
+      gap: 8px;
+    }
+    .flash-item {
+      display: flex;
+      align-items: center;
+      gap: 8px;
+      padding: 10px 12px;
+      background: var(--bg);
+      border-radius: 10px;
+      font-size: 0.85rem;
+    }
+    .flash-item .del {
+      margin-left: auto;
+      cursor: pointer;
+      opacity: 0.4;
+      font-size: 0.75rem;
+    }
+    .flash-item .del:hover {
+      opacity: 1;
+      color: var(--primary);
+    }
+
+    /* 底部导航 */
+    .bottom-nav {
+      position: fixed;
+      bottom: 0;
+      left: 0;
+      right: 0;
+      background: var(--card);
+      border-top: 1px solid var(--border);
+      display: flex;
+      justify-content: space-around;
+      padding: 10px 0;
+      z-index: 100;
+    }
+    .nav-item {
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      gap: 4px;
+      cursor: pointer;
+      padding: 4px 12px;
+      border-radius: 12px;
+      transition: all 0.2s;
+    }
+    .nav-item .nav-icon {
+      font-size: 1.3rem;
+    }
+    .nav-item .nav-label {
+      font-size: 0.7rem;
+      color: var(--text-light);
+    }
+    .nav-item.active {
+      background: var(--warm);
+    }
+    .nav-item.active .nav-label {
+      color: var(--primary);
+      font-weight: 600;
+    }
+
+    /* 弹窗 */
+    .modal-overlay {
+      display: none;
+      position: fixed;
+      top: 0;
+      left: 0;
+      right: 0;
+      bottom: 0;
+      background: rgba(0,0,0,0.5);
+      z-index: 200;
+      justify-content: center;
+      align-items: flex-end;
+    }
+    .modal-overlay.show {
+      display: flex;
+    }
+    .modal {
+      background: var(--card);
+      border-radius: 24px 24px 0 0;
+      padding: 24px;
+      width: 100%;
+      max-width: 800px;
+      max-height: 80vh;
+      overflow-y: auto;
+      animation: slideUp 0.3s ease;
+    }
+    @keyframes slideUp {
+      from { transform: translateY(100%); }
+      to { transform: translateY(0); }
+    }
+    .modal-title {
+      font-size: 1.1rem;
+      font-weight: 700;
+      margin-bottom: 16px;
+      text-align: center;
+    }
+    .modal-close {
+      text-align: center;
+      padding: 12px;
+      color: var(--text-light);
+      cursor: pointer;
+      font-size: 0.85rem;
+    }
+
+    /* 打卡成功动画 */
+    .checkin-success {
+      display: none;
+      position: fixed;
+      top: 50%;
+      left: 50%;
+      transform: translate(-50%, -50%);
+      background: var(--card);
+      padding: 32px 48px;
+      border-radius: 24px;
+      z-index: 300;
+      text-align: center;
+      box-shadow: 0 20px 60px rgba(0,0,0,0.3);
+      animation: popIn 0.4s ease;
+    }
+    .checkin-success.show {
+      display: block;
+    }
+    @keyframes popIn {
+      0% { transform: translate(-50%, -50%) scale(0.5); opacity: 0; }
+      100% { transform: translate(-50%, -50%) scale(1); opacity: 1; }
+    }
+    .checkin-success .big-emoji {
+      font-size: 4rem;
+      margin-bottom: 12px;
+    }
+    .checkin-success .msg {
+      font-size: 1.1rem;
+      font-weight: 600;
+    }
+
+    /* 响应式 */
+    @media (max-width: 600px) {
+      .top3-grid {
+        grid-template-columns: 1fr;
+      }
+      .checkin-grid {
+        grid-template-columns: repeat(2, 1fr);
+      }
+    }
+
+    /* 页面隐藏 */
+    .page { display: none; }
+    .page.active { display: block; }
+
+    /* 数据备份区 */
+    .backup-section {
+      margin-top: 24px;
+      padding: 16px;
+      background: var(--card);
+      border-radius: 16px;
+      border: 1px solid var(--border);
+    }
+    .backup-btns {
+      display: flex;
+      gap: 8px;
+      margin-top: 12px;
+    }
+    .backup-btns button {
+      flex: 1;
+      padding: 10px;
+      border-radius: 10px;
+      border: 1px solid var(--border);
+      background: var(--bg);
+      cursor: pointer;
+      font-family: inherit;
+      font-size: 0.85rem;
+    }
+    .backup-btns button:hover {
+      background: var(--warm);
+    }
+    .backup-note {
+      font-size: 0.75rem;
+      color: var(--text-light);
+      margin-top: 8px;
+    }
+  </style>
+</head>
+<body>
+
+<!-- 顶部导航 -->
+<div class="top-bar">
+  <div class="logo">家庭成长录</div>
+  <div class="date-info" id="currentDate"></div>
+  <div class="streak-badge" id="streakBadge">🔥 0天</div>
+</div>
+
+<!-- 主容器 -->
+<div class="container">
+
+  <!-- 每日首页 -->
+  <div class="page active" id="page-home">
+    <!-- 每日状态Hero -->
+    <div class="daily-hero" id="dailyHero" onclick="openMoodModal()">
+      <div class="hero-date" id="heroDate"></div>
+      <div class="hero-mood" id="heroMood">☀️</div>
+      <div class="hero-label" id="heroLabel">选择今日状态</div>
+      <div class="hero-keyword" id="heroKeyword">"教育不是灌满一桶水，而是点燃一把火。"</div>
+    </div>
+
+    <!-- 成就栏 -->
+    <div class="achievement-bar" id="achievementBar">
+      <div class="achieve-item locked" id="ach-7days">
+        <span class="icon">🌱</span>
+        <span>7天连续</span>
+      </div>
+      <div class="achieve-item locked" id="ach-30days">
+        <span class="icon">🌳</span>
+        <span>30天坚持</span>
+      </div>
+      <div class="achieve-item" id="ach-awareness">
+        <span class="icon">👁️</span>
+        <span>觉察日记</span>
+        <span class="num" id="ach-awareness-count">0</span>
+      </div>
+      <div class="achieve-item" id="ach-review">
+        <span class="icon">📝</span>
+        <span>复盘</span>
+        <span class="num" id="ach-review-count">0</span>
+      </div>
+    </div>
+
+    <!-- 今日三件事 -->
+    <div class="section-title">今日三件事</div>
+    <div class="top3-grid" id="top3Grid">
+      <div class="top3-card" id="top3-0" onclick="toggleTop3(0)">
+        <div class="card-num">①</div>
+        <div class="card-text" id="top3-text-0">点击添加...</div>
+        <div class="card-check" id="top3-check-0">○ 未完成</div>
+      </div>
+      <div class="top3-card" id="top3-1" onclick="toggleTop3(1)">
+        <div class="card-num">②</div>
+        <div class="card-text" id="top3-text-1">点击添加...</div>
+        <div class="card-check" id="top3-check-1">○ 未完成</div>
+      </div>
+      <div class="top3-card" id="top3-2" onclick="toggleTop3(2)">
+        <div class="card-num">③</div>
+        <div class="card-text" id="top3-text-2">点击添加...</div>
+        <div class="card-check" id="top3-check-2">○ 未完成</div>
+      </div>
+      <div class="add-top3" onclick="openTop3Modal()">
+        <div class="plus">+</div>
+        <span>自定义添加</span>
+      </div>
+    </div>
+
+    <!-- 晨间打卡 -->
+    <div class="section-title" style="margin-top: 24px;">晨间打卡</div>
+    <div class="morning-checkin">
+      <div class="checkin-grid">
+        <div class="checkin-item" id="ci-sleep" onclick="toggleCheckin('sleep')">
+          <div class="ci-icon">😴</div>
+          <div class="ci-label">睡眠质量</div>
+          <div class="ci-status">点击记录</div>
+        </div>
+        <div class="checkin-item" id="ci-breakfast" onclick="toggleCheckin('breakfast')">
+          <div class="ci-icon">🍳</div>
+          <div class="ci-label">早餐</div>
+          <div class="ci-status">点击记录</div>
+        </div>
+        <div class="checkin-item" id="ci-exercise" onclick="toggleCheckin('exercise')">
+          <div class="ci-icon">🏃</div>
+          <div class="ci-label">运动</div>
+          <div class="ci-status">点击记录</div>
+        </div>
+        <div class="checkin-item" id="ci-mood" onclick="toggleCheckin('mood')">
+          <div class="ci-icon">😊</div>
+          <div class="ci-label">此刻心情</div>
+          <div class="ci-status">点击记录</div>
+        </div>
+      </div>
+    </div>
+
+    <!-- 闪念胶囊 -->
+    <div class="flash-section">
+      <div class="section-title">💡 闪念胶囊</div>
+      <div class="flash-input-wrap">
+        <input type="text" id="flashInput" placeholder="捕捉一个突发想法..." onkeypress="if(event.key==='Enter')addFlash()">
+        <button class="flash-add-btn" onclick="addFlash()">+</button>
+      </div>
+      <div class="flash-list" id="flashList"></div>
+    </div>
+  </div>
+
+  <!-- 觉察日记页 -->
+  <div class="page" id="page-awareness">
+    <div class="awareness-card">
+      <div class="section-title">👁️ 觉察日记</div>
+      <div class="awareness-q">
+        <div class="q-label">👀 你看到了什么？</div>
+        <textarea id="aw-see" placeholder="描述你观察到的事物、场景、孩子的行为..."></textarea>
+      </div>
+      <div class="awareness-q">
+        <div class="q-label">👂 你听到了什么？</div>
+        <textarea id="aw-hear" placeholder="描述你听到的声音、孩子说的话、自己的内心独白..."></textarea>
+      </div>
+      <div class="awareness-q">
+        <div class="q-label">💛 你的感受是什么？</div>
+        <textarea id="aw-feel" placeholder="描述你此刻的情绪、身体感受、直觉反应..."></textarea>
+      </div>
+      <div class="awareness-q">
+        <div class="q-label">📝 自定义备注</div>
+        <textarea id="aw-note" placeholder="任何想补充的细节、原因分析、后续行动..."></textarea>
+      </div>
+      <button class="awareness-submit" onclick="saveAwareness()">📌 记录觉察</button>
+    </div>
+
+    <!-- 历史觉察 -->
+    <div class="section-title" style="margin-top: 24px;">历史觉察</div>
+    <div id="awarenessHistory"></div>
+  </div>
+
+  <!-- 孩子成长页 -->
+  <div class="page" id="page-kids">
+    <div class="section-title">👶 孩子成长</div>
+    <div class="kid-tabs">
+      <div class="kid-tab active" onclick="switchKid('姐姐')">👧 姐姐</div>
+      <div class="kid-tab" onclick="switchKid('妹妹')">👶 妹妹</div>
+    </div>
+    <div class="kid-card">
+      <div id="kidForm-姐姐" class="kid-record-form active">
+        <input type="text" class="kid-record-input" id="kidInput-姐姐" placeholder="今天姐姐发生了什么让你印象深刻的事？">
+        <div class="kid-record-select">
+          <button class="kid-emoji-btn" onclick="selectKidEmoji('姐姐','😊')">😊</button>
+          <button class="kid-emoji-btn" onclick="selectKidEmoji('姐姐','😢')">😢</button>
+          <button class="kid-emoji-btn" onclick="selectKidEmoji('姐姐','😡')">😡</button>
+          <button class="kid-emoji-btn" onclick="selectKidEmoji('姐姐','😱')">😱</button>
+          <button class="kid-emoji-btn" onclick="selectKidEmoji('姐姐','🤔')">🤔</button>
+          <button class="kid-emoji-btn" onclick="selectKidEmoji('姐姐','🎉')">🎉</button>
+        </div>
+        <input type="hidden" id="kidEmoji-姐姐" value="😊">
+        <button class="kid-save-btn" onclick="saveKidRecord('姐姐')">记录姐姐今日</button>
+      </div>
+      <div id="kidForm-妹妹" class="kid-record-form">
+        <input type="text" class="kid-record-input" id="kidInput-妹妹" placeholder="今天妹妹发生了什么让你印象深刻的事？">
+        <div class="kid-record-select">
+          <button class="kid-emoji-btn" onclick="selectKidEmoji('妹妹','😊')">😊</button>
+          <button class="kid-emoji-btn" onclick="selectKidEmoji('妹妹','😢')">😢</button>
+          <button class="kid-emoji-btn" onclick="selectKidEmoji('妹妹','😡')">😡</button>
+          <button class="kid-emoji-btn" onclick="selectKidEmoji('妹妹','😱')">😱</button>
+          <button class="kid-emoji-btn" onclick="selectKidEmoji('妹妹','🤔')">🤔</button>
+          <button class="kid-emoji-btn" onclick="selectKidEmoji('妹妹','🎉')">🎉</button>
+        </div>
+        <input type="hidden" id="kidEmoji-妹妹" value="😊">
+        <button class="kid-save-btn" onclick="saveKidRecord('妹妹')">记录妹妹今日</button>
+      </div>
+      <div class="kid-timeline" id="kidTimeline"></div>
+    </div>
+  </div>
+
+  <!-- 复盘页 -->
+  <div class="page" id="page-review">
+    <div class="review-section">
+      <div class="section-title">📝 每日复盘</div>
+      <div class="review-4step">
+        <div class="review-step">
+          <div class="step-num">STEP 1</div>
+          <textarea id="rev-1" placeholder="今天最想解决的一个真实困境是什么？"></textarea>
+        </div>
+        <div class="review-step">
+          <div class="step-num">STEP 2</div>
+          <textarea id="rev-2" placeholder="最近实战中哪些做法真正起作用了？"></textarea>
+        </div>
+        <div class="review-step">
+          <div class="step-num">STEP 3</div>
+          <textarea id="rev-3" placeholder="哪些做法只是表面忙碌实际没产出？"></textarea>
+        </div>
+        <div class="review-step">
+          <div class="step-num">STEP 4</div>
+          <textarea id="rev-4" placeholder="基于以上分析，接下来应该停止做什么、开始做什么？"></textarea>
+        </div>
+      </div>
+      <button class="review-submit" onclick="saveReview()">完成今日复盘 ✓</button>
+    </div>
+
+    <!-- 历史复盘 -->
+    <div class="section-title" style="margin-top: 24px;">历史复盘</div>
+    <div id="reviewHistory"></div>
+  </div>
+
+  <!-- 数据页 -->
+  <div class="page" id="page-data">
+    <div class="backup-section">
+      <div class="section-title">💾 数据管理</div>
+      <div class="backup-note">数据保存在本地浏览器中，不会上传到任何服务器。</div>
+      <div class="backup-btns">
+        <button onclick="exportData()">📤 导出备份</button>
+        <button onclick="document.getElementById('importFile').click()">📥 导入恢复</button>
+        <input type="file" id="importFile" accept=".json" style="display:none" onchange="importData(event)">
+      </div>
+    </div>
+  </div>
+
+</div>
+
+<!-- 底部导航 -->
+<div class="bottom-nav">
+  <div class="nav-item active" onclick="switchPage('home')">
+    <span class="nav-icon">🏠</span>
+    <span class="nav-label">首页</span>
+  </div>
+  <div class="nav-item" onclick="switchPage('awareness')">
+    <span class="nav-icon">👁️</span>
+    <span class="nav-label">觉察</span>
+  </div>
+  <div class="nav-item" onclick="switchPage('kids')">
+    <span class="nav-icon">👶</span>
+    <span class="nav-label">孩子</span>
+  </div>
+  <div class="nav-item" onclick="switchPage('review')">
+    <span class="nav-icon">📝</span>
+    <span class="nav-label">复盘</span>
+  </div>
+  <div class="nav-item" onclick="switchPage('data')">
+    <span class="nav-icon">⚙️</span>
+    <span class="nav-label">设置</span>
+  </div>
+</div>
+
+<!-- 心情选择弹窗 -->
+<div class="modal-overlay" id="moodModal">
+  <div class="modal">
+    <div class="modal-title">选择今日状态</div>
+    <div class="checkin-grid">
+      <div class="checkin-item" onclick="setMood('😊','充实满足')">
+        <div class="ci-icon">😊</div>
+        <div class="ci-label">充实满足</div>
+      </div>
+      <div class="checkin-item" onclick="setMood('😌','平静安稳')">
+        <div class="ci-icon">😌</div>
+        <div class="ci-label">平静安稳</div>
+      </div>
+      <div class="checkin-item" onclick="setMood('😔','有些低落')">
+        <div class="ci-icon">😔</div>
+        <div class="ci-label">有些低落</div>
+      </div>
+      <div class="checkin-item" onclick="setMood('😰','焦虑忙碌')">
+        <div class="ci-icon">😰</div>
+        <div class="ci-label">焦虑忙碌</div>
+      </div>
+      <div class="checkin-item" onclick="setMood('🤔','迷茫思考')">
+        <div class="ci-icon">🤔</div>
+        <div class="ci-label">迷茫思考</div>
+      </div>
+      <div class="checkin-item" onclick="setMood('🤗','温暖被爱')">
+        <div class="ci-icon">🤗</div>
+        <div class="ci-label">温暖被爱</div>
+      </div>
+    </div>
+    <div style="margin-top:16px;">
+      <input type="text" class="kid-record-input" id="keywordInput" placeholder="一句话形容今天..." style="margin-bottom:12px">
+      <button class="kid-save-btn" onclick="saveMood()">保存状态</button>
+    </div>
+    <div class="modal-close" onclick="closeMoodModal()">取消</div>
+  </div>
+</div>
+
+<!-- 三件事编辑弹窗 -->
+<div class="modal-overlay" id="top3Modal">
+  <div class="modal">
+    <div class="modal-title">添加今日事项</div>
+    <input type="text" class="kid-record-input" id="top3EditInput" placeholder="输入事项内容...">
+    <input type="hidden" id="top3EditIndex" value="">
+    <div style="display:flex;gap:8px;margin-top:12px;">
+      <button class="kid-save-btn" style="flex:1" onclick="saveTop3Edit()">保存</button>
+      <button class="kid-save-btn" style="flex:1;background:#999" onclick="deleteTop3()">删除</button>
+    </div>
+    <div class="modal-close" onclick="closeTop3Modal()">取消</div>
+  </div>
+</div>
+
+<!-- 打卡成功提示 -->
+<div class="checkin-success" id="checkinSuccess">
+  <div class="big-emoji">✨</div>
+  <div class="msg" id="successMsg">记录成功！</div>
+</div>
+
+<script>
+// ========== 数据存储 ==========
+const STORAGE_KEY = 'jiating_chengzhanglu_data';
+let appData = loadData();
+
+function getToday() {
+  const d = new Date();
+  return `${d.getFullYear()}-${String(d.getMonth()+1).padStart(2,'0')}-${String(d.getDate()).padStart(2,'0')}`;
+}
+
+function loadData() {
+  try {
+    const raw = localStorage.getItem(STORAGE_KEY);
+    if (raw) return JSON.parse(raw);
+  } catch(e) {}
+  return {
+    streak: 0,
+    lastDate: '',
+    mood: null,
+    keyword: '',
+    top3: [null, null, null],
+    top3Done: [false, false, false],
+    checkins: {},
+    flashList: [],
+    awarenessList: [],
+    reviewList: [],
+    kids: {
+      '姐姐': [],
+      '妹妹': []
+    }
+  };
+}
+
+function saveData() {
+  localStorage.setItem(STORAGE_KEY, JSON.stringify(appData));
+}
+
+// ========== 初始化 ==========
+function init() {
+  // 检查是否新的一天
+  const today = getToday();
+  if (appData.lastDate && appData.lastDate !== today) {
+    // 重置每日状态
+    appData.top3Done = [false, false, false];
+    appData.checkins = {};
+    updateStreak();
+  }
+  appData.lastDate = today;
+  saveData();
+
+  // 渲染日期
+  const d = new Date();
+  const weekdays = ['周日','周一','周二','周三','周四','周五','周六'];
+  document.getElementById('heroDate').textContent = `${d.getMonth()+1}月${d.getDate()}日 ${weekdays[d.getDay()]}`;
+  document.getElementById('currentDate').textContent = `${d.getMonth()+1}/${d.getDate()}`;
+
+  renderAll();
+}
+
+function renderAll() {
+  renderMood();
+  renderTop3();
+  renderCheckins();
+  renderFlash();
+  renderAchievements();
+  renderAwarenessHistory();
+  renderReviewHistory();
+  renderKidTimeline();
+  updateStreak();
+}
+
+// ========== 心情 ==========
+function openMoodModal() {
+  document.getElementById('moodModal').classList.add('show');
+  document.getElementById('keywordInput').value = appData.keyword || '';
+}
+function closeMoodModal() {
+  document.getElementById('moodModal').classList.remove('show');
+}
+function setMood(emoji, label) {
+  document.getElementById('heroMood').textContent = emoji;
+  document.getElementById('heroLabel').textContent = label;
+}
+function saveMood() {
+  const emoji = document.getElementById('heroMood').textContent;
+  const label = document.getElementById('heroLabel').textContent;
+  const keyword = document.getElementById('keywordInput').value;
+  appData.mood = { emoji, label, keyword };
+  appData.keyword = keyword;
+  saveData();
+  closeMoodModal();
+  showSuccess('状态已保存！');
+}
+function renderMood() {
+  if (appData.mood) {
+    document.getElementById('heroMood').textContent = appData.mood.emoji;
+    document.getElementById('heroLabel').textContent = appData.mood.label;
+    if (appData.mood.keyword) {
+      document.getElementById('heroKeyword').textContent = `"${appData.mood.keyword}"`;
+    }
+  }
+}
+
+// ========== 三件事 ==========
+function openTop3Modal(idx) {
+  document.getElementById('top3Modal').classList.add('show');
+  document.getElementById('top3EditIndex').value = idx;
+  const text = appData.top3[idx];
+  document.getElementById('top3EditInput').value = text || '';
+}
+function closeTop3Modal() {
+  document.getElementById('top3Modal').classList.remove('show');
+}
+function saveTop3Edit() {
+  const idx = parseInt(document.getElementById('top3EditIndex').value);
+  const text = document.getElementById('top3EditInput').value.trim();
+  appData.top3[idx] = text;
+  saveData();
+  renderTop3();
+  closeTop3Modal();
+}
+function deleteTop3() {
+  const idx = parseInt(document.getElementById('top3EditIndex').value);
+  appData.top3[idx] = null;
+  appData.top3Done[idx] = false;
+  saveData();
+  renderTop3();
+  closeTop3Modal();
+}
+function toggleTop3(idx) {
+  if (!appData.top3[idx]) {
+    openTop3Modal(idx);
+    return;
+  }
+  appData.top3Done[idx] = !appData.top3Done[idx];
+  saveData();
+  renderTop3();
+  if (appData.top3Done[idx]) {
+    const doneCount = appData.top3Done.filter(d=>d).length;
+    showSuccess(`完成 ${doneCount}/3 件事！`);
+  }
+}
+function renderTop3() {
+  for (let i = 0; i < 3; i++) {
+    const card = document.getElementById(`top3-${i}`);
+    const textEl = document.getElementById(`top3-text-${i}`);
+    const checkEl = document.getElementById(`top3-check-${i}`);
+    if (appData.top3[i]) {
+      textEl.textContent = appData.top3[i];
+      checkEl.textContent = appData.top3Done[i] ? '✓ 已完成' : '○ 未完成';
+      card.classList.toggle('done', appData.top3Done[i]);
+    } else {
+      textEl.textContent = '点击添加...';
+      checkEl.textContent = '';
+      card.classList.remove('done');
+    }
+  }
+}
+
+// ========== 晨间打卡 ==========
+const checkinConfig = {
+  sleep: { icon: '😴', label: '睡眠质量', options: [{e:'😊',t:'好'},{e:'😴',t:'一般'},{e:'🥱',t:'疲惫'}] },
+  breakfast: { icon: '🍳', label: '早餐', options: [{e:'✅',t:'已吃'},{e:'❌',t:'未吃'}] },
+  exercise: { icon: '🏃', label: '运动', options: [{e:'🧘',t:'瑜伽'},{e:'🏃',t:'跑步'},{e:'🚴',t:'骑行'},{e:'❌',t:'未运动'}] },
+  mood: { icon: '😊', label: '心情', options: [{e:'😊',t:'愉悦'},{e:'😐',t:'平静'},{e:'😔',t:'低落'}] }
+};
+
+function toggleCheckin(type) {
+  const ci = document.getElementById(`ci-${type}`);
+  const current = appData.checkins[type];
+  const config = checkinConfig[type];
+
+  if (!current) {
+    // 打开选择
+    showCheckinOptions(type);
+  } else {
+    // 取消
+    appData.checkins[type] = null;
+    saveData();
+    renderCheckins();
+  }
+}
+
+function showCheckinOptions(type) {
+  const config = checkinConfig[type];
+  const ci = document.getElementById(`ci-${type}`);
+  ci.innerHTML = `<div style="display:flex;gap:8px;justify-content:center;flex-wrap:wrap;">
+    ${config.options.map(o=>`<button style="font-size:1.2rem;padding:4px 8px;border:none;background:rgba(255,255,255,0.3);border-radius:8px;cursor:pointer" onclick="event.stopPropagation();setCheckin('${type}','${o.e}')">${o.e}</button>`).join('')}
+  </div>`;
+}
+
+function setCheckin(type, emoji) {
+  appData.checkins[type] = emoji;
+  saveData();
+  renderCheckins();
+  showSuccess('已记录！');
+}
+
+function renderCheckins() {
+  for (const [type, config] of Object.entries(checkinConfig)) {
+    const ci = document.getElementById(`ci-${type}`);
+    const val = appData.checkins[type];
+    if (val) {
+      const opt = config.options.find(o=>o.e===val);
+      ci.classList.add('done');
+      ci.innerHTML = `<div class="ci-icon">${val}</div>
+        <div class="ci-label">${config.label}</div>
+        <div class="ci-status">${opt ? opt.t : ''}</div>`;
+    } else {
+      ci.classList.remove('done');
+      ci.innerHTML = `<div class="ci-icon">${config.icon}</div>
+        <div class="ci-label">${config.label}</div>
+        <div class="ci-status">点击记录</div>`;
+    }
+  }
+}
+
+// ========== 闪念胶囊 ==========
+function addFlash() {
+  const input = document.getElementById('flashInput');
+  const text = input.value.trim();
+  if (!text) return;
+  appData.flashList.unshift({
+    text,
+    time: new Date().toLocaleTimeString('zh-CN', {hour:'2-digit',minute:'2-digit'})
+  });
+  if (appData.flashList.length > 20) appData.flashList.pop();
+  input.value = '';
+  saveData();
+  renderFlash();
+}
+function deleteFlash(idx) {
+  appData.flashList.splice(idx, 1);
+  saveData();
+  renderFlash();
+}
+function renderFlash() {
+  const list = document.getElementById('flashList');
+  if (appData.flashList.length === 0) {
+    list.innerHTML = '<div style="color:var(--text-light);font-size:0.85rem;text-align:center;padding:12px">暂无闪念，随时记下突发想法...</div>';
+    return;
+  }
+  list.innerHTML = appData.flashList.map((f,i)=>`
+    <div class="flash-item">
+      <span>💡</span>
+      <span>${f.text}</span>
+      <span style="margin-left:auto;font-size:0.75rem;color:var(--text-light)">${f.time}</span>
+      <span class="del" onclick="deleteFlash(${i})">✕</span>
+    </div>
+  `).join('');
+}
+
+// ========== 觉察日记 ==========
+function saveAwareness() {
+  const see = document.getElementById('aw-see').value.trim();
+  const hear = document.getElementById('aw-hear').value.trim();
+  const feel = document.getElementById('aw-feel').value.trim();
+  const note = document.getElementById('aw-note').value.trim();
+
+  if (!see && !hear && !feel) {
+    showSuccess('请至少填写一项内容');
+    return;
+  }
+
+  appData.awarenessList.unshift({
+    date: new Date().toLocaleDateString('zh-CN'),
+    see, hear, feel, note
+  });
+  saveData();
+
+  document.getElementById('aw-see').value = '';
+  document.getElementById('aw-hear').value = '';
+  document.getElementById('aw-feel').value = '';
+  document.getElementById('aw-note').value = '';
+
+  renderAwarenessHistory();
+  showSuccess('觉察已记录！');
+}
+
+function renderAwarenessHistory() {
+  const el = document.getElementById('awarenessHistory');
+  const count = appData.awarenessList.length;
+  document.getElementById('ach-awareness-count').textContent = count;
+
+  if (count === 0) {
+    el.innerHTML = '<div style="text-align:center;color:var(--text-light);padding:24px;font-size:0.9rem">还没有觉察记录，开始记录吧...</div>';
+    return;
+  }
+
+  el.innerHTML = appData.awarenessList.slice(0, 7).map(a=>`
+    <div style="background:var(--card);border-radius:16px;padding:16px;margin-bottom:12px;border:1px solid var(--border)">
+      <div style="font-size:0.75rem;color:var(--text-light);margin-bottom:8px">${a.date}</div>
+      ${a.see ? `<div style="margin-bottom:6px"><span style="color:var(--gold)">👀</span> ${a.see}</div>` : ''}
+      ${a.hear ? `<div style="margin-bottom:6px"><span style="color:var(--gold)">👂</span> ${a.hear}</div>` : ''}
+      ${a.feel ? `<div style="margin-bottom:6px"><span style="color:var(--gold)">💛</span> ${a.feel}</div>` : ''}
+      ${a.note ? `<div style="font-size:0.85rem;color:var(--text-light)">📝 ${a.note}</div>` : ''}
+    </div>
+  `).join('');
+}
+
+// ========== 孩子成长 ==========
+let currentKid = '姐姐';
+
+function switchKid(name) {
+  currentKid = name;
+  document.querySelectorAll('.kid-tab').forEach(t=>t.classList.remove('active'));
+  event.target.classList.add('active');
+  document.querySelectorAll('.kid-record-form').forEach(f=>f.classList.remove('active'));
+  document.getElementById(`kidForm-${name}`).classList.add('active');
+  renderKidTimeline();
+}
+
+function selectKidEmoji(kid, emoji) {
+  document.getElementById(`kidEmoji-${kid}`).value = emoji;
+  // 更新选中状态
+  const btns = document.querySelectorAll(`#kidForm-${kid} .kid-emoji-btn`);
+  btns.forEach(b=>b.classList.remove('selected'));
+  event.target.classList.add('selected');
+}
+
+function saveKidRecord(kid) {
+  const input = document.getElementById(`kidInput-${kid}`);
+  const emoji = document.getElementById(`kidEmoji-${kid}`).value;
+  const text = input.value.trim();
+
+  if (!text) {
+    showSuccess('请输入记录内容');
+    return;
+  }
+
+  appData.kids[kid].unshift({
+    date: new Date().toLocaleDateString('zh-CN'),
+    emoji,
+    text
+  });
+  saveData();
+
+  input.value = '';
+  renderKidTimeline();
+  showSuccess(`${kid}今日已记录！`);
+}
+
+function renderKidTimeline() {
+  const el = document.getElementById('kidTimeline');
+  const records = appData.kids[currentKid];
+
+  if (records.length === 0) {
+    el.innerHTML = '<div style="text-align:center;color:var(--text-light);padding:16px;font-size:0.9rem">还没有记录，开始记录吧...</div>';
+    return;
+  }
+
+  el.innerHTML = `<div style="margin-bottom:12px;font-size:0.85rem;color:var(--text-light)">共 ${records.length} 条记录</div>` +
+    records.slice(0, 10).map(r=>`
+      <div class="timeline-item">
+        <div class="timeline-date">${r.date}</div>
+        <div class="timeline-emoji">${r.emoji}</div>
+        <div class="timeline-text">${r.text}</div>
+      </div>
+    `).join('');
+}
+
+// ========== 复盘 ==========
+function saveReview() {
+  const r1 = document.getElementById('rev-1').value.trim();
+  const r2 = document.getElementById('rev-2').value.trim();
+  const r3 = document.getElementById('rev-3').value.trim();
+  const r4 = document.getElementById('rev-4').value.trim();
+
+  if (!r1 && !r2 && !r3 && !r4) {
+    showSuccess('请至少填写一个步骤');
+    return;
+  }
+
+  appData.reviewList.unshift({
+    date: new Date().toLocaleDateString('zh-CN'),
+    r1, r2, r3, r4
+  });
+  saveData();
+
+  document.getElementById('rev-1').value = '';
+  document.getElementById('rev-2').value = '';
+  document.getElementById('rev-3').value = '';
+  document.getElementById('rev-4').value = '';
+
+  renderReviewHistory();
+  showSuccess('复盘完成！坚持的力量 💪');
+}
+
+function renderReviewHistory() {
+  const el = document.getElementById('reviewHistory');
+  const count = appData.reviewList.length;
+  document.getElementById('ach-review-count').textContent = count;
+
+  if (count === 0) {
+    el.innerHTML = '<div style="text-align:center;color:var(--text-light);padding:24px;font-size:0.9rem">还没有复盘记录...</div>';
+    return;
+  }
+
+  el.innerHTML = appData.reviewList.slice(0, 7).map(r=>`
+    <div style="background:var(--card);border-radius:16px;padding:16px;margin-bottom:12px;border:1px solid var(--border)">
+      <div style="font-size:0.75rem;color:var(--text-light);margin-bottom:8px">${r.date}</div>
+      ${r.r1 ? `<div style="margin-bottom:4px;font-size:0.8rem"><span style="color:var(--primary)">①</span> ${r.r1}</div>` : ''}
+      ${r.r2 ? `<div style="margin-bottom:4px;font-size:0.8rem"><span style="color:var(--primary)">②</span> ${r.r2}</div>` : ''}
+      ${r.r3 ? `<div style="margin-bottom:4px;font-size:0.8rem"><span style="color:var(--primary)">③</span> ${r.r3}</div>` : ''}
+      ${r.r4 ? `<div style="font-size:0.8rem;padding:8px;background:var(--warm);border-radius:8px;margin-top:8px"><span style="color:var(--gold)">→</span> ${r.r4}</div>` : ''}
+    </div>
+  `).join('');
+}
+
+// ========== 成就 ==========
+function updateStreak() {
+  const today = getToday();
+  const yesterday = new Date();
+  yesterday.setDate(yesterday.getDate() - 1);
+  const yStr = `${yesterday.getFullYear()}-${String(yesterday.getMonth()+1).padStart(2,'0')}-${String(yesterday.getDate()).padStart(2,'0')}`;
+
+  if (appData.lastDate === today) {
+    // 今天已记录
+  } else if (appData.lastDate === yStr) {
+    // 昨天有记录，今天还没记录
+  } else if (appData.lastDate && appData.lastDate !== today) {
+    // 中间断开了
+    appData.streak = 0;
+    saveData();
+  }
+
+  document.getElementById('streakBadge').textContent = `🔥 ${appData.streak}天`;
+}
+
+function renderAchievements() {
+  const streak = appData.streak;
+  document.getElementById('ach-7days').classList.toggle('locked', streak < 7);
+  document.getElementById('ach-30days').classList.toggle('locked', streak < 30);
+}
+
+// ========== 导航 ==========
+function switchPage(name) {
+  document.querySelectorAll('.page').forEach(p=>p.classList.remove('active'));
+  document.querySelectorAll('.nav-item').forEach(n=>n.classList.remove('active'));
+  document.getElementById(`page-${name}`).classList.add('active');
+  event.currentTarget.classList.add('active');
+}
+
+// ========== 成功提示 ==========
+function showSuccess(msg) {
+  const el = document.getElementById('checkinSuccess');
+  document.getElementById('successMsg').textContent = msg;
+  el.classList.add('show');
+  setTimeout(()=>el.classList.remove('show'), 1500);
+}
+
+// ========== 数据导入导出 ==========
+function exportData() {
+  const blob = new Blob([JSON.stringify(appData, null, 2)], {type:'application/json'});
+  const url = URL.createObjectURL(blob);
+  const a = document.createElement('a');
+  a.href = url;
+  a.download = `家庭成长录备份_${getToday()}.json`;
+  a.click();
+  URL.revokeObjectURL(url);
+  showSuccess('备份已导出！');
+}
+
+function importData(e) {
+  const file = e.target.files[0];
+  if (!file) return;
+  const reader = new FileReader();
+  reader.onload = function(ev) {
+    try {
+      const data = JSON.parse(ev.target.result);
+      appData = data;
+      saveData();
+      renderAll();
+      showSuccess('数据已恢复！');
+    } catch(err) {
+      showSuccess('文件格式错误');
+    }
+  };
+  reader.readAsText(file);
+}
+
+// ========== 启动 ==========
+init();
+</script>
+</body>
+</html>
