@@ -959,6 +959,53 @@
     .page { display: none; }
     .page.active { display: block; }
 
+    /* 成长报告 */
+    .report-section {
+      background: var(--card);
+      border-radius: 16px;
+      padding: 20px;
+      margin-bottom: 20px;
+      border: 1px solid var(--border);
+    }
+    .report-btns {
+      display: flex;
+      gap: 10px;
+      margin-top: 14px;
+    }
+    .report-btn {
+      flex: 1;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      gap: 4px;
+      padding: 16px 8px;
+      border-radius: 14px;
+      border: 1px solid var(--border);
+      background: var(--bg);
+      cursor: pointer;
+      transition: all 0.2s;
+    }
+    .report-btn:hover { transform: translateY(-2px); box-shadow: 0 4px 12px rgba(0,0,0,0.1); }
+    .report-btn:active { transform: scale(0.97); }
+    .r-icon { font-size: 1.6rem; }
+    .r-label { font-size: 0.95rem; font-weight: 600; color: var(--text); }
+    .r-desc { font-size: 0.7rem; color: var(--text-light); }
+
+    /* 报告卡片 */
+    .report-card {
+      background: var(--card);
+      border-radius: 16px;
+      padding: 20px;
+      margin-bottom: 16px;
+      border: 1px solid var(--border);
+    }
+    .report-card h3 { font-size: 1.1rem; margin-bottom: 12px; color: var(--primary); }
+    .report-meta { font-size: 0.8rem; color: var(--text-light); margin-bottom: 14px; }
+    .report-row { display: flex; justify-content: space-between; padding: 8px 0; border-bottom: 1px solid var(--border); font-size: 0.9rem; }
+    .report-row:last-child { border-bottom: none; }
+    .report-row-label { color: var(--text-light); }
+    .report-row-val { font-weight: 600; }
+
     /* 数据备份区 */
     .backup-section {
       margin-top: 24px;
@@ -1228,6 +1275,32 @@
 
   <!-- 数据页 -->
   <div class="page" id="page-data">
+    <!-- 报告生成 -->
+    <div class="report-section">
+      <div class="section-title">📊 成长报告</div>
+      <div class="report-btns">
+        <button class="report-btn" onclick="generateDailyReport()">
+          <span class="r-icon">📅</span>
+          <span class="r-label">日报</span>
+          <span class="r-desc">今日记录摘要</span>
+        </button>
+        <button class="report-btn" onclick="generateWeeklyReport()">
+          <span class="r-icon">📆</span>
+          <span class="r-label">周报</span>
+          <span class="r-desc">本周数据回顾</span>
+        </button>
+        <button class="report-btn" onclick="generateMonthlyReport()">
+          <span class="r-icon">🗓️</span>
+          <span class="r-label">月报</span>
+          <span class="r-desc">本月数据总览</span>
+        </button>
+      </div>
+    </div>
+
+    <!-- 报告展示区 -->
+    <div id="reportDisplay" style="display:none;margin-top:20px;"></div>
+
+    <!-- 数据管理 -->
     <div class="backup-section">
       <div class="section-title">💾 数据管理</div>
       <div class="backup-note">数据保存在本地浏览器中，不会上传到任何服务器。</div>
@@ -2077,7 +2150,7 @@ function switchPage(name) {
   document.querySelectorAll('.page').forEach(p=>p.classList.remove('active'));
   document.querySelectorAll('.nav-item').forEach(n=>n.classList.remove('active'));
   document.getElementById(`page-${name}`).classList.add('active');
-  event.currentTarget.classList.add('active');
+  if (event && event.currentTarget) event.currentTarget.classList.add('active');
 }
 
 // ========== 成功提示 ==========
@@ -2086,6 +2159,122 @@ function showSuccess(msg) {
   document.getElementById('successMsg').textContent = msg;
   el.classList.add('show');
   setTimeout(()=>el.classList.remove('show'), 1500);
+}
+
+// ========== 成长报告 ==========
+function generateDailyReport() {
+  const today = getToday();
+  const mood = appData.moodByDate && appData.moodByDate[today];
+  const checkins = appData.checkinsByDate && appData.checkinsByDate[today];
+  const top3 = appData.top3ByDate && appData.top3ByDate[today];
+  const flash = appData.flashByDate && appData.flashByDate[today];
+  const awareness = appData.awarenessByDate && appData.awarenessByDate[today];
+  const review = appData.reviewByDate && appData.reviewByDate[today];
+  const kids = appData.kidEvents && appData.kidEvents[today];
+
+  let html = `<div class="report-card">
+    <h3>📅 ${today} 日报</h3>
+    <div class="report-meta">家庭成长记录 · 每日摘要</div>
+    <div class="report-row"><span class="report-row-label">今日心情</span><span class="report-row-val">${mood ? mood.emoji + ' ' + mood.label : '未记录'}</span></div>
+    <div class="report-row"><span class="report-row-label">睡眠</span><span class="report-row-val">${checkins && checkins.sleep || '未记录'}</span></div>
+    <div class="report-row"><span class="report-row-label">运动</span><span class="report-row-val">${checkins && checkins.exercise || '未记录'}</span></div>
+    <div class="report-row"><span class="report-row-label">早餐</span><span class="report-row-val">${checkins && checkins.breakfast ? checkins.breakfast + (checkins.breakfastNote ? ' - ' + checkins.breakfastNote : '') : '未记录'}</span></div>
+    <div class="report-row"><span class="report-row-label">午餐</span><span class="report-row-val">${checkins && checkins.lunch ? checkins.lunch + (checkins.lunchNote ? ' - ' + checkins.lunchNote : '') : '未记录'}</span></div>
+    <div class="report-row"><span class="report-row-label">晚餐</span><span class="report-row-val">${checkins && checkins.dinner ? checkins.dinner + (checkins.dinnerNote ? ' - ' + checkins.dinnerNote : '') : '未记录'}</span></div>
+    <div class="report-row"><span class="report-row-label">三件事完成</span><span class="report-row-val">${top3 ? top3.filter(t=>t && t.done).length + '/3' : '未记录'}</span></div>
+    <div class="report-row"><span class="report-row-label">闪念胶囊</span><span class="report-row-val">${flash ? flash.length + '条' : '0条'}</span></div>
+    <div class="report-row"><span class="report-row-label">觉察日记</span><span class="report-row-val">${awareness ? '已记录' : '未写'}</span></div>
+    <div class="report-row"><span class="report-row-label">复盘</span><span class="report-row-val">${review ? '已复盘' : '未复盘'}</span></div>
+    <div class="report-row"><span class="report-row-label">孩子记录</span><span class="report-row-val">${kids ? kids.length + '条' : '无记录'}</span></div>
+  </div>`;
+  showReport(html);
+}
+
+function generateWeeklyReport() {
+  const today = new Date(getToday() + 'T00:00:00');
+  const dayOfWeek = today.getDay();
+  const startDate = new Date(today);
+  startDate.setDate(startDate.getDate() - dayOfWeek);
+
+  let rows = '';
+  let moodCount = {};
+  let totalCheckins = 0;
+  let awarenessDays = 0;
+  let reviewDays = 0;
+
+  for (let i = 0; i < 7; i++) {
+    const d = new Date(startDate);
+    d.setDate(d.getDate() + i);
+    const ds = getDateStr(d);
+    const mood = appData.moodByDate && appData.moodByDate[ds];
+    if (mood) moodCount[mood.emoji] = (moodCount[mood.emoji] || 0) + 1;
+    const checkins = appData.checkinsByDate && appData.checkinsByDate[ds];
+    if (checkins && Object.values(checkins).some(v => v)) totalCheckins++;
+    if (appData.awarenessByDate && appData.awarenessByDate[ds]) awarenessDays++;
+    if (appData.reviewByDate && appData.reviewByDate[ds]) reviewDays++;
+    rows += `<div class="report-row">
+      <span class="report-row-label">${ds}</span>
+      <span class="report-row-val">${mood ? mood.emoji : '○'} ${checkins && Object.values(checkins).some(v=>v) ? '✓' : ''} ${appData.awarenessByDate && appData.awarenessByDate[ds] ? '觉' : ''} ${appData.reviewByDate && appData.reviewByDate[ds] ? '复' : ''}</span>
+    </div>`;
+  }
+
+  const topMood = Object.entries(moodCount).sort((a,b)=>b[1]-a[1])[0];
+  const weekLabel = `${getDateStr(startDate)} ~ ${getDateStr(new Date(startDate.getTime() + 6*86400000))}`;
+
+  let html = `<div class="report-card">
+    <h3>📆 ${weekLabel} 周报</h3>
+    <div class="report-meta">家庭成长记录 · 本周回顾</div>
+    <div class="report-row"><span class="report-row-label">记录天数</span><span class="report-row-val">${totalCheckins} 天</span></div>
+    <div class="report-row"><span class="report-row-label">主要心情</span><span class="report-row-val">${topMood ? topMood[0] + ' (' + topMood[1] + '天)' : '无数据'}</span></div>
+    <div class="report-row"><span class="report-row-label">觉察日记</span><span class="report-row-val">${awarenessDays} 天</span></div>
+    <div class="report-row"><span class="report-row-label">复盘次数</span><span class="report-row-val">${reviewDays} 天</span></div>
+    <div class="report-row"><span class="report-row-label">本周每日</span><span class="report-row-val">${weekLabel}</span></div>
+    ${rows}
+  </div>`;
+  showReport(html);
+}
+
+function generateMonthlyReport() {
+  const today = new Date(getToday() + 'T00:00:00');
+  const year = today.getFullYear();
+  const month = today.getMonth() + 1;
+  const daysInMonth = new Date(year, month, 0).getDate();
+
+  let moodCount = {};
+  let totalCheckins = 0;
+  let awarenessDays = 0;
+  let reviewDays = 0;
+  let streak = appData.streak || 0;
+
+  for (let d = 1; d <= daysInMonth; d++) {
+    const ds = `${year}-${String(month).padStart(2,'0')}-${String(d).padStart(2,'0')}`;
+    const mood = appData.moodByDate && appData.moodByDate[ds];
+    if (mood) moodCount[mood.emoji] = (moodCount[mood.emoji] || 0) + 1;
+    const checkins = appData.checkinsByDate && appData.checkinsByDate[ds];
+    if (checkins && Object.values(checkins).some(v => v)) totalCheckins++;
+    if (appData.awarenessByDate && appData.awarenessByDate[ds]) awarenessDays++;
+    if (appData.reviewByDate && appData.reviewByDate[ds]) reviewDays++;
+  }
+
+  const topMood = Object.entries(moodCount).sort((a,b)=>b[1]-a[1])[0];
+  let html = `<div class="report-card">
+    <h3>🗓️ ${year}年${month}月 月报</h3>
+    <div class="report-meta">家庭成长记录 · 月度总览</div>
+    <div class="report-row"><span class="report-row-label">本月天数</span><span class="report-row-val">${daysInMonth} 天</span></div>
+    <div class="report-row"><span class="report-row-label">记录天数</span><span class="report-row-val">${totalCheckins} 天</span></div>
+    <div class="report-row"><span class="report-row-label">主要心情</span><span class="report-row-val">${topMood ? topMood[0] + ' (' + topMood[1] + '次)' : '无数据'}</span></div>
+    <div class="report-row"><span class="report-row-label">觉察日记</span><span class="report-row-val">${awarenessDays} 天</span></div>
+    <div class="report-row"><span class="report-row-label">复盘次数</span><span class="report-row-val">${reviewDays} 天</span></div>
+    <div class="report-row"><span class="report-row-label">当前连续</span><span class="report-row-val">🔥 ${streak} 天</span></div>
+  </div>`;
+  showReport(html);
+}
+
+function showReport(html) {
+  const el = document.getElementById('reportDisplay');
+  el.innerHTML = html + '<button onclick="document.getElementById(\'reportDisplay\').style.display=\'none\'" style="width:100%;padding:12px;border:none;border-radius:10px;background:var(--border);color:var(--text);cursor:pointer;font-family:inherit;margin-top:8px;">关闭报告</button>';
+  el.style.display = 'block';
+  el.scrollIntoView({ behavior: 'smooth' });
 }
 
 // ========== 数据导入导出 ==========
