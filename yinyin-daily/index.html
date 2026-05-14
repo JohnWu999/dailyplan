@@ -129,6 +129,10 @@ textarea{width:100%;padding:12px;border:1px solid var(--border);border-radius:10
   @media(min-width:601px) and (max-width:900px){
     .top4-grid{grid-template-columns:repeat(2,1fr)!important}
   }
+  /* 桌面端：4列，等高 */
+  @media(min-width:901px){
+    .top4-grid{align-items:stretch!important}
+  }
   /* 手机上：第2行（觉察+孩子）改为1列 */
   @media(max-width:600px){
     .two-col-grid{grid-template-columns:1fr!important}
