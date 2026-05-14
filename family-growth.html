@@ -968,9 +968,64 @@
       border: 1px solid var(--border);
     }
     .report-btns {
-      display: flex;
-      gap: 10px;
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: 12px;
       margin-top: 14px;
+    }
+    .report-card {
+      background: var(--bg);
+      border: 1px solid var(--border);
+      border-radius: 12px;
+      padding: 16px;
+      display: flex;
+      flex-direction: column;
+      gap: 8px;
+    }
+    .report-card-header {
+      display: flex;
+      align-items: center;
+      gap: 8px;
+      font-weight: 600;
+      color: var(--primary);
+    }
+    .report-card-header .r-icon { font-size: 1.2rem; }
+    .report-card-header .r-label { font-size: 1rem; }
+    .report-card-desc {
+      font-size: 0.78rem;
+      color: var(--text-secondary);
+      margin-bottom: 4px;
+    }
+    .report-input {
+      width: 100%;
+      padding: 8px 10px;
+      border: 1px solid var(--border);
+      border-radius: 8px;
+      background: var(--bg);
+      color: var(--text);
+      font-size: 0.85rem;
+      font-family: inherit;
+      box-sizing: border-box;
+    }
+    .report-input:focus {
+      outline: none;
+      border-color: var(--primary);
+    }
+    .report-gen-btn {
+      width: 100%;
+      padding: 8px;
+      background: var(--primary);
+      color: #fff;
+      border: none;
+      border-radius: 8px;
+      font-size: 0.85rem;
+      font-weight: 600;
+      cursor: pointer;
+      transition: all 0.2s;
+    }
+    .report-gen-btn:hover {
+      background: var(--primary-dark);
+      transform: translateY(-1px);
     }
     .report-btn {
       flex: 1;
@@ -1279,21 +1334,36 @@
     <div class="report-section">
       <div class="section-title">📊 成长报告</div>
       <div class="report-btns">
-        <button class="report-btn" onclick="generateDailyReport()">
-          <span class="r-icon">📅</span>
-          <span class="r-label">日报</span>
-          <span class="r-desc">今日记录摘要</span>
-        </button>
-        <button class="report-btn" onclick="generateWeeklyReport()">
-          <span class="r-icon">📆</span>
-          <span class="r-label">周报</span>
-          <span class="r-desc">本周数据回顾</span>
-        </button>
-        <button class="report-btn" onclick="generateMonthlyReport()">
-          <span class="r-icon">🗓️</span>
-          <span class="r-label">月报</span>
-          <span class="r-desc">本月数据总览</span>
-        </button>
+        <!-- 日报卡片 -->
+        <div class="report-card">
+          <div class="report-card-header">
+            <span class="r-icon">📅</span>
+            <span class="r-label">日报</span>
+          </div>
+          <div class="report-card-desc">查看某一天的成长记录</div>
+          <input type="date" id="dailyReportDate" class="report-input">
+          <button class="report-gen-btn" onclick="generateDailyReport(document.getElementById('dailyReportDate').value)">生成日报</button>
+        </div>
+        <!-- 周报卡片 -->
+        <div class="report-card">
+          <div class="report-card-header">
+            <span class="r-icon">📆</span>
+            <span class="r-label">周报</span>
+          </div>
+          <div class="report-card-desc">选择某周的周一日期</div>
+          <input type="week" id="weeklyReportWeek" class="report-input">
+          <button class="report-gen-btn" onclick="generateWeeklyReport(document.getElementById('weeklyReportWeek').value)">生成周报</button>
+        </div>
+        <!-- 月报卡片 -->
+        <div class="report-card">
+          <div class="report-card-header">
+            <span class="r-icon">🗓️</span>
+            <span class="r-label">月报</span>
+          </div>
+          <div class="report-card-desc">选择年份和月份</div>
+          <input type="month" id="monthlyReportMonth" class="report-input">
+          <button class="report-gen-btn" onclick="generateMonthlyReport(document.getElementById('monthlyReportMonth').value)">生成月报</button>
+        </div>
       </div>
     </div>
 
@@ -2162,18 +2232,23 @@ function showSuccess(msg) {
 }
 
 // ========== 成长报告 ==========
-function generateDailyReport() {
-  const today = getToday();
-  const mood = appData.moodByDate && appData.moodByDate[today];
-  const checkins = appData.checkinsByDate && appData.checkinsByDate[today];
-  const top3 = appData.top3ByDate && appData.top3ByDate[today];
-  const flash = appData.flashByDate && appData.flashByDate[today];
-  const awareness = appData.awarenessByDate && appData.awarenessByDate[today];
-  const review = appData.reviewByDate && appData.reviewByDate[today];
-  const kids = appData.kidEvents && appData.kidEvents[today];
+function generateDailyReport(dateStr) {
+  const date = dateStr || getToday();
+  const mood = appData.moodByDate && appData.moodByDate[date];
+  const checkins = appData.checkinsByDate && appData.checkinsByDate[date];
+  const top3 = appData.top3ByDate && appData.top3ByDate[date];
+  const flash = appData.flashByDate && appData.flashByDate[date];
+  const awareness = appData.awarenessByDate && appData.awarenessByDate[date];
+  const review = appData.reviewByDate && appData.reviewByDate[date];
+  const kids = appData.kidEvents && appData.kidEvents[date];
+
+  if (!mood && !checkins && !top3 && !flash && !awareness && !review && !kids) {
+    alert('该日期暂无数据，请选择有记录的日期');
+    return;
+  }
 
   let html = `<div class="report-card">
-    <h3>📅 ${today} 日报</h3>
+    <h3>📅 ${date} 日报</h3>
     <div class="report-meta">家庭成长记录 · 每日摘要</div>
     <div class="report-row"><span class="report-row-label">今日心情</span><span class="report-row-val">${mood ? mood.emoji + ' ' + mood.label : '未记录'}</span></div>
     <div class="report-row"><span class="report-row-label">睡眠</span><span class="report-row-val">${checkins && checkins.sleep || '未记录'}</span></div>
@@ -2190,11 +2265,22 @@ function generateDailyReport() {
   showReport(html);
 }
 
-function generateWeeklyReport() {
-  const today = new Date(getToday() + 'T00:00:00');
-  const dayOfWeek = today.getDay();
-  const startDate = new Date(today);
-  startDate.setDate(startDate.getDate() - dayOfWeek);
+function generateWeeklyReport(weekStr) {
+  let startDate;
+  if (weekStr) {
+    // Parse "2025-W15" format
+    const [year, week] = weekStr.split('-W').map(Number);
+    // Get Jan 4 of that year (always in week 1)
+    startDate = new Date(year, 0, 4);
+    // Adjust to Monday of that week
+    const dayOfWeek = startDate.getDay() || 7;
+    startDate.setDate(startDate.getDate() - dayOfWeek + 1 + (week - 1) * 7);
+  } else {
+    const today = new Date(getToday() + 'T00:00:00');
+    const dayOfWeek = today.getDay() || 7;
+    startDate = new Date(today);
+    startDate.setDate(startDate.getDate() - dayOfWeek + 1);
+  }
 
   let rows = '';
   let moodCount = {};
@@ -2234,10 +2320,15 @@ function generateWeeklyReport() {
   showReport(html);
 }
 
-function generateMonthlyReport() {
-  const today = new Date(getToday() + 'T00:00:00');
-  const year = today.getFullYear();
-  const month = today.getMonth() + 1;
+function generateMonthlyReport(monthStr) {
+  let year, month;
+  if (monthStr) {
+    [year, month] = monthStr.split('-').map(Number);
+  } else {
+    const today = new Date(getToday() + 'T00:00:00');
+    year = today.getFullYear();
+    month = today.getMonth() + 1;
+  }
   const daysInMonth = new Date(year, month, 0).getDate();
 
   let moodCount = {};
