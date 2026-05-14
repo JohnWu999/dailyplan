@@ -1598,15 +1598,22 @@ function saveAwareness() {
 
 function renderAwarenessHistory() {
   const el = document.getElementById('awarenessHistory');
-  const count = appData.awarenessList.length;
-  document.getElementById('ach-awareness-count').textContent = count;
+  const list = appData.awarenessList || [];
+  document.getElementById('ach-awareness-count').textContent = list.length;
 
-  if (count === 0) {
+  if (list.length === 0) {
     el.innerHTML = '<div style="text-align:center;color:var(--text-light);padding:24px;font-size:0.9rem">还没有觉察记录，开始记录吧...</div>';
     return;
   }
 
-  el.innerHTML = appData.awarenessList.slice(0, 7).map(a=>`
+  // 分页：每页7条
+  const pageSize = 7;
+  const page = window.awarenessPage || 1;
+  const start = 0;
+  const end = page * pageSize;
+  const items = list.slice(start, end);
+
+  let html = items.map(a=>`
     <div style="background:var(--card);border-radius:16px;padding:16px;margin-bottom:12px;border:1px solid var(--border)">
       <div style="font-size:0.75rem;color:var(--text-light);margin-bottom:8px">${a.date}</div>
       ${a.see ? `<div style="margin-bottom:6px"><span style="color:var(--gold)">👀</span> ${a.see}</div>` : ''}
@@ -1615,6 +1622,20 @@ function renderAwarenessHistory() {
       ${a.note ? `<div style="font-size:0.85rem;color:var(--text-light)">📝 ${a.note}</div>` : ''}
     </div>
   `).join('');
+
+  // 加载更多按钮
+  if (end < list.length) {
+    html += `<button onclick="loadMoreAwareness()" style="width:100%;padding:12px;border:1px solid var(--border);border-radius:12px;background:var(--card);cursor:pointer;font-family:inherit;font-size:0.9rem;color:var(--primary)">加载更多（${list.length - end} 条）</button>`;
+  } else if (list.length > pageSize) {
+    html += `<div style="text-align:center;color:var(--text-light);padding:12px;font-size:0.8rem">已加载全部 ${list.length} 条</div>`;
+  }
+
+  el.innerHTML = html;
+}
+
+function loadMoreAwareness() {
+  window.awarenessPage = (window.awarenessPage || 1) + 1;
+  renderAwarenessHistory();
 }
 
 // ========== 孩子成长 ==========
@@ -1707,15 +1728,22 @@ function saveReview() {
 
 function renderReviewHistory() {
   const el = document.getElementById('reviewHistory');
-  const count = appData.reviewList.length;
-  document.getElementById('ach-review-count').textContent = count;
+  const list = appData.reviewList || [];
+  document.getElementById('ach-review-count').textContent = list.length;
 
-  if (count === 0) {
+  if (list.length === 0) {
     el.innerHTML = '<div style="text-align:center;color:var(--text-light);padding:24px;font-size:0.9rem">还没有复盘记录...</div>';
     return;
   }
 
-  el.innerHTML = appData.reviewList.slice(0, 7).map(r=>`
+  // 分页：每页7条
+  const pageSize = 7;
+  const page = window.reviewPage || 1;
+  const start = 0;
+  const end = page * pageSize;
+  const items = list.slice(start, end);
+
+  let html = items.map(r=>`
     <div style="background:var(--card);border-radius:16px;padding:16px;margin-bottom:12px;border:1px solid var(--border)">
       <div style="font-size:0.75rem;color:var(--text-light);margin-bottom:8px">${r.date}</div>
       ${r.r1 ? `<div style="margin-bottom:4px;font-size:0.8rem"><span style="color:var(--primary)">①</span> ${r.r1}</div>` : ''}
@@ -1724,6 +1752,20 @@ function renderReviewHistory() {
       ${r.r4 ? `<div style="font-size:0.8rem;padding:8px;background:var(--warm);border-radius:8px;margin-top:8px"><span style="color:var(--gold)">→</span> ${r.r4}</div>` : ''}
     </div>
   `).join('');
+
+  // 加载更多按钮
+  if (end < list.length) {
+    html += `<button onclick="loadMoreReview()" style="width:100%;padding:12px;border:1px solid var(--border);border-radius:12px;background:var(--card);cursor:pointer;font-family:inherit;font-size:0.9rem;color:var(--primary)">加载更多（${list.length - end} 条）</button>`;
+  } else if (list.length > pageSize) {
+    html += `<div style="text-align:center;color:var(--text-light);padding:12px;font-size:0.8rem">已加载全部 ${list.length} 条</div>`;
+  }
+
+  el.innerHTML = html;
+}
+
+function loadMoreReview() {
+  window.reviewPage = (window.reviewPage || 1) + 1;
+  renderReviewHistory();
 }
 
 // ========== 成就 ==========
