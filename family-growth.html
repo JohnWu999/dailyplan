@@ -345,18 +345,60 @@
       gap: 8px;
       font-size: 0.85rem;
       border: 1px solid var(--border);
+      transition: all 0.3s ease;
     }
     .achieve-item .icon {
       font-size: 1.2rem;
     }
     .achieve-item.locked {
-      opacity: 0.4;
+      opacity: 0.35;
       filter: grayscale(1);
+    }
+    .achieve-item.unlocked {
+      opacity: 1;
+      filter: none;
+      animation: achieveUnlock 0.6s ease;
+      border-color: var(--primary);
+      box-shadow: 0 0 12px rgba(232, 93, 4, 0.2);
     }
     .achieve-item .num {
       font-weight: 700;
       color: var(--primary);
     }
+    @keyframes achieveUnlock {
+      0% { transform: scale(1); }
+      30% { transform: scale(1.15); }
+      60% { transform: scale(0.95); }
+      100% { transform: scale(1); }
+    }
+
+    /* 成就庆祝弹窗 */
+    .celebration-popup {
+      display: none;
+      position: fixed;
+      top: 50%;
+      left: 50%;
+      transform: translate(-50%, -50%);
+      background: var(--card);
+      border-radius: 24px;
+      padding: 32px 48px;
+      z-index: 500;
+      text-align: center;
+      box-shadow: 0 20px 60px rgba(0,0,0,0.35);
+      animation: celebrateIn 0.4s ease;
+    }
+    .celebration-popup.show { display: flex; flex-direction: column; align-items: center; gap: 12px; }
+    @keyframes celebrateIn {
+      0% { transform: translate(-50%, -50%) scale(0.4); opacity: 0; }
+      100% { transform: translate(-50%, -50%) scale(1); opacity: 1; }
+    }
+    .celebration-icon { font-size: 3.5rem; animation: celebrateBounce 0.6s ease 0.2s; }
+    @keyframes celebrateBounce {
+      0%, 100% { transform: scale(1) rotate(0deg); }
+      25% { transform: scale(1.2) rotate(-5deg); }
+      75% { transform: scale(1.1) rotate(5deg); }
+    }
+    .celebration-msg { font-size: 1.1rem; font-weight: 600; color: var(--primary); }
 
     /* 本周心情曲线 */
     .week-mood-card {
@@ -862,6 +904,57 @@
       }
     }
 
+    /* 起居录弹窗 */
+    .mini-modal-overlay {
+      display: none;
+      position: fixed;
+      inset: 0;
+      background: rgba(0,0,0,0.5);
+      z-index: 200;
+      justify-content: center;
+      align-items: center;
+    }
+    .mini-modal-overlay.show { display: flex; }
+    .mini-modal {
+      background: var(--card);
+      border-radius: 20px;
+      padding: 20px;
+      width: 280px;
+      max-width: 90vw;
+      text-align: center;
+    }
+    .mini-modal-title { font-size: 1rem; font-weight: 600; margin-bottom: 14px; color: var(--text); }
+    .mini-modal-options { display: flex; flex-wrap: wrap; gap: 8px; justify-content: center; margin-bottom: 12px; }
+    .mini-modal-btn {
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      gap: 2px;
+      padding: 8px 12px;
+      border: 1.5px solid var(--border);
+      border-radius: 12px;
+      background: var(--bg);
+      cursor: pointer;
+      font-size: 1.4rem;
+      min-width: 52px;
+      transition: all 0.2s;
+    }
+    .mini-modal-btn span { font-size: 0.65rem; color: var(--text-light); }
+    .mini-modal-btn.active { border-color: var(--primary); background: var(--warm); }
+    .mini-modal-btn:hover { transform: scale(1.05); }
+    .mini-modal-close {
+      margin-top: 4px;
+      padding: 8px;
+      border: none;
+      background: transparent;
+      color: var(--text-light);
+      cursor: pointer;
+      font-size: 0.85rem;
+      font-family: inherit;
+      width: 100%;
+    }
+    .mini-modal-close:hover { color: var(--text); }
+
     /* 页面隐藏 */
     .page { display: none; }
     .page.active { display: block; }
@@ -982,31 +1075,48 @@
       </div>
     </div>
 
-    <!-- 晨间打卡 -->
-    <div class="section-title" style="margin-top: 24px;">晨间打卡</div>
-    <div class="morning-checkin">
-      <div class="checkin-grid">
-        <div class="checkin-item" id="ci-sleep" onclick="toggleCheckin('sleep')">
-          <div class="ci-icon">😴</div>
-          <div class="ci-label">睡眠质量</div>
-          <div class="ci-status">点击记录</div>
-        </div>
-        <div class="checkin-item" id="ci-breakfast" onclick="toggleCheckin('breakfast')">
-          <div class="ci-icon">🍳</div>
-          <div class="ci-label">早餐</div>
-          <div class="ci-status">点击记录</div>
-        </div>
-        <div class="checkin-item" id="ci-exercise" onclick="toggleCheckin('exercise')">
-          <div class="ci-icon">🏃</div>
-          <div class="ci-label">运动</div>
-          <div class="ci-status">点击记录</div>
-        </div>
-        <div class="checkin-item" id="ci-mood" onclick="toggleCheckin('mood')">
-          <div class="ci-icon">😊</div>
-          <div class="ci-label">此刻心情</div>
-          <div class="ci-status">点击记录</div>
-        </div>
+    <!-- 起居录 -->
+    <div class="section-title" style="margin-top: 24px;">🏠 起居录</div>
+    <div class="checkin-grid">
+      <div class="checkin-item" id="ci-sleep" onclick="openCheckinModal('sleep')">
+        <div class="ci-icon">😴</div>
+        <div class="ci-label">睡眠</div>
+        <div class="ci-status">点击记录</div>
       </div>
+      <div class="checkin-item" id="ci-mood" onclick="openCheckinModal('mood')">
+        <div class="ci-icon">😊</div>
+        <div class="ci-label">心情</div>
+        <div class="ci-status">点击记录</div>
+      </div>
+      <div class="checkin-item" id="ci-exercise" onclick="openCheckinModal('exercise')">
+        <div class="ci-icon">🏃</div>
+        <div class="ci-label">运动</div>
+        <div class="ci-status">点击记录</div>
+      </div>
+      <div class="checkin-item" id="ci-breakfast" onclick="openCheckinModal('breakfast')">
+        <div class="ci-icon">🍳</div>
+        <div class="ci-label">早餐</div>
+        <div class="ci-status">点击记录</div>
+      </div>
+      <div class="checkin-item" id="ci-lunch" onclick="openCheckinModal('lunch')">
+        <div class="ci-icon">🍜</div>
+        <div class="ci-label">午餐</div>
+        <div class="ci-status">点击记录</div>
+      </div>
+      <div class="checkin-item" id="ci-dinner" onclick="openCheckinModal('dinner')">
+        <div class="ci-icon">🍽️</div>
+        <div class="ci-label">晚餐</div>
+        <div class="ci-status">点击记录</div>
+      </div>
+    </div>
+    <div class="checkin-note" id="ci-note-breakfast" style="display:none">
+      <input type="text" class="ci-note-input" placeholder="早餐备注..." onchange="saveCheckinNote('breakfast', this.value)">
+    </div>
+    <div class="checkin-note" id="ci-note-lunch" style="display:none">
+      <input type="text" class="ci-note-input" placeholder="午餐备注..." onchange="saveCheckinNote('lunch', this.value)">
+    </div>
+    <div class="checkin-note" id="ci-note-dinner" style="display:none">
+      <input type="text" class="ci-note-input" placeholder="晚餐备注..." onchange="saveCheckinNote('dinner', this.value)">
     </div>
 
     <!-- 闪念胶囊 -->
@@ -1529,46 +1639,78 @@ function renderTop3() {
   }
 }
 
-// ========== 晨间打卡 ==========
+// ========== 起居录 ==========
 const checkinConfig = {
-  sleep: { icon: '😴', label: '睡眠质量', options: [{e:'😊',t:'好'},{e:'😴',t:'一般'},{e:'🥱',t:'疲惫'}] },
+  sleep: { icon: '😴', label: '睡眠', options: [{e:'😊',t:'好'},{e:'😴',t:'一般'},{e:'🥱',t:'疲惫'},{e:'😵',t:'很差'}] },
+  mood: { icon: '😊', label: '心情', options: [{e:'😊',t:'愉悦'},{e:'😐',t:'平静'},{e:'😔',t:'低落'},{e:'😤',t:'烦躁'},{e:'😰',t:'焦虑'}] },
+  exercise: { icon: '🏃', label: '运动', options: [{e:'🧘',t:'瑜伽'},{e:'🏃',t:'跑步'},{e:'🚴',t:'骑行'},{e:'🏋️',t:'力量'},{e:'🚶',t:'散步'},{e:'❌',t:'未动'}] },
   breakfast: { icon: '🍳', label: '早餐', options: [{e:'✅',t:'已吃'},{e:'❌',t:'未吃'}] },
-  exercise: { icon: '🏃', label: '运动', options: [{e:'🧘',t:'瑜伽'},{e:'🏃',t:'跑步'},{e:'🚴',t:'骑行'},{e:'❌',t:'未运动'}] },
-  mood: { icon: '😊', label: '心情', options: [{e:'😊',t:'愉悦'},{e:'😐',t:'平静'},{e:'😔',t:'低落'}] }
+  lunch: { icon: '🍜', label: '午餐', options: [{e:'✅',t:'已吃'},{e:'❌',t:'未吃'}] },
+  dinner: { icon: '🍽️', label: '晚餐', options: [{e:'✅',t:'已吃'},{e:'❌',t:'未吃'}] }
 };
 
-function toggleCheckin(type) {
-  const ci = document.getElementById(`ci-${type}`);
-  if (!appData.checkinsByDate) appData.checkinsByDate = {};
-  const current = appData.checkinsByDate[selectedDate] && appData.checkinsByDate[selectedDate][type];
+function openCheckinModal(type) {
   const config = checkinConfig[type];
+  const checkins = appData.checkinsByDate && appData.checkinsByDate[selectedDate];
+  const current = checkins && checkins[type];
 
-  if (!current) {
-    showCheckinOptions(type);
-  } else {
-    // 取消
-    if (!appData.checkinsByDate[selectedDate]) appData.checkinsByDate[selectedDate] = {};
-    appData.checkinsByDate[selectedDate][type] = null;
-    saveData();
-    renderCheckins();
-  }
+  let html = `<div class="mini-modal" onclick="event.stopPropagation()">
+    <div class="mini-modal-title">${config.icon} ${config.label}</div>
+    <div class="mini-modal-options">`;
+  html += config.options.map(o =>
+    `<button class="mini-modal-btn ${current === o.e ? 'active' : ''}" onclick="setCheckin('${type}','${o.e}')">${o.e}<span>${o.t}</span></button>`
+  ).join('');
+  html += `</div><button class="mini-modal-close" onclick="closeMiniModal()">取消</button></div>`;
+
+  const overlay = document.getElementById('miniModalOverlay') || createMiniModalOverlay();
+  overlay.innerHTML = html;
+  overlay.classList.add('show');
 }
 
-function showCheckinOptions(type) {
-  const config = checkinConfig[type];
-  const ci = document.getElementById(`ci-${type}`);
-  ci.innerHTML = `<div style="display:flex;gap:8px;justify-content:center;flex-wrap:wrap;">
-    ${config.options.map(o=>`<button style="font-size:1.2rem;padding:4px 8px;border:none;background:rgba(255,255,255,0.3);border-radius:8px;cursor:pointer" onclick="event.stopPropagation();setCheckin('${type}','${o.e}')">${o.e}</button>`).join('')}
-  </div>`;
+function createMiniModalOverlay() {
+  const el = document.createElement('div');
+  el.id = 'miniModalOverlay';
+  el.className = 'mini-modal-overlay';
+  el.onclick = closeMiniModal;
+  document.body.appendChild(el);
+  return el;
+}
+
+function closeMiniModal() {
+  const overlay = document.getElementById('miniModalOverlay');
+  if (overlay) overlay.classList.remove('show');
 }
 
 function setCheckin(type, emoji) {
   if (!appData.checkinsByDate) appData.checkinsByDate = {};
   if (!appData.checkinsByDate[selectedDate]) appData.checkinsByDate[selectedDate] = {};
   appData.checkinsByDate[selectedDate][type] = emoji;
+
+  // 三餐显示备注框
+  if (['breakfast','lunch','dinner'].includes(type)) {
+    const noteEl = document.getElementById(`ci-note-${type}`);
+    if (noteEl) {
+      noteEl.style.display = 'block';
+      const note = appData.checkinsByDate[selectedDate][`${type}Note`];
+      noteEl.querySelector('.ci-note-input').value = note || '';
+    }
+  }
+
   saveData();
   renderCheckins();
+  closeMiniModal();
   showSuccess('已记录！');
+}
+
+function saveCheckinNote(type, value) {
+  if (!appData.checkinsByDate) appData.checkinsByDate = {};
+  if (!appData.checkinsByDate[selectedDate]) appData.checkinsByDate[selectedDate] = {};
+  appData.checkinsByDate[selectedDate][`${type}Note`] = value;
+  saveData();
+}
+
+function toggleCheckin(type) {
+  openCheckinModal(type);
 }
 
 function renderCheckins() {
@@ -1855,8 +1997,37 @@ function updateStreak() {
 
 function renderAchievements() {
   const streak = appData.streak;
-  document.getElementById('ach-7days').classList.toggle('locked', streak < 7);
-  document.getElementById('ach-30days').classList.toggle('locked', streak < 30);
+  const ach7 = document.getElementById('ach-7days');
+  const ach30 = document.getElementById('ach-30days');
+
+  // 7天成就
+  const was7Locked = ach7.classList.contains('locked');
+  ach7.classList.toggle('locked', streak < 7);
+  ach7.classList.toggle('unlocked', streak >= 7);
+  if (streak >= 7 && was7Locked) celebrateAchievement('🌱', '7天连续记录达成！');
+
+  // 30天成就
+  const was30Locked = ach30.classList.contains('locked');
+  ach30.classList.toggle('locked', streak < 30);
+  ach30.classList.toggle('unlocked', streak >= 30);
+  if (streak >= 30 && was30Locked) celebrateAchievement('🌳', '30天坚持达成！');
+
+  // 觉察日记数
+  const awarenessCount = Object.keys(appData.awarenessByDate || {}).length;
+  document.getElementById('ach-awareness-count').textContent = awarenessCount;
+
+  // 复盘数
+  const reviewCount = Object.keys(appData.reviewByDate || {}).length;
+  document.getElementById('ach-review-count').textContent = reviewCount;
+}
+
+function celebrateAchievement(icon, message) {
+  const el = document.createElement('div');
+  el.className = 'celebration-popup';
+  el.innerHTML = `<div class="celebration-icon">${icon}</div><div class="celebration-msg">${message}</div>`;
+  document.body.appendChild(el);
+  setTimeout(() => el.classList.add('show'), 10);
+  setTimeout(() => { el.classList.remove('show'); setTimeout(() => el.remove(), 400); }, 2500);
 }
 
 // ========== 本周心情曲线 ==========
